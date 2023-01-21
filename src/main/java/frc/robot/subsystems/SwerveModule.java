@@ -10,6 +10,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.config.SwerveModuleConstants;
 import frc.lib.math.OnboardModuleState;
 import frc.lib.util.CANCoderUtil;
@@ -94,6 +96,7 @@ public class SwerveModule {
     angleController.setFF(Constants.Swerve.angleKFF);
     angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
     angleMotor.burnFlash();
+    Timer.delay(1);
     resetToAbsolute();
   }
 
@@ -151,8 +154,11 @@ public class SwerveModule {
   }
 
   public SwerveModulePosition getPosition(){
+    SmartDashboard.putNumber("angleEncoder position " + moduleNumber, angleEncoder.getPosition());
+    SmartDashboard.putNumber("angleOffset degrees " + moduleNumber, angleOffset.getDegrees());
+
     return new SwerveModulePosition(
         driveEncoder.getPosition(),
-        new Rotation2d(angleEncoder.getPosition() - angleOffset.getDegrees()));
+        Rotation2d.fromDegrees(angleEncoder.getPosition() - angleOffset.getDegrees()));
   }
 }

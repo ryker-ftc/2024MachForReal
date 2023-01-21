@@ -68,6 +68,8 @@ public class Swerve extends SubsystemBase {
 
   public Pose2d getPose() {
     SmartDashboard.putNumber("pose X", swerveOdometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("pose Y", swerveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("gyro angle", gyro.getAngle());
     return swerveOdometry.getPoseMeters();
   }
 
@@ -84,12 +86,14 @@ public class Swerve extends SubsystemBase {
   }
 
   public SwerveModulePosition[] getPositions(){
-        SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
-            positions[mod.moduleNumber] = mod.getPosition();
-        }
-        return positions;
+    SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    for(SwerveModule mod : mSwerveMods){
+      SmartDashboard.putNumber("position: module " + mod.moduleNumber, mod.getPosition().distanceMeters);
+      SmartDashboard.putNumber("angle: module " + mod.moduleNumber, mod.getPosition().angle.getDegrees());
+      positions[mod.moduleNumber] = mod.getPosition();
     }
+    return positions;
+  }
 
   public void zeroGyro() {
     gyro.reset();

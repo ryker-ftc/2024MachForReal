@@ -35,6 +35,9 @@ public class RobotContainer {
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
+  private final JoystickButton slowSpeed =
+      new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
@@ -46,7 +49,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
-            () -> robotCentric.getAsBoolean()));
+            () -> robotCentric.getAsBoolean(),
+            () -> slowSpeed.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();

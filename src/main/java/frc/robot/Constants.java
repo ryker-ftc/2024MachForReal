@@ -65,8 +65,8 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 1; // meters per second  //4.5
-    public static final double maxAngularVelocity = 1;            // 11.5
+    public static final double maxSpeed = 4.5; // meters per second  //4.5
+    public static final double maxAngularVelocity = 6;            // 11.5
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -122,8 +122,8 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 1; //3
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1; //3
+    public static final double kMaxSpeedMetersPerSecond = 4; //3
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3; //3
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
