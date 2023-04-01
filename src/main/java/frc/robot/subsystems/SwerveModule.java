@@ -73,7 +73,12 @@ public class SwerveModule {
   }
 
   private void resetToAbsolute() {
-    double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
+    double canCoderDegrees = getCanCoder().getDegrees();
+    double angleDegrees = angleOffset.getDegrees();
+    double absolutePosition = canCoderDegrees - angleDegrees;
+    SmartDashboard.putNumber("CanDegrees: " + moduleNumber, canCoderDegrees);
+    SmartDashboard.putNumber("AngleDegrees: " + moduleNumber, angleDegrees);
+    SmartDashboard.putNumber("AbsolutePosition: " + moduleNumber, absolutePosition);
     integratedAngleEncoder.setPosition(absolutePosition);
   }
 
@@ -137,6 +142,8 @@ public class SwerveModule {
             ? lastAngle
             : desiredState.angle;
 
+    SmartDashboard.putString("Angle: " + moduleNumber, angle.toString());
+    SmartDashboard.putString("Last Angle: " + moduleNumber, lastAngle.toString());
     angleController.setReference(angle.getDegrees(), ControlType.kPosition);
     lastAngle = angle;
   }
