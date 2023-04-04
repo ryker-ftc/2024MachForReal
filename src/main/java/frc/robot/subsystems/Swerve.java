@@ -118,4 +118,10 @@ public class Swerve extends SubsystemBase {
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
   }
+
+  public void resetToAbsoluteNorth() {
+    for (SwerveModule mod : mSwerveMods) {
+      mod.resetToAbsoluteNorth();
+    }
+  }
 }

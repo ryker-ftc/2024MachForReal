@@ -62,29 +62,6 @@ public class SwerveModule {
     lastAngle = getState().angle;
   }
 
-  public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-    // Custom optimize command, since default WPILib optimize assumes continuous
-    // controller which
-    // REV and CTRE are not
-    // desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-
-    setAngle(desiredState);
-    setSpeed(desiredState, isOpenLoop);
-  }
-
-  private void resetToAbsolute() {
-    double canCoderDegrees = getCanCoder().getDegrees();
-    double angleDegrees = angleOffset.getDegrees();
-    double absolutePosition = canCoderDegrees - angleDegrees;
-    SmartDashboard.putNumber("1- CanDegrees: " + moduleNumber, canCoderDegrees);
-    SmartDashboard.putNumber("1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
-    SmartDashboard.putNumber("1- AbsolutePosition: " + moduleNumber, absolutePosition);
-    SmartDashboard.putNumber("1- Integrated Angle Motor Position: " + moduleNumber,
-        integratedAngleEncoder.getPosition());
-    // integratedAngleEncoder.setPosition(absolutePosition);
-    angleController.setReference(absolutePosition, ControlType.kPosition);
-  }
-
   private void configAngleEncoder() {
     angleEncoder.configFactoryDefault();
     CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
@@ -125,6 +102,31 @@ public class SwerveModule {
     driveEncoder.setPosition(0.0);
   }
 
+  private void resetToAbsolute() {
+    // double canCoderDegrees = getCanCoder().getDegrees();
+    // double angleDegrees = angleOffset.getDegrees();
+    // double absolutePosition = canCoderDegrees - angleDegrees;
+    // SmartDashboard.putNumber("1- CanDegrees: " + moduleNumber, canCoderDegrees);
+    // SmartDashboard.putNumber("1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
+    // SmartDashboard.putNumber("1- Setting angle to: " + moduleNumber, absolutePosition);
+    // SmartDashboard.putNumber("1- Integrated Angle Motor Position: " + moduleNumber,
+    //     integratedAngleEncoder.getPosition());
+    // // integratedAngleEncoder.setPosition(absolutePosition);
+    // angleController.setReference(absolutePosition*Constants.Swerve.angleConversionFactor, ControlType.kPosition);
+    // integratedAngleEncoder.setPosition(canCoderDegrees);
+  }
+
+  public void resetToAbsoluteNorth() {
+    double canCoderDegrees = getCanCoder().getDegrees();
+    double angleDegrees = angleOffset.getDegrees();
+    double absolutePosition = canCoderDegrees - angleDegrees;
+    SmartDashboard.putNumber("M1- CanDegrees: " + moduleNumber, canCoderDegrees);
+    SmartDashboard.putNumber("M1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
+    SmartDashboard.putNumber("M1- Setting angle to: " + moduleNumber, absolutePosition);
+    SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber, integratedAngleEncoder.getPosition());
+    angleController.setReference(angleDegrees, ControlType.kPosition);
+  }
+
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
@@ -144,13 +146,22 @@ public class SwerveModule {
     // (Constants.Swerve.maxSpeed * 0.01))
     // ? lastAngle
     // : desiredState.angle;
-    // Rotation2d angle = desiredState.angle;
 
     // SmartDashboard.putString("Angle: " + moduleNumber, angle.toString());
     // SmartDashboard.putString("Last Angle: " + moduleNumber,
     // lastAngle.toString());
     // angleController.setReference(angle.getDegrees(), ControlType.kPosition);
     // lastAngle = angle;
+  }
+
+  public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+    // Custom optimize command, since default WPILib optimize assumes continuous
+    // controller which
+    // REV and CTRE are not
+    // desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+
+    setAngle(desiredState);
+    setSpeed(desiredState, isOpenLoop);
   }
 
   private Rotation2d getAngle() {
