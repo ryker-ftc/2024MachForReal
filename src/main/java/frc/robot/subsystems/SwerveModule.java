@@ -79,6 +79,7 @@ public class SwerveModule {
     angleController.setI(Constants.Swerve.angleKI);
     angleController.setD(Constants.Swerve.angleKD);
     angleController.setFF(Constants.Swerve.angleKFF);
+    // angleController.setFeedbackDevice(integratedAngleEncoder);
     angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
     angleMotor.burnFlash();
     Timer.delay(1);
@@ -103,7 +104,7 @@ public class SwerveModule {
   }
 
   private void resetToAbsolute() {
-    // double canCoderDegrees = getCanCoder().getDegrees();
+    double canCoderDegrees = getCanCoder().getDegrees();
     // double angleDegrees = angleOffset.getDegrees();
     // double absolutePosition = canCoderDegrees - angleDegrees;
     // SmartDashboard.putNumber("1- CanDegrees: " + moduleNumber, canCoderDegrees);
@@ -113,7 +114,7 @@ public class SwerveModule {
     //     integratedAngleEncoder.getPosition());
     // // integratedAngleEncoder.setPosition(absolutePosition);
     // angleController.setReference(absolutePosition*Constants.Swerve.angleConversionFactor, ControlType.kPosition);
-    // integratedAngleEncoder.setPosition(canCoderDegrees);
+    integratedAngleEncoder.setPosition((canCoderDegrees/(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
   }
 
   public void resetToAbsoluteNorth() {
@@ -124,7 +125,7 @@ public class SwerveModule {
     SmartDashboard.putNumber("M1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
     SmartDashboard.putNumber("M1- Setting angle to: " + moduleNumber, absolutePosition);
     SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber, integratedAngleEncoder.getPosition());
-    angleController.setReference(angleDegrees, ControlType.kPosition);
+    angleController.setReference(0, ControlType.kPosition);
   }
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -141,24 +142,24 @@ public class SwerveModule {
   }
 
   private void setAngle(SwerveModuleState desiredState) {
-    // Prevent rotating module if speed is less then 1%. Prevents jittering.
-    // Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <=
-    // (Constants.Swerve.maxSpeed * 0.01))
-    // ? lastAngle
-    // : desiredState.angle;
+    //Prevent rotating module if speed is less then 1%. Prevents jittering.
+    Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <=
+    (Constants.Swerve.maxSpeed * 0.01))
+    ? lastAngle
+    : desiredState.angle;
 
-    // SmartDashboard.putString("Angle: " + moduleNumber, angle.toString());
-    // SmartDashboard.putString("Last Angle: " + moduleNumber,
-    // lastAngle.toString());
-    // angleController.setReference(angle.getDegrees(), ControlType.kPosition);
-    // lastAngle = angle;
+    SmartDashboard.putString("Angle: " + moduleNumber, angle.toString());
+    SmartDashboard.putString("Last Angle: " + moduleNumber,
+    lastAngle.toString());
+    angleController.setReference(angle.getDegrees(), ControlType.kPosition);
+    lastAngle = angle;
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
-    // desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+    desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
 
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
