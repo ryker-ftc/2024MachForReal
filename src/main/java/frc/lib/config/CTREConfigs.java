@@ -19,7 +19,7 @@ public final class CTREConfigs {
         SensorInitializationStrategy.BootToAbsolutePosition;
     swerveCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
     //swerveCanCoderConfig.magnetOffsetDegrees();
-    //need to set the cancoders to the specific offset per motor.
+    //TODO: need to set the cancoders to the specific offset per motor.
     
     ///Swerve Drive Specialties MK4, L2 Fast (https://www.swervedrivespecialties.com/products/mk4-swerve-module)
   }
