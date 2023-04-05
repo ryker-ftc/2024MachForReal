@@ -84,6 +84,7 @@ public final class Constants {
       public static final int driveMotorID = 2;
       public static final int angleMotorID = 1;
       public static final int canCoderID = 9;
+      //TODO: THis should be an int. And it should be the absolute cancoder offset that points north.
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(135.0 - 23);// 171.650); //108.28-90-0.8
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
