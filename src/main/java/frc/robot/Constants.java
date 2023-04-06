@@ -33,7 +33,7 @@ public final class Constants {
         new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
         new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
-    /* Swerve Voltage Compensation */
+    /* Swerve Voltage Compensation 1*/
     public static final double voltageComp = 12.0;
 
     /* Swerve Current Limiting */
