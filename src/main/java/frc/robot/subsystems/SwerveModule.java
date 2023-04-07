@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.AngleStatistics;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -23,8 +24,8 @@ import frc.robot.Robot;
 
 public class SwerveModule {
   public int moduleNumber;
-  private Rotation2d lastAngle;
-  private Rotation2d angleOffset;
+  private double lastAngle;
+  private double angleOffset;
 
   private CANSparkMax angleMotor;
   private CANSparkMax driveMotor;
@@ -59,13 +60,15 @@ public class SwerveModule {
     driveController = driveMotor.getPIDController();
     configDriveMotor();
 
-    lastAngle = getState().angle;
+    lastAngle = getState().angle.getDegrees();
   }
 
   private void configAngleEncoder() {
     angleEncoder.configFactoryDefault();
     CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
     angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+    // angleEncoder.setPosition(angleOffset);
+
   }
 
   private void configAngleMotor() {
@@ -105,12 +108,16 @@ public class SwerveModule {
 
   private void resetToAbsolute() {
     double canCoderDegrees = getCanCoder().getDegrees();
-    integratedAngleEncoder.setPosition((canCoderDegrees/(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
+    double actualDegrees = canCoderDegrees - angleOffset;
+    angleEncoder.configMagnetOffset(actualDegrees);
+    // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
+    integratedAngleEncoder.setPosition(actualDegrees);
+
   }
 
   public void resetToAbsoluteNorth() {
     double canCoderDegrees = getCanCoder().getDegrees();
-    double angleDegrees = angleOffset.getDegrees();
+    double angleDegrees = angleOffset;
     double absolutePosition = canCoderDegrees - angleDegrees;
     SmartDashboard.putNumber("M1- CanDegrees: " + moduleNumber, canCoderDegrees);
     SmartDashboard.putNumber("M1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
@@ -135,15 +142,15 @@ public class SwerveModule {
 
   private void setAngle(SwerveModuleState desiredState) {
     //Prevent rotating module if speed is less then 1%. Prevents jittering.
-    Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <=
+   double angle = (Math.abs(desiredState.speedMetersPerSecond) <=
     (Constants.Swerve.maxSpeed * 0.01))
     ? lastAngle
-    : desiredState.angle;
+    : desiredState.angle.getDegrees();
 
-    SmartDashboard.putString("Angle: " + moduleNumber, angle.toString());
-    SmartDashboard.putString("Last Angle: " + moduleNumber,
-    lastAngle.toString());
-    angleController.setReference(angle.getDegrees(), ControlType.kPosition);
+    SmartDashboard.putNumber("Angle: " + moduleNumber, angle);
+    SmartDashboard.putNumber("Last Angle: " + moduleNumber,
+    lastAngle);
+    angleController.setReference(angle, ControlType.kPosition);
     lastAngle = angle;
   }
 
@@ -171,10 +178,10 @@ public class SwerveModule {
 
   public SwerveModulePosition getPosition() {
     SmartDashboard.putNumber("angleEncoder position " + moduleNumber, angleEncoder.getPosition());
-    SmartDashboard.putNumber("angleOffset degrees " + moduleNumber, angleOffset.getDegrees());
+    SmartDashboard.putNumber("angleOffset degrees " + moduleNumber, angleOffset);
 
     return new SwerveModulePosition(
         driveEncoder.getPosition(),
-        Rotation2d.fromDegrees(angleEncoder.getPosition() - angleOffset.getDegrees()));
+        Rotation2d.fromDegrees(angleEncoder.getPosition() - angleOffset));
   }
 }
