@@ -109,18 +109,26 @@ public class SwerveModule {
   }
 
   private void resetToAbsolute() {
+    this.resetToAbsolute(false);
+  }
+
+  private void resetToAbsolute(boolean resetQuickly) {
     angleEncoder.configMagnetOffset(angleOffset);
-    // If you read the angle immediately, the magnetic offset won't be set yet. Wait a second and it'll be there.
-    Timer.delay(1);
+    // If you read the angle immediately, the magnetic offset won't be set yet. Wait
+    // a second and it'll be there.
+    if (!resetQuickly) {
+      Timer.delay(1);
+    }
     double canCoderDegrees = getCanCoderAbsolutePosition();
     // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
     DriverStation.reportWarning("Module: " + moduleNumber + " CanCoderDegrees:  " + canCoderDegrees
         + " AngleOffset: " + angleOffset, false);
-    integratedAngleEncoder.setPosition(0);
+    integratedAngleEncoder.setPosition(canCoderDegrees);
 
   }
 
   public void resetToAbsoluteNorth() {
+    resetToAbsolute(true);
     double canCoderDegrees = getCanCoderAbsolutePosition();
     double angleDegrees = angleOffset;
     double absolutePosition = canCoderDegrees - angleDegrees;
@@ -130,7 +138,9 @@ public class SwerveModule {
     SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber,
         integratedAngleEncoder.getPosition());
 
-    this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
+    angleController.setReference(0, ControlType.kPosition);
+    lastAngle = 0;
+    // this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
   }
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
