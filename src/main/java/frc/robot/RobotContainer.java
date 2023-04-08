@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,9 +39,15 @@ public class RobotContainer {
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kB.value);
+  
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final Intaker s_Intaker = new Intaker();
+  private final Lifter s_Lifter = new Lifter();
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,6 +64,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+    s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
   }
 
   /**
@@ -69,6 +78,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+ 
+    m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.suck()));
+    m_intakeOut.whileTrue(new RunCommand(() -> s_Intaker.blow()));
+
   }
 
   /**
