@@ -1,5 +1,7 @@
 package frc.robot;
 
+import javax.swing.ImageIcon;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -119,7 +121,23 @@ public final class Constants {
           canCoderID, angleOffset);
     }
   }
-
+public static final class IntakeConstants {
+  /* Intake module - Module 4 */
+  public static final class Mod4 {
+    public static final int[] intakeMotorID1 = {13};
+    public static final int[] intakeMotorID2 = {14};
+    public static final int intakeEncoderPort = 13;
+    public static final boolean kEncoderReversed = false;
+    public static final int kEncoderCPR = 42;
+    public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
+  }
+}
+public static final class LiftConstants {
+  /* Lift module - Module 5 */
+  public static final class Mod5 {
+    public static final int liftMotorID = 14;
+  }
+}
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4; // 3
     public static final double kMaxAccelerationMetersPerSecondSquared = 3; // 3
