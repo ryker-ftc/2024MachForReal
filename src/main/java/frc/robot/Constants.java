@@ -75,7 +75,7 @@ public final class Constants {
 
     /* Motor Inverts */
     public static final boolean driveInvert = true;
-    public static final boolean angleInvert = true;
+    public static final boolean angleInvert = false;
 
     /* Angle Encoder Invert */
     public static final boolean canCoderInvert = false;
