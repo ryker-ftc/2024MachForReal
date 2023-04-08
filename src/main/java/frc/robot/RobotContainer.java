@@ -35,12 +35,14 @@ public class RobotContainer {
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
-  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton m_lifterPush = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton m_lifterPull = new JoystickButton(driver, XboxController.Button.kB.value);
   
 
   /* Subsystems */
@@ -65,6 +67,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
+    s_Lifter.setDefaultCommand(new RunCommand(s_Lifter::stop, s_Lifter));
   }
 
   /**
@@ -82,7 +85,8 @@ public class RobotContainer {
  
     m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.suck()));
     m_intakeOut.whileTrue(new RunCommand(() -> s_Intaker.blow()));
-
+    m_lifterPush.whileTrue(new RunCommand(() -> s_Lifter.push()));
+    m_lifterPull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
   }
 
   /**
