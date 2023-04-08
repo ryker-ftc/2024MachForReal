@@ -109,7 +109,7 @@ public class SwerveModule {
   private void resetToAbsolute() {
     double canCoderDegrees = getCanCoder().getDegrees();
     double actualDegrees = canCoderDegrees - angleOffset;
-    angleEncoder.configMagnetOffset(angleOffset);
+    angleEncoder.configMagnetOffset(actualDegrees);
     // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
     integratedAngleEncoder.setPosition(actualDegrees);
 
@@ -124,8 +124,7 @@ public class SwerveModule {
     SmartDashboard.putNumber("M1- Setting angle to: " + moduleNumber, absolutePosition);
     SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber, integratedAngleEncoder.getPosition());
     // TODO: This has to be zero after we reset the cancoder in CTREConfig.java 
-    // angleController.setReference(0, ControlType.kPosition);
-    this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
+    angleController.setReference(0, ControlType.kPosition);
   }
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
