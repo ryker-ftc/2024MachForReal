@@ -43,14 +43,26 @@ public class Swerve extends SubsystemBase {
 
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    // Each SwerveModuleState contains an angle and a speedMetersPerSecond for the module.
+    // Calculate new values for these based on the values from the joystick.  The values defined in
+    // the Constants for this are critical.
     SwerveModuleState[] swerveModuleStates =
         Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+            // If the fieldRelative/robotCentric button is pressed, calculate individual module
+            // angles and speeds from an absolute/field point of view.
+            // Otherwise, calculate them relative to the robot.
+            // The calculated ChassisSpeeds object contains the intended x and y velocities of
+            // the robot (in m/s) as well as the intended angular velocity of the robot.
             fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(), translation.getY(), rotation, getYaw())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
+    // This function ensures that no individual Swerve module wheel is driven faster than it
+    // can physically handle.  If any of the individual module speeds are above the defined
+    // constant, all speeds are readjusted accordingly.
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
+    // Updated each module with our desired speed and angle for it
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
@@ -65,6 +77,7 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  // note: pose and odometry are only used for status readouts
   public Pose2d getPose() {
     SmartDashboard.putNumber("pose X", swerveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("pose Y", swerveOdometry.getPoseMeters().getY());
