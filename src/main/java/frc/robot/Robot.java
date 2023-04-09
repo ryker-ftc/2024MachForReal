@@ -15,9 +15,13 @@ import frc.lib.config.CTREConfigs;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
+// CB: This is the main class for the robot, where execution starts.
 public class Robot extends TimedRobot {
+  // CB: This contains configuration constants for the robot.  Currently, this only contains CANCoder configuration.
   public static CTREConfigs ctreConfigs;
+  // CB: This is the command that is run to begin autonomous mode.
   private Command m_autonomousCommand;
+  // CB: The RobotContainer class contains subsystems, commands, joystick buttons, and glue logic between them.
   private RobotContainer m_robotContainer;
 
   /**
@@ -62,6 +66,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+      // CB: .schedule() causes a command to be executed on the next periodic loop (very soon).
       m_autonomousCommand.schedule();
     }
   }

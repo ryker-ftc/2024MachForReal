@@ -56,12 +56,19 @@ public class RobotContainer {
    */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
+        // Command that's continuously run to update the swerve state
         new TeleopSwerve(
+            // The Swerve subsystem
             s_Swerve,
+            // getRawAxis() returns a value for the controller axis from -1 to 1
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
+            // robotCentric and slowSpeed are both buttons on the joystick
+            // The robotCentric button, when held down, enables axis behavior relative to the field (and requires a working gyroscope).  The default
+            // is for movements to apply relative to the robot.
             () -> robotCentric.getAsBoolean(),
+            // slowSpeed button, when held, causes translation and rotation to be performed at a slower speed
             () -> slowSpeed.getAsBoolean()));
 
     // Configure the button bindings
