@@ -22,6 +22,7 @@ import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+// CB: This class represents one of the four hardware swerve modules
 public class SwerveModule {
   public int moduleNumber;
   private double lastAngle;
@@ -32,6 +33,7 @@ public class SwerveModule {
 
   private RelativeEncoder driveEncoder;
   private RelativeEncoder integratedAngleEncoder;
+  // This class represents the CANcoder for the swerve module
   private CANCoder angleEncoder;
 
   private final SparkMaxPIDController driveController;
@@ -116,6 +118,7 @@ public class SwerveModule {
   }
 
   public void resetToAbsoluteNorth() {
+    // CB: CANcoder absolute position in degrees
     double canCoderDegrees = getCanCoder().getDegrees();
     double angleDegrees = angleOffset;
     double absolutePosition = canCoderDegrees - angleDegrees;
@@ -158,20 +161,29 @@ public class SwerveModule {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
+    // This optimize() instruction is taken straight from the ChiefDelphi example, I can find
+    // no documentation on what it actually does.  Could try commenting it out if problems
+    // persist.
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
 
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
   }
 
+  // Get angular measurement from the relative encoder integrated with the rotation motor
   private Rotation2d getAngle() {
     return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
   }
 
+  // CB: Returns an angular measurement from the CANcoder, as the class Rotation2D
   public Rotation2d getCanCoder() {
+    // CB: angleEncoder is the CANcoder for this module.  getAbsolutePosition() returns the angular
+    // position in degrees; and Rotation2d.fromDegrees converts it into a Rotation2d
     return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
   }
 
+  // The returned state consists of the current velocity of the wheel and the angle of the swerve module
+  // but calculated from the rotation motor's integrated encoder rather than the CANcoder
   public SwerveModuleState getState() {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
   }
