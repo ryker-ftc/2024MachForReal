@@ -13,15 +13,7 @@ public class Lifter extends SubsystemBase {
     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
     private final CANSparkMax lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
-    private RelativeEncoder liftRelativeEncoder;
 
-//SmartDashboard.putnumber("P value",lifterm)
-    public void defenseX() {
-        lifterMotor.getPIDController().setP(0);
-        lifterMotor.getPIDController().setI(0);
-        lifterMotor.getPIDController().setD(0);
-
-    }
 
     // turn on the intake motor to pull in objects.
     public void push() {

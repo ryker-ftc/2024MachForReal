@@ -124,9 +124,9 @@ public class Swerve extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+          "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoderAbsolutePosition());
       SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+          "Mod " + mod.moduleNumber + " Integrated", mod.getInternalAngle());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
