@@ -57,29 +57,32 @@ public class Lifter extends SubsystemBase {
 
     // turn on the intake motor to pull in objects.
     public void push() {
-        lifterMotor.set(0.25);
+        
         SmartDashboard.putString("Lifter Status", "PUSHING");
         SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
         SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
         SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        lifterMotor.set(0.25);
     }
 
     // turn on the intake motor to push out objects.
     public void pull() {
-        lifterMotor.set(-0.25);
+        
         SmartDashboard.putString("Lifter Status", "PULLING");
         SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
         SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
         SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        lifterMotor.set(-0.25);
     }
 
     // this is the default state of the intake motor - do not move.
     public void stop() {
-        lifterMotor.set(0);
+        
         SmartDashboard.putString("Lifter Status", "STOPPED");
         SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
         SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
         SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        lifterMotor.set(0);
     }
 
     
