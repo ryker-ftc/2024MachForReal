@@ -16,21 +16,21 @@ public class Intaker extends SubsystemBase {
     private final CANSparkMax intakeMotor = new CANSparkMax(13, MotorType.kBrushless);
 
     // turn on the intake motor to pull in objects.
-    public void suck() {
+    public void pull() {
+        SmartDashboard.putString("Intake Status", "PULL");
         intakeMotor.set(0.25);
-        SmartDashboard.putString("Intake Status", "SUCK");
     }
 
     // turn on the intake motor to push out objects.
-    public void blow() {
+    public void push() {
         intakeMotor.set(-0.25);
-        SmartDashboard.putString("Intake Status", "BLOW");
+        SmartDashboard.putString("Intake Status", "PUSH");
     }
 
     // this is the default state of the intake motor - do not move.
     public void stop() {
         intakeMotor.set(0);
-        SmartDashboard.putString("Intake Status", "STOPPED");
+        SmartDashboard.putString("Intake Status", "STOP");
     }
 
 

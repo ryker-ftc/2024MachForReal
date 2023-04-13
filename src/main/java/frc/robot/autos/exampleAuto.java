@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.TurnToAngleCommand;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Swerve;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import edu.wpi.first.wpilibj.Timer;
 
 public class exampleAuto extends SequentialCommandGroup {
   public exampleAuto(Swerve s_Swerve) {
@@ -147,15 +149,15 @@ public class exampleAuto extends SequentialCommandGroup {
     addCommands(
       //new InstantCommand(() -> s_Swerve.resetOdometry(trajectory1.getInitialPose())),
       new InstantCommand(() -> s_Swerve.resetOdometry(new Pose2d(new Translation2d(0,0), Rotation2d.fromDegrees(0)))),
-      swerveControllerCommand1,
-      new TurnToAngleCommand(s_Swerve, 180, 2),
-      swerveControllerCommand2,
-      new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true)),
-      new WaitCommand(1),
-      swerveControllerCommand3,
-      new TurnToAngleCommand(s_Swerve, 0, 2),
-      swerveControllerCommand4,
-      new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true))
+      swerveControllerCommand1//,
+      // new TurnToAngleCommand(s_Swerve, 180, 2),
+      // swerveControllerCommand2,
+      // new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true)),
+      // new WaitCommand(1),
+      // swerveControllerCommand3,
+      // new TurnToAngleCommand(s_Swerve, 0, 2),
+      // swerveControllerCommand4,
+      // new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,0), 0, false, true))
 
       // ,
       // new InstantCommand(() -> s_Swerve.drive(new ChassisSpeeds(0,0,0)))
@@ -177,4 +179,10 @@ public class exampleAuto extends SequentialCommandGroup {
     //     new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
     //     swerveControllerCommand);
   }
+  public exampleAuto(Intaker intaker) {
+    intaker.push(); 
+    Timer.delay(1); 
+    intaker.stop();
+  }
 }
+

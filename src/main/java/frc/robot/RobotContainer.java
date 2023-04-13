@@ -65,7 +65,7 @@ public class RobotContainer {
             // getRawAxis() returns a value for the controller axis from -1 to 1
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
+            () -> driver.getRawAxis(rotationAxis),
             // robotCentric and slowSpeed are both buttons on the joystick
             // The robotCentric button, when held down, enables axis behavior relative to the field (and requires a working gyroscope).  The default
             // is for movements to apply relative to the robot.
@@ -94,8 +94,8 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
  
-    m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.suck()));
-    m_intakeOut.whileTrue(new RunCommand(() -> s_Intaker.blow()));
+    m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
+    m_intakeOut.whileTrue(new RunCommand(() -> s_Intaker.push()));
 
     m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
