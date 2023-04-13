@@ -11,6 +11,7 @@ import edu.wpi.first.math.estimator.AngleStatistics;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.config.SwerveModuleConstants;
@@ -22,7 +23,6 @@ import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-// CB: This class represents one of the four hardware swerve modules
 public class SwerveModule {
   public int moduleNumber;
   private double lastAngle;
@@ -33,7 +33,6 @@ public class SwerveModule {
 
   private RelativeEncoder driveEncoder;
   private RelativeEncoder integratedAngleEncoder;
-  // This class represents the CANcoder for the swerve module
   private CANCoder angleEncoder;
 
   private final SparkMaxPIDController driveController;
@@ -84,6 +83,7 @@ public class SwerveModule {
     angleController.setI(Constants.Swerve.angleKI);
     angleController.setD(Constants.Swerve.angleKD);
     angleController.setFF(Constants.Swerve.angleKFF);
+    // TODO: Make this the CANCoder some day.
     // angleController.setFeedbackDevice(integratedAngleEncoder);
     angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
     angleMotor.burnFlash();
@@ -109,25 +109,38 @@ public class SwerveModule {
   }
 
   private void resetToAbsolute() {
-    double canCoderDegrees = getCanCoder().getDegrees();
-    double actualDegrees = canCoderDegrees - angleOffset;
-    angleEncoder.configMagnetOffset(actualDegrees);
+    this.resetToAbsolute(false);
+  }
+
+  private void resetToAbsolute(boolean resetQuickly) {
+    angleEncoder.configMagnetOffset(angleOffset);
+    // If you read the angle immediately, the magnetic offset won't be set yet. Wait
+    // a second and it'll be there.
+    if (!resetQuickly) {
+      Timer.delay(1);
+    }
+    double canCoderDegrees = getCanCoderAbsolutePosition();
     // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
-    integratedAngleEncoder.setPosition(actualDegrees);
+    DriverStation.reportWarning("Module: " + moduleNumber + " CanCoderDegrees:  " + canCoderDegrees
+        + " AngleOffset: " + angleOffset, false);
+    integratedAngleEncoder.setPosition(canCoderDegrees);
 
   }
 
   public void resetToAbsoluteNorth() {
-    // CB: CANcoder absolute position in degrees
-    double canCoderDegrees = getCanCoder().getDegrees();
+    resetToAbsolute(true);
+    double canCoderDegrees = getCanCoderAbsolutePosition();
     double angleDegrees = angleOffset;
     double absolutePosition = canCoderDegrees - angleDegrees;
     SmartDashboard.putNumber("M1- CanDegrees: " + moduleNumber, canCoderDegrees);
     SmartDashboard.putNumber("M1- AngleOffsetDegrees: " + moduleNumber, angleDegrees);
     SmartDashboard.putNumber("M1- Setting angle to: " + moduleNumber, absolutePosition);
-    SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber, integratedAngleEncoder.getPosition());
-    // TODO: This has to be zero after we reset the cancoder in CTREConfig.java 
+    SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber,
+        integratedAngleEncoder.getPosition());
+
     angleController.setReference(0, ControlType.kPosition);
+    lastAngle = 0;
+    // this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
   }
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -136,7 +149,9 @@ public class SwerveModule {
       driveMotor.set(percentOutput);
     } else {
       driveController.setReference(
-          desiredState.speedMetersPerSecond,
+          // TODO: Undo this to set the speed back.
+          // desiredState.speedMetersPerSecond,
+          desiredState.speedMetersPerSecond * 0.1,
           ControlType.kVelocity,
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
@@ -144,15 +159,14 @@ public class SwerveModule {
   }
 
   private void setAngle(SwerveModuleState desiredState) {
-    //Prevent rotating module if speed is less then 1%. Prevents jittering.
-   double angle = (Math.abs(desiredState.speedMetersPerSecond) <=
-    (Constants.Swerve.maxSpeed * 0.01))
-    ? lastAngle
-    : desiredState.angle.getDegrees();
+    // Prevent rotating module if speed is less then 1%. Prevents jittering.
+    double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
+        ? lastAngle
+        : desiredState.angle.getDegrees();
 
     SmartDashboard.putNumber("Angle: " + moduleNumber, angle);
     SmartDashboard.putNumber("Last Angle: " + moduleNumber,
-    lastAngle);
+        lastAngle);
     angleController.setReference(angle, ControlType.kPosition);
     lastAngle = angle;
   }
@@ -161,31 +175,22 @@ public class SwerveModule {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
-    // This optimize() instruction is taken straight from the ChiefDelphi example, I can find
-    // no documentation on what it actually does.  Could try commenting it out if problems
-    // persist.
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
 
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
   }
 
-  // Get angular measurement from the relative encoder integrated with the rotation motor
-  private Rotation2d getAngle() {
-    return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+  public double getInternalAngle() {
+    return integratedAngleEncoder.getPosition();
   }
 
-  // CB: Returns an angular measurement from the CANcoder, as the class Rotation2D
-  public Rotation2d getCanCoder() {
-    // CB: angleEncoder is the CANcoder for this module.  getAbsolutePosition() returns the angular
-    // position in degrees; and Rotation2d.fromDegrees converts it into a Rotation2d
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+  public double getCanCoderAbsolutePosition() {
+    return angleEncoder.getAbsolutePosition();
   }
 
-  // The returned state consists of the current velocity of the wheel and the angle of the swerve module
-  // but calculated from the rotation motor's integrated encoder rather than the CANcoder
   public SwerveModuleState getState() {
-    return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
+    return new SwerveModuleState(driveEncoder.getVelocity(), Rotation2d.fromDegrees(getInternalAngle()));
   }
 
   public SwerveModulePosition getPosition() {
@@ -194,6 +199,6 @@ public class SwerveModule {
 
     return new SwerveModulePosition(
         driveEncoder.getPosition(),
-        Rotation2d.fromDegrees(angleEncoder.getPosition() - angleOffset));
+        Rotation2d.fromDegrees(angleEncoder.getPosition()));
   }
 }

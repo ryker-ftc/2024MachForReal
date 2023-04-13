@@ -29,31 +29,8 @@ public class Lifter extends SubsystemBase {
     /*Config motors and encoders */
     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
-    private Rotation2d angleOffset;
-    private final CANSparkMax lifterMotor = new CANSparkMax(Constants.LiftConstants.Mod5.kLiftMotorID, MotorType.kBrushless);
-    private final RelativeEncoder lifterEncoder;
-    private final SparkMaxPIDController lifterController;
-    private final Encoder liftEncoder = new Encoder(Constants.LiftConstants.Mod5.kEncoderChannelA, Constants.LiftConstants.Mod5.kEncoderChannelB);
-    private Rotation2d lastAngle;
 
-    public Lifter (){
-        lifterEncoder = lifterMotor.getEncoder();
-        lifterController = lifterMotor.getPIDController();
-        
-        liftEncoder.setDistancePerPulse(Constants.LiftConstants.Mod5.kEncoderDistancePerPulse);
-        lifterEncoder.setVelocityConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorVelocityFactor);
-        lifterEncoder.setPositionConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorPositionFactor);
-        lifterController.setP(Constants.LiftConstants.Mod5.angleKP);
-        lifterController.setI(Constants.LiftConstants.Mod5.angleKI);
-        lifterController.setD(Constants.LiftConstants.Mod5.angleKD);
-        lifterController.setFF(Constants.LiftConstants.Mod5.angleKFF);
-        lifterController.setFeedbackDevice(lifterEncoder);
-        lifterEncoder.setPosition(lifterEncoder.getPosition() - lifterEncoder.getPosition());
-    }
-
-   
-
-
+    private final CANSparkMax lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
 
     // turn on the intake motor to pull in objects.
     public void push() {
