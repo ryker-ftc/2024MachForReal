@@ -9,7 +9,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 //import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,13 +29,35 @@ public class Lifter extends SubsystemBase {
     /*Config motors and encoders */
     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
+    private Rotation2d angleOffset;
+    private final CANSparkMax lifterMotor = new CANSparkMax(Constants.LiftConstants.Mod5.kLiftMotorID, MotorType.kBrushless);
+    private final RelativeEncoder lifterEncoder;
+    private final SparkMaxPIDController lifterController;
+    private final Encoder liftEncoder = new Encoder(Constants.LiftConstants.Mod5.kEncoderChannelA, Constants.LiftConstants.Mod5.kEncoderChannelB);
+    private Rotation2d lastAngle;
 
-    private final CANSparkMax lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
+    public Lifter (){
+        lifterEncoder = lifterMotor.getEncoder();
+        lifterController = lifterMotor.getPIDController();
+        
+        liftEncoder.setDistancePerPulse(Constants.LiftConstants.Mod5.kEncoderDistancePerPulse);
+        lifterEncoder.setVelocityConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorVelocityFactor);
+        lifterEncoder.setPositionConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorPositionFactor);
+        lifterController.setP(Constants.LiftConstants.Mod5.angleKP);
+        lifterController.setI(Constants.LiftConstants.Mod5.angleKI);
+        lifterController.setD(Constants.LiftConstants.Mod5.angleKD);
+        lifterController.setFF(Constants.LiftConstants.Mod5.angleKFF);
+        lifterController.setFeedbackDevice(lifterEncoder);
+        lifterEncoder.setPosition(lifterEncoder.getPosition() - lifterEncoder.getPosition());
+    }
+
+   
+
+
 
     // turn on the intake motor to pull in objects.
     public void push() {
         lifterMotor.set(0.25);
-        
         SmartDashboard.putString("Lifter Status", "PUSHING");
         SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
         SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
@@ -44,9 +66,6 @@ public class Lifter extends SubsystemBase {
 
     // turn on the intake motor to push out objects.
     public void pull() {
-        
-        DigitalInput maxReach = new DigitalInput(0);
-
         lifterMotor.set(-0.25);
         SmartDashboard.putString("Lifter Status", "PULLING");
         SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
@@ -84,3 +103,4 @@ public class Lifter extends SubsystemBase {
     */
 
 }
+
