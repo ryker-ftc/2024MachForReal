@@ -164,6 +164,9 @@ public class SwerveModule {
         ? lastAngle
         : desiredState.angle.getDegrees();
 
+    double cancoderAngle = this.getCanCoderAbsolutePosition();
+    this.integratedAngleEncoder.setPosition(cancoderAngle);
+
     SmartDashboard.putNumber("Angle: " + moduleNumber, angle);
     SmartDashboard.putNumber("Last Angle: " + moduleNumber,
         lastAngle);
