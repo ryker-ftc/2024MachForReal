@@ -126,7 +126,7 @@ public final class Constants {
     /* Intake module - Module 4 */
     public static final class Mod4 {
       public static final int[] intakeMotorID1 = { 13 };
-      public static final int[] intakeMotorID2 = { 14 };
+      
       public static final int intakeEncoderPort = 13;
       public static final boolean kEncoderReversed = false;
       public static final int kEncoderCPR = 42;
