@@ -39,10 +39,11 @@ public class RobotContainer {
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kBack.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
+  private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
-  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
-  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
   
@@ -63,9 +64,9 @@ public class RobotContainer {
             // The Swerve subsystem
             s_Swerve,
             // getRawAxis() returns a value for the controller axis from -1 to 1
-            () -> -driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
+            () -> driver.getRawAxis(translationAxis),
+            () -> driver.getRawAxis(strafeAxis),
+            () -> driver.getRawAxis(rotationAxis),
             // robotCentric and slowSpeed are both buttons on the joystick
             // The robotCentric button, when held down, enables axis behavior relative to the field (and requires a working gyroscope).  The default
             // is for movements to apply relative to the robot.
