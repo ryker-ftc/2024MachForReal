@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -39,9 +40,11 @@ public class RobotContainer {
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
-
+  private final POVButton dPad_Right = new POVButton(driver, 90, 0);
+  private final POVButton dPad_Top = new POVButton(driver, 0, 0);
+  private final POVButton dPad_Left = new POVButton(driver, 270, 0);
+  
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kBack.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
   private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
@@ -50,7 +53,8 @@ public class RobotContainer {
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton m_setToPosition1 = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton m_rotateLiftPosition = new JoystickButton(driver, XboxController.Button.kBack.value);
+  
   
 
   /* Subsystems */
@@ -83,7 +87,7 @@ public class RobotContainer {
     configureButtonBindings();
     //s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
 
-    s_Lifter.setDefaultCommand(new RunCommand(s_Lifter::stop, s_Lifter));
+    //s_Lifter.setDefaultCommand(new RunCommand(s_Lifter::stop, s_Lifter));
 
   }
 
@@ -97,7 +101,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
  
    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
@@ -111,8 +114,12 @@ public class RobotContainer {
     m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
     m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
-    //TODO: Test position method for the lfiter
-    //m_setToPosition1.whileTrue(new InstantCommand(() -> s_Lifter.setToPosition(0.2)));
+    //TODO: Test position method for the lifter
+    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
+    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(8)));
+    
+    
     
 
 

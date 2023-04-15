@@ -34,10 +34,10 @@ public class Lifter extends SubsystemBase {
     private final CANSparkMax lifterMotor = new CANSparkMax(Constants.LiftConstants.Mod5.kLiftMotorID, MotorType.kBrushless);
     private final RelativeEncoder lifterEncoder;
     private final SparkMaxPIDController lifterController;
-    private final Encoder liftEncoder = new Encoder(Constants.LiftConstants.Mod5.kEncoderChannelA, Constants.LiftConstants.Mod5.kEncoderChannelB);
     private final DigitalInput bottomLimitSwitch = new DigitalInput(0);
     private final DigitalInput topLimitSwitch = new DigitalInput(1);
     private int travelDirection = 0;
+    
    
    
 
@@ -45,9 +45,7 @@ public class Lifter extends SubsystemBase {
     public Lifter (){
         lifterEncoder = lifterMotor.getEncoder();
         lifterController = lifterMotor.getPIDController();
-        
-       
-        liftEncoder.setDistancePerPulse(Constants.LiftConstants.Mod5.kEncoderDistancePerPulse);
+
         lifterEncoder.setVelocityConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorVelocityFactor);
         lifterEncoder.setPositionConversionFactor(Constants.LiftConstants.Mod5.kLifterMotorPositionFactor);
         lifterController.setP(Constants.LiftConstants.Mod5.angleKP);
@@ -55,7 +53,7 @@ public class Lifter extends SubsystemBase {
         lifterController.setD(Constants.LiftConstants.Mod5.angleKD);
         lifterController.setFF(Constants.LiftConstants.Mod5.angleKFF);
         lifterController.setFeedbackDevice(lifterEncoder);
-        lifterEncoder.setPosition(lifterEncoder.getPosition() - lifterEncoder.getPosition());
+        lifterEncoder.setPosition(0);
     }
 
    
@@ -97,10 +95,13 @@ public class Lifter extends SubsystemBase {
 
     
 
-    public void setToPosition(double distance) {
+    public void setToPosition(double rotations) {
         //Prevent rotating module if speed is less then 1%. Prevents jittering.
-        lifterController.setReference(distance/Constants.LiftConstants.Mod5.kPulleyRatio, ControlType.kPosition);
+        lifterController.setReference(rotations, ControlType.kPosition);
     }
+
+
+    
 
     public void checkLimits() {
         SmartDashboard.putBoolean("Top Limit Switch:", topLimitSwitch.get());
@@ -109,6 +110,10 @@ public class Lifter extends SubsystemBase {
             stop();
         } else if(travelDirection == -1 && bottomLimitSwitch.get()) {
             stop();
+        }
+
+        if(bottomLimitSwitch.get()) {
+            lifterEncoder.setPosition(0);
         }
         
     }

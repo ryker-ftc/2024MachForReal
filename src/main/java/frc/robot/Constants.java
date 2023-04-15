@@ -162,8 +162,8 @@ public final class Constants {
       public static final int demand = 1;
 
       /*Lifter Motor Conversion Factors */
-      public static final double kLifterMotorPositionFactor = kPulleyRatio;
-      public static final double kLifterMotorVelocityFactor = kLifterMotorPositionFactor / 60.0;
+      public static final double kLifterMotorPositionFactor = 1;
+      public static final double kLifterMotorVelocityFactor = 1;
     }
   }
 
