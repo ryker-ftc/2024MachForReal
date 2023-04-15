@@ -125,11 +125,13 @@ public final class Constants {
   public static final class IntakeConstants {
     /* Intake module - Module 4 */
     public static final class Mod4 {
+
       public static final int intakeMotorID = 13;
       // public static final int intakeEncoderPort = 13;
       // public static final boolean kEncoderReversed = false;
      // public static final int kEncoderCPR = 42;
   //    public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
+
     }
   }
 
