@@ -4,12 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -45,12 +49,13 @@ public class RobotContainer {
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton m_setToPosition1 = new JoystickButton(driver, XboxController.Button.kX.value);
   
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Intaker s_Intaker = new Intaker();
-  private final Lifter s_Lifter = new Lifter();
+  public final Lifter s_Lifter = new Lifter();
 
 
   /**
@@ -75,7 +80,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
+    //s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
 
     s_Lifter.setDefaultCommand(new RunCommand(s_Lifter::stop, s_Lifter));
 
@@ -94,11 +99,20 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
  
-    m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-    m_intakeOut.whileTrue(new RunCommand(() -> s_Intaker.push()));
+   // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
+    m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
+    m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
 
-    m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
-    m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
+    // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
+    // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
+    // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
+    // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
+    m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
+    m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
+
+    //TODO: Test position method for the lfiter
+    //m_setToPosition1.whileTrue(new InstantCommand(() -> s_Lifter.setToPosition(0.2)));
+    
 
 
   }
@@ -116,4 +130,6 @@ public class RobotContainer {
   public void resetToAbsoluteNorth() {
     s_Swerve.resetToAbsoluteNorth();
   }
+
+  
 }
