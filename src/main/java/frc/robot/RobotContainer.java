@@ -139,5 +139,12 @@ public class RobotContainer {
     s_Swerve.resetToAbsoluteNorth();
   }
 
+  /**
+   * This is run constantly as soon as the robot is plugged in.
+   */
+  public void periodic() {
+    s_Lifter.checkLimits();
+    s_Intaker.periodic();
+  }
   
 }

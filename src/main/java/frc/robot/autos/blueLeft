@@ -14,6 +14,9 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Swerve;
+
+import java.util.function.Function;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -21,35 +24,7 @@ import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 
-public class exampleAuto extends SequentialCommandGroup {
+public class blueLeft extends SequentialCommandGroup {
   private RobotContainer m_robotContainer;
-  public exampleAuto(RobotContainer container) {
-    m_robotContainer = container;
 
-
-  
-
-    addCommands(
-      //Lift the lifter 4 rotations
-      // new InstantCommand(() -> m_robotContainer.s_Lifter.setToPosition(4)),
-      // new WaitCommand(5),
-      //Push out the cube using the intaker
-      new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-      new WaitCommand(2),
-      
-      new InstantCommand(() -> m_robotContainer.s_Intaker.stop()),
-      //Move backward
-      //new InstantCommand(()-> m_robotContainer.s_Swerve.drive(new Translation2d(0,-1), 180,  false, true)),
-     // new WaitCommand(3), //goes 3 meters to the left x is up and down y is left and right
-      //Stop the robot
-      new InstantCommand(()-> m_robotContainer.s_Swerve.drive(new Translation2d(0,0), 180,  false, true))
-
-
-     
-    );
-
-        
-  }
-  
 }
-

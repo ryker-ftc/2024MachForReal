@@ -63,10 +63,7 @@ public class Lifter extends SubsystemBase {
     // turn on the intake motor to pull in objects.
     public void push() {
         
-        SmartDashboard.putString("Lifter Status", "PUSHING");
-        SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
-        SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
-        SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        SmartDashboard.putString("Lifter Status", "PUSH");
         lifterMotor.set(0.25);
         travelDirection = 1;
     }
@@ -74,10 +71,7 @@ public class Lifter extends SubsystemBase {
     // turn on the intake motor to push out objects.
     public void pull() {
         
-        SmartDashboard.putString("Lifter Status", "PULLING");
-        SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
-        SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
-        SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        SmartDashboard.putString("Lifter Status", "PULL");
         lifterMotor.set(-0.25);
         travelDirection = -1;
     }
@@ -85,10 +79,7 @@ public class Lifter extends SubsystemBase {
     // this is the default state of the intake motor - do not move.
     public void stop() {
         
-        SmartDashboard.putString("Lifter Status", "STOPPED");
-        SmartDashboard.putNumber("Lifter P Value", lifterMotor.getPIDController().getP());
-        SmartDashboard.putNumber("Lifter I Value", lifterMotor.getPIDController().getI());
-        SmartDashboard.putNumber("Lifter D Value", lifterMotor.getPIDController().getD());
+        SmartDashboard.putString("Lifter Status", "STOP");
         lifterMotor.set(0);
         travelDirection = 0;
     }
@@ -106,6 +97,7 @@ public class Lifter extends SubsystemBase {
     public void checkLimits() {
         SmartDashboard.putBoolean("Top Limit Switch:", topLimitSwitch.get());
         SmartDashboard.putBoolean("Bottom Limit Switch: ", bottomLimitSwitch.get());
+        SmartDashboard.putNumber("Lifter Speed: ", lifterMotor.get());
         if(travelDirection == 1 && topLimitSwitch.get()) {
             stop();
         } else if(travelDirection == -1 && bottomLimitSwitch.get()) {

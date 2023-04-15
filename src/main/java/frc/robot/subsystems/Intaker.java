@@ -18,7 +18,10 @@ public class Intaker extends SubsystemBase {
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
     //private final CANSparkMax intakeMotor = new CANSparkMax(13, MotorType.kBrushless);
     private final PWMSparkMax intakeMotor = new PWMSparkMax(1);
- 
+  
+    public void periodic() {
+        SmartDashboard.putNumber("Intake speed", intakeMotor.get());
+    }
 
     // turn on the intake motor to pull in objects.
     public void pull() {
@@ -28,14 +31,14 @@ public class Intaker extends SubsystemBase {
 
     // turn on the intake motor to push out objects.
     public void push() {
-        intakeMotor.set(-0.25);
         SmartDashboard.putString("Intake Status", "PUSH");
+        intakeMotor.set(-0.25);
     }
 
     // this is the default state of the intake motor - do not move.
     public void stop() {
-        intakeMotor.set(0);
         SmartDashboard.putString("Intake Status", "STOP");
+        intakeMotor.set(0);
     }
 
     
