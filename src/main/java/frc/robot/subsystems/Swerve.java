@@ -24,43 +24,50 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     gyro = new AnalogGyro(0);
-    //gyro.configFactoryDefault();
+    // gyro.configFactoryDefault();
     zeroGyro();
 
-    mSwerveMods =
-        new SwerveModule[] {
-          new SwerveModule(0, Constants.Swerve.Mod0.constants),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants)
-        };
+    mSwerveMods = new SwerveModule[] {
+        new SwerveModule(0, Constants.Swerve.Mod0.constants),
+        new SwerveModule(1, Constants.Swerve.Mod1.constants),
+        new SwerveModule(2, Constants.Swerve.Mod2.constants),
+        new SwerveModule(3, Constants.Swerve.Mod3.constants)
+    };
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
-
 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
   }
 
   public void drive(
+
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-    // Each SwerveModuleState contains an angle and a speedMetersPerSecond for the module.
-    // Calculate new values for these based on the values from the joystick.  The values defined in
+    SmartDashboard.putNumber("wheel 1 speede", translation.getX());
+    // Each SwerveModuleState contains an angle and a speedMetersPerSecond for the
+    // module.
+    // Calculate new values for these based on the values from the joystick. The
+    // values defined in
     // the Constants for this are critical.
-    SwerveModuleState[] swerveModuleStates =
-        Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-            // If the fieldRelative/robotCentric button is pressed, calculate individual module
-            // angles and speeds from an absolute/field point of view.
-            // Otherwise, calculate them relative to the robot.
-            // The calculated ChassisSpeeds object contains the intended x and y velocities of
-            // the robot (in m/s) as well as the intended angular velocity of the robot.
-            fieldRelative
-                ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                    translation.getX(), translation.getY(), rotation, getYaw())
-                : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-    // This function ensures that no individual Swerve module wheel is driven faster than it
-    // can physically handle.  If any of the individual module speeds are above the defined
+    SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        // If the fieldRelative/robotCentric button is pressed, calculate individual
+        // module
+        // angles and speeds from an absolute/field point of view.
+        // Otherwise, calculate them relative to the robot.
+        // The calculated ChassisSpeeds object contains the intended x and y velocities
+        // of
+        // the robot (in m/s) as well as the intended angular velocity of the robot.
+        fieldRelative
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                translation.getX(), translation.getY(), rotation, getYaw())
+            : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
+    // This function ensures that no individual Swerve module wheel is driven faster
+    // than it
+    // can physically handle. If any of the individual module speeds are above the
+    // defined
     // constant, all speeds are readjusted accordingly.
+    SmartDashboard.putNumber("wheel 1 speeda", swerveModuleStates[0].speedMetersPerSecond);
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    SmartDashboard.putNumber("wheel 1 speedb", swerveModuleStates[0].speedMetersPerSecond);
 
     // Updated each module with our desired speed and angle for it
     for (SwerveModule mod : mSwerveMods) {
@@ -97,9 +104,9 @@ public class Swerve extends SubsystemBase {
     return states;
   }
 
-  public SwerveModulePosition[] getPositions(){
+  public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
-    for(SwerveModule mod : mSwerveMods){
+    for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber("position: module " + mod.moduleNumber, mod.getPosition().distanceMeters);
       SmartDashboard.putNumber("angle: module " + mod.moduleNumber, mod.getPosition().angle.getDegrees());
       positions[mod.moduleNumber] = mod.getPosition();

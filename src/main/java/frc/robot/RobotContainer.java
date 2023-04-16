@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -34,6 +36,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class RobotContainer {
   /* Controllers */
+  
   private final Joystick driver = new Joystick(0);
 
   /* Drive Controls */
@@ -47,7 +50,7 @@ public class RobotContainer {
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
   private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-
+  private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -67,6 +70,18 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    chooser = new SendableChooser<String>();
+    chooser.setDefaultOption("im going to go strait", "strait");
+    chooser.addOption("how about right", "right"); //etc
+    chooser.addOption("lets go with left", "left");
+    chooser.addOption("were going to go nowhere", "none");
+
+    SmartDashboard.putData("Auto Selector", chooser);
+    SendableRegistry.setName(chooser, "Auto Selector");
+  }
+  public void teleopInit() {
+    this.resetToAbsoluteNorth();
+
     s_Swerve.setDefaultCommand(
         // Command that's continuously run to update the swerve state
         new TeleopSwerve(
@@ -85,9 +100,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    //s_Intaker.setDefaultCommand(new RunCommand(s_Intaker::stop, s_Intaker));
-
-    //s_Lifter.setDefaultCommand(new RunCommand(s_Lifter::stop, s_Lifter));
 
   }
 
@@ -132,7 +144,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(this);
+    return new BusterAuto(this, this.chooser);
   }
 
   public void resetToAbsoluteNorth() {
@@ -145,6 +157,10 @@ public class RobotContainer {
   public void periodic() {
     s_Lifter.checkLimits();
     s_Intaker.periodic();
+    SmartDashboard.putString("Choosen Auto", chooser.getSelected());
+  }
+  public void killTeleop() {
+    s_Swerve.removeDefaultCommand();
   }
   
 }

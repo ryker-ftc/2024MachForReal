@@ -146,12 +146,13 @@ public class SwerveModule {
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+      if (moduleNumber == 1) {
+        SmartDashboard.putNumber("wheel 1 speed", percentOutput);
+      }
       driveMotor.set(percentOutput);
     } else {
       driveController.setReference(
-          // TODO: Undo this to set the speed back.
-          // desiredState.speedMetersPerSecond,
-          desiredState.speedMetersPerSecond * 0.1,
+          desiredState.speedMetersPerSecond,
           ControlType.kVelocity,
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
@@ -179,9 +180,12 @@ public class SwerveModule {
     // controller which
     // REV and CTRE are not
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-
+    if (moduleNumber == 1) {
+      SmartDashboard.putNumber("wheel 1 speedc", desiredState.speedMetersPerSecond);
+    }
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
+
   }
 
   public double getInternalAngle() {
