@@ -36,28 +36,27 @@ public class BusterAuto extends SequentialCommandGroup {
         addCommands(
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
             new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
-        );
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)));
         break;
       case "left":
-      addCommands(
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 4.5), 0, false, true)),
-      new WaitCommand(3),
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-      new WaitCommand(3),
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
-    
-      );
-      break;
+        addCommands(
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 4.5), 0, false, true)),
+            new WaitCommand(3),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
+            new WaitCommand(3),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+
+        );
+        break;
       case "right":
-      addCommands(
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
-      new WaitCommand(3),
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-      new WaitCommand(3),
-      new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
-  
-      );
+        addCommands(
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
+            new WaitCommand(3),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
+            new WaitCommand(3),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+
+        );
         break;
       case "none":
         break;
