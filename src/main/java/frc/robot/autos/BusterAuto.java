@@ -20,36 +20,32 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class exampleAuto extends SequentialCommandGroup {
+public class BusterAuto extends SequentialCommandGroup {
   private RobotContainer m_robotContainer;
-  public exampleAuto(RobotContainer container) {
+  public BusterAuto(RobotContainer container, SendableChooser<String> chooser) {
     m_robotContainer = container;
-
-
-  
-
+   
     addCommands(
-      //Lift the lifter 4 rotations
-      // new InstantCommand(() -> m_robotContainer.s_Lifter.setToPosition(4)),
-      // new WaitCommand(5),
-      //Push out the cube using the intaker
-      new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-      new WaitCommand(2),
-      
-      new InstantCommand(() -> m_robotContainer.s_Intaker.stop()),
-      //Move backward
-      //new InstantCommand(()-> m_robotContainer.s_Swerve.drive(new Translation2d(0,-1), 180,  false, true)),
-     // new WaitCommand(3), //goes 3 meters to the left x is up and down y is left and right
-      //Stop the robot
-      new InstantCommand(()-> m_robotContainer.s_Swerve.drive(new Translation2d(0,0), 180,  false, true))
+        // Lift the lifter 4 rotations
+        // new InstantCommand(() -> m_robotContainer.s_Lifter.setToPosition(4)),
+        // new WaitCommand(5),
+        // Push out the cube using the intaker
+        // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+        // new WaitCommand(2),
+        // new InstantCommand(() -> m_robotContainer.s_Intaker.stop()),
 
+        // Move backward
+        new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(1, 0), 0, false, true)),
+        new WaitCommand(3),
 
-     
+        new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+    // Stop the robot
+
     );
 
-        
   }
-  
-}
 
+}
