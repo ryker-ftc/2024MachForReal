@@ -80,6 +80,8 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auto Selector", chooser);
     // SendableRegistry.setName(chooser, "Auto Selector");
+
+    new ShuffleboardWrapper(chooser);
   }
   public void teleopInit() {
     this.resetToAbsoluteNorth();
