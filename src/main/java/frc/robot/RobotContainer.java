@@ -70,6 +70,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    
     chooser = new SendableChooser<String>();
     chooser.setDefaultOption("im going to go strait", "strait");
     chooser.addOption("how about right", "right"); //etc
@@ -77,7 +78,7 @@ public class RobotContainer {
     chooser.addOption("were going to go nowhere", "none");
 
     SmartDashboard.putData("Auto Selector", chooser);
-    SendableRegistry.setName(chooser, "Auto Selector");
+    // SendableRegistry.setName(chooser, "Auto Selector");
   }
   public void teleopInit() {
     this.resetToAbsoluteNorth();
