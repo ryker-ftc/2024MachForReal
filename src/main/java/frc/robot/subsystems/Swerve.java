@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Date;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -145,12 +147,14 @@ public class Swerve extends SubsystemBase {
     }
   }
 
-  public void setX() {
-    mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Front Left
-    mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Front Right
-    mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Back Left
-    mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Back Right
-}
+//   public void setX() {
+//     removeDefaultCommand();
+//     SmartDashboard.putString("Last X?", new Date().toString());
+//     mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Front Left
+//     mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Front Right
+//     mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Back Left
+//     mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Back Right
+// }
 
   
 }
