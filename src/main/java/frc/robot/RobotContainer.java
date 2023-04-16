@@ -130,11 +130,11 @@ public class RobotContainer {
     m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
     m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
-    //TODO: Test position method for the lifter
-    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
-    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
-    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(8)));
-    dPad_Down.onTrue(new InstantCommand(() -> s_Swerve.setX()));
+    // //TODO: Test position method for the lifter
+    // dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
+    // dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    // dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(8)));
+    // dPad_Down.onTrue(new StartEndCommand(() -> s_Swerve.setX(), () -> teleopInit()));
     
     
     
