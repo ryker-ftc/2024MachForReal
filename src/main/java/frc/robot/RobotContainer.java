@@ -46,6 +46,7 @@ public class RobotContainer {
   private final POVButton dPad_Right = new POVButton(driver, 90, 0);
   private final POVButton dPad_Top = new POVButton(driver, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver, 270, 0);
+  private final POVButton dPad_Down = new POVButton(driver, 180);
   
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
@@ -131,6 +132,7 @@ public class RobotContainer {
     dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
     dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
     dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(8)));
+    dPad_Down.onTrue(new InstantCommand(() -> s_Swerve.setX()));
     
     
     
