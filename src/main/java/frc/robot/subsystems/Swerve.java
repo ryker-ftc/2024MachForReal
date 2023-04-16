@@ -137,4 +137,13 @@ public class Swerve extends SubsystemBase {
       mod.resetToAbsoluteNorth();
     }
   }
+
+  public void setX() {
+    mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Front Left
+    mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Front Right
+    mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Back Left
+    mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Back Right
+}
+
+  
 }
