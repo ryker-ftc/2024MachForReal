@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -50,14 +51,15 @@ public class RobotContainer {
   
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
-  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton m_rotateLiftPosition = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton back_resetPosition = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private int position;
   
   
 
@@ -118,11 +120,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
 
- 
+        
    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-    m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
-    m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
-
+        // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
+    // m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
+    m_intakeIn.whileTrue(new intakein(s_Intaker));
+    m_intakeOut.whileTrue(new intakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
@@ -131,10 +134,11 @@ public class RobotContainer {
     m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
     // //TODO: Test position method for the lifter
-    // dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
-    // dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
-    // dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(8)));
-    // dPad_Down.onTrue(new StartEndCommand(() -> s_Swerve.setX(), () -> teleopInit()));
+    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
+    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
+    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    //resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
+    dPad_Down.whileTrue(new StartEndCommand(() -> s_Swerve.setX(), () -> teleopInit()));
     
     
     

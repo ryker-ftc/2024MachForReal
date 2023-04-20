@@ -27,19 +27,22 @@ public class BusterAuto extends SequentialCommandGroup {
 
   public BusterAuto(RobotContainer container, SendableChooser<String> chooser) {
     m_robotContainer = container;
-    addCommands(
-        new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-        new WaitCommand(3),
-        new InstantCommand(() -> m_robotContainer.s_Intaker.stop()));
+
     switch (chooser.getSelected()) {
       case "strait":
         addCommands(
+            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+            new WaitCommand(3),
+            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
             new WaitCommand(3),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)));
         break;
       case "left":
         addCommands(
+            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+            new WaitCommand(3),
+            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 4.5), 0, false, true)),
             new WaitCommand(3),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
@@ -50,6 +53,9 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "right":
         addCommands(
+            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+            new WaitCommand(3),
+            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
             new WaitCommand(3),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
@@ -62,11 +68,6 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
 
     }
-    addCommands(
-    // left
-
-    );
-    addCommands();
   }
 
 }

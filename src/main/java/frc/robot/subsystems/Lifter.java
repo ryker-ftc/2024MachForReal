@@ -37,6 +37,9 @@ public class Lifter extends SubsystemBase {
     private final DigitalInput bottomLimitSwitch = new DigitalInput(0);
     private final DigitalInput topLimitSwitch = new DigitalInput(1);
     private int travelDirection = 0;
+    private int numTimes = 0;
+    private double previousPosition;
+
     
    
    
@@ -87,10 +90,57 @@ public class Lifter extends SubsystemBase {
     
 
     public void setToPosition(double rotations) {
-        //Prevent rotating module if speed is less then 1%. Prevents jittering.
-        lifterController.setReference(rotations, ControlType.kPosition);
-    }
+        // Prevent rotating module if speed is less then 1%. Prevents jittering.
+        if (numTimes == 0) {
+            lifterController.setReference(rotations, ControlType.kPosition);
+        } else {
+            if (rotations == 0.0) {
+                if(previousPosition == 0.0) {
+                    lifterController.setReference(0, ControlType.kPosition);
+                } else if (previousPosition == 2.0) {
+                    lifterController.setReference(previousPosition - 2, ControlType.kPosition);
+                } else if (previousPosition == 4.0) {
+                    lifterController.setReference(previousPosition - 4, ControlType.kPosition);
+                } else if (previousPosition == 6.0) {
+                    lifterController.setReference(previousPosition - 6, ControlType.kPosition);
+                }
+            }
 
+            if (rotations == 2.0) {
+                if(previousPosition == 0.0) {
+                    lifterController.setReference(rotations, ControlType.kPosition);    
+                } else if (previousPosition == 2.0) {
+                    lifterController.setReference(0, ControlType.kPosition);
+                } else if (previousPosition == 4.0) {
+                    lifterController.setReference(previousPosition - 2, ControlType.kPosition);
+                } else if (previousPosition == 6.0) {
+                    lifterController.setReference(previousPosition - 4, ControlType.kPosition);
+                }
+            } else if (rotations == 4.0) {
+                if(previousPosition == 0.0) {
+                    lifterController.setReference(rotations, ControlType.kPosition);    
+                } else if (previousPosition == 2.0) {
+                    lifterController.setReference(previousPosition - 2, ControlType.kPosition);
+                } else if (previousPosition == 4.0) {
+                    lifterController.setReference(0, ControlType.kPosition);
+                } else if (previousPosition == 6.0) {
+                    lifterController.setReference(previousPosition + 2, ControlType.kPosition);
+                }
+            } else if (rotations == 6.0) {
+                if(previousPosition == 0.0) {
+                    lifterController.setReference(rotations, ControlType.kPosition);    
+                } else if (previousPosition == 2.0) {
+                    lifterController.setReference(previousPosition + 4, ControlType.kPosition);
+                } else if (previousPosition == 4.0) {
+                    lifterController.setReference(previousPosition + 2, ControlType.kPosition);
+                } else if (previousPosition == 6.0) {
+                    lifterController.setReference(0, ControlType.kPosition);
+                }
+            }
+        }
+        previousPosition = rotations;
+        numTimes++;
+    }
 
     
 

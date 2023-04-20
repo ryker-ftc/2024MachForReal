@@ -86,7 +86,7 @@ public final class Constants {
       public static final int driveMotorID = 2;
       public static final int angleMotorID = 1;
       public static final int canCoderID = 9;
-      public static final int angleOffset = -64;
+      public static final int angleOffset = -259; //-64 //359 //89
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -96,7 +96,7 @@ public final class Constants {
       public static final int driveMotorID = 4;
       public static final int angleMotorID = 3;
       public static final int canCoderID = 10;
-      public static final int angleOffset = -243;
+      public static final int angleOffset = -346; //-249 //8 //7
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -106,7 +106,7 @@ public final class Constants {
       public static final int driveMotorID = 6;
       public static final int angleMotorID = 5;
       public static final int canCoderID = 11;
-      public static final int angleOffset = -348;
+      public static final int angleOffset = -253; //-348 //0 //-68
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -116,7 +116,7 @@ public final class Constants {
       public static final int driveMotorID = 8;
       public static final int angleMotorID = 7;
       public static final int canCoderID = 12;
-      public static final int angleOffset = -259;
+      public static final int angleOffset = -62; //-259 //-359 //273
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -145,7 +145,7 @@ public final class Constants {
      public static final double kEncoderDistancePerPulse = (1.0/42) * (kLifterDrumRadius * 2 * Math.PI);
      public static final double kLifterMinHeight = 0;
      public static final double kLifterMaxHeight = Units.inchesToMeters(50.0);
-      public static final int kLiftMotorID = 14;
+      public static final int kLiftMotorID = 13;
 
       public static final double kPulleyRatio = ((kLifterDrumRadius * 2.0) * Math.PI);
       public static final int kEncoderChannelA = 14;

@@ -26,13 +26,15 @@ public class Intaker extends SubsystemBase {
     // turn on the intake motor to pull in objects.
     public void pull() {
         SmartDashboard.putString("Intake Status", "PULL");
+        intakeMotor.setInverted(false);
         intakeMotor.set(0.25);
     }
 
     // turn on the intake motor to push out objects.
     public void push() {
         SmartDashboard.putString("Intake Status", "PUSH");
-        intakeMotor.set(-0.25);
+        intakeMotor.setInverted(true);
+        intakeMotor.set(1.0);
     }
 
     // this is the default state of the intake motor - do not move.
