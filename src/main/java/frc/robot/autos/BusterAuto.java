@@ -31,23 +31,21 @@ public class BusterAuto extends SequentialCommandGroup {
     switch (chooser.getSelected()) {
       case "strait":
         addCommands(
-            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-            new WaitCommand(3),
-            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-            new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)));
+            //  new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+            //  new WaitCommand(3),
+            //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, false)),
+            new WaitCommand(1),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
         break;
       case "left":
         addCommands(
-            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-            new WaitCommand(3),
-            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 4.5), 0, false, true)),
-            new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-            new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+          new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+           new WaitCommand(3),
+           new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.25, 0), 0, false, false)),
+            new WaitCommand(2.5),
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
 
         );
         break;

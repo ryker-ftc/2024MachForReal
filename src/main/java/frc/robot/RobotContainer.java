@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
+
   private final POVButton dPad_Right = new POVButton(driver, 90, 0);
   private final POVButton dPad_Top = new POVButton(driver, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver, 270, 0);
@@ -75,10 +77,10 @@ public class RobotContainer {
   public RobotContainer() {
     
     chooser = new SendableChooser<String>();
-    chooser.setDefaultOption("im going to go strait", "strait");
-    chooser.addOption("how about right", "right"); //etc
-    chooser.addOption("lets go with left", "left");
-    chooser.addOption("were going to go nowhere", "none");
+    chooser.setDefaultOption("straight forward", "straight");
+    chooser.addOption("straight right", "right"); //etc
+    chooser.addOption("straight left", "left");
+    chooser.addOption("does nothing", "stand still");
 
     SmartDashboard.putData("Auto Selector", chooser);
     // SendableRegistry.setName(chooser, "Auto Selector");
@@ -124,8 +126,8 @@ public class RobotContainer {
    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
         // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
     // m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
-    m_intakeIn.whileTrue(new intakein(s_Intaker));
-    m_intakeOut.whileTrue(new intakeOut(s_Intaker));
+    m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
+    m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
@@ -138,7 +140,11 @@ public class RobotContainer {
     dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
     dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
     //resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
+    
     dPad_Down.whileTrue(new StartEndCommand(() -> s_Swerve.setX(), () -> teleopInit()));
+  
+
+    back_resetPosition.onTrue(new InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
     
     
     

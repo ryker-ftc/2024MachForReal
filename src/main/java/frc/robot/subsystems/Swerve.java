@@ -142,7 +142,9 @@ public class Swerve extends SubsystemBase {
   }
 
   public void resetToAbsoluteNorth() {
+    zeroGyro();
     for (SwerveModule mod : mSwerveMods) {
+  
       mod.resetToAbsoluteNorth();
     }
   }
