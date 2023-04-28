@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intaker;
 
-public class IntakeOut extends CommandBase{
+public class IntakeOut extends SystemBase{
     Intaker m_Intaker;
     public IntakeOut(Intaker intake){
         m_Intaker = intake;
@@ -14,10 +14,13 @@ public class IntakeOut extends CommandBase{
     }
     @Override
     public boolean isFinished() {
-        return false;
+return false;
     }
     @Override
     public void end(boolean interrupted) {
 m_Intaker.stop();
+    }
+    public CommandBase outCmd() {
+        return run(this::push);
     }
 }
