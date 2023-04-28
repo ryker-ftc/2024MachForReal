@@ -47,7 +47,7 @@ public class TeleopSwerve extends CommandBase {
     // translationLimiter, strafeLimiter, and rotationLimiter are all instances of SlewRateLimiter.
     // This ensures that quick movements on the joystick do not result in too fast of changes in the hardware.
     // The resulting values still range from -1 to 1, with 0 being the neutral (no change) position.
-    double translationVal =
+    double translationVal = //forward/back
         translationLimiter.calculate(
             // speedMultiplier is set above and enables slow speed mode
             speedMultiplier *
@@ -55,7 +55,7 @@ public class TeleopSwerve extends CommandBase {
             // joystick when at a neutral position will result in a halted robot, even if
             // the joystick leans slightly in one direction.
             MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double strafeVal =
+    double strafeVal = //right/left
         strafeLimiter.calculate(
             speedMultiplier *
             MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));

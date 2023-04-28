@@ -41,6 +41,8 @@ public class SwerveModule {
   private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
       Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
+  private int encoderResetCounter = 0;
+
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
@@ -73,6 +75,7 @@ public class SwerveModule {
   }
 
   private void configAngleMotor() {
+    angleEncoder.configMagnetOffset(angleOffset);
     angleMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
     angleMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
@@ -112,8 +115,19 @@ public class SwerveModule {
     this.resetToAbsolute(false);
   }
 
+  private void updateIntegratedToCanCoder() {
+    double canAngle = getCanCoderAbsolutePosition();
+    double intAngle = integratedAngleEncoder.getPosition();
+    while (canAngle < 0) canAngle += 360;
+    double intAngleB = intAngle;
+    while (intAngleB < 0) intAngleB += 360;
+    intAngleB %= 360;
+    double angleDiff = canAngle - intAngleB;
+    double newPosition = intAngle + angleDiff;
+    integratedAngleEncoder.setPosition(newPosition);
+  }
+
   private void resetToAbsolute(boolean resetQuickly) {
-    angleEncoder.configMagnetOffset(angleOffset);
     // If you read the angle immediately, the magnetic offset won't be set yet. Wait
     // a second and it'll be there.
     if (!resetQuickly) {
@@ -123,12 +137,14 @@ public class SwerveModule {
     // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
     DriverStation.reportWarning("Module: " + moduleNumber + " CanCoderDegrees:  " + canCoderDegrees
         + " AngleOffset: " + angleOffset, false);
+    SmartDashboard.putNumber("M" + moduleNumber + " - reset CAN: ", canCoderDegrees);
+    SmartDashboard.putNumber("M" + moduleNumber + " - reset Integr: ", integratedAngleEncoder.getPosition());
     integratedAngleEncoder.setPosition(canCoderDegrees);
+    SmartDashboard.putNumber("M" + moduleNumber + " - reset Integr after: ", integratedAngleEncoder.getPosition());
 
   }
 
-  public void resetToAbsoluteNorth() {
-    resetToAbsolute(true);
+  public void updateDashboardCancoders() {
     double canCoderDegrees = getCanCoderAbsolutePosition();
     double angleDegrees = angleOffset;
     double absolutePosition = canCoderDegrees - angleDegrees;
@@ -137,7 +153,14 @@ public class SwerveModule {
     SmartDashboard.putNumber("M1- Setting angle to: " + moduleNumber, absolutePosition);
     SmartDashboard.putNumber("M1- Integrated Angle Motor Position: " + moduleNumber,
         integratedAngleEncoder.getPosition());
+  }
 
+  public void resetToAbsoluteNorth() {
+    resetToAbsolute(true);
+    double canCoderDegrees = getCanCoderAbsolutePosition();
+    double angleDegrees = angleOffset;
+    double absolutePosition = canCoderDegrees - angleDegrees;
+    updateDashboardCancoders();
     angleController.setReference(0, ControlType.kPosition);
     lastAngle = 0;
     // this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
@@ -160,6 +183,11 @@ public class SwerveModule {
   }
 
   private void setAngle(SwerveModuleState desiredState) {
+    if (encoderResetCounter++ % 300 == 0) {
+      //updateIntegratedToCanCoder();
+      //resetToAbsolute(true);
+    }
+    updateDashboardCancoders();
     // Prevent rotating module if speed is less then 1%. Prevents jittering.
     double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
         ? lastAngle
@@ -179,7 +207,7 @@ public class SwerveModule {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
-    desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+    //desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
     if (moduleNumber == 1) {
       SmartDashboard.putNumber("wheel 1 speedc", desiredState.speedMetersPerSecond);
     }
