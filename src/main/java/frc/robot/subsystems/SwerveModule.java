@@ -75,6 +75,9 @@ public class SwerveModule {
   }
 
   private void configAngleMotor() {
+    angleEncoder.configMagnetOffset(0);
+    //Timer.delay(1);
+    SmartDashboard.putNumber("CANCoder Initial Value " + moduleNumber, angleEncoder.getAbsolutePosition());
     angleEncoder.configMagnetOffset(angleOffset);
     angleMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
@@ -115,18 +118,6 @@ public class SwerveModule {
     this.resetToAbsolute(false);
   }
 
-  private void updateIntegratedToCanCoder() {
-    double canAngle = getCanCoderAbsolutePosition();
-    double intAngle = integratedAngleEncoder.getPosition();
-    while (canAngle < 0) canAngle += 360;
-    double intAngleB = intAngle;
-    while (intAngleB < 0) intAngleB += 360;
-    intAngleB %= 360;
-    double angleDiff = canAngle - intAngleB;
-    double newPosition = intAngle + angleDiff;
-    integratedAngleEncoder.setPosition(newPosition);
-  }
-
   private void resetToAbsolute(boolean resetQuickly) {
     // If you read the angle immediately, the magnetic offset won't be set yet. Wait
     // a second and it'll be there.
@@ -137,10 +128,7 @@ public class SwerveModule {
     // integratedAngleEncoder.setPosition((actualDegrees*(Constants.Swerve.angleConversionFactor))*Constants.Swerve.numberOfSensorCountsPerRevolution);
     DriverStation.reportWarning("Module: " + moduleNumber + " CanCoderDegrees:  " + canCoderDegrees
         + " AngleOffset: " + angleOffset, false);
-    SmartDashboard.putNumber("M" + moduleNumber + " - reset CAN: ", canCoderDegrees);
-    SmartDashboard.putNumber("M" + moduleNumber + " - reset Integr: ", integratedAngleEncoder.getPosition());
     integratedAngleEncoder.setPosition(canCoderDegrees);
-    SmartDashboard.putNumber("M" + moduleNumber + " - reset Integr after: ", integratedAngleEncoder.getPosition());
 
   }
 
@@ -183,13 +171,14 @@ public class SwerveModule {
   }
 
   private void setAngle(SwerveModuleState desiredState) {
-    if (encoderResetCounter++ % 300 == 0) {
-      //updateIntegratedToCanCoder();
-      //resetToAbsolute(true);
-    }
+    setAngle(desiredState, true);
+  }
+
+  private void setAngle(SwerveModuleState desiredState, boolean jitterCheck) {
+    SmartDashboard.putNumber("setAngle A: " + moduleNumber, desiredState.angle.getDegrees());
     updateDashboardCancoders();
     // Prevent rotating module if speed is less then 1%. Prevents jittering.
-    double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
+    double angle = (jitterCheck && Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
         ? lastAngle
         : desiredState.angle.getDegrees();
 
@@ -204,14 +193,17 @@ public class SwerveModule {
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+    setDesiredState(desiredState, isOpenLoop, true);
+  }
+
+  public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop, boolean jitterCheck) {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
-    //desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-    if (moduleNumber == 1) {
-      SmartDashboard.putNumber("wheel 1 speedc", desiredState.speedMetersPerSecond);
-    }
-    setAngle(desiredState);
+    SmartDashboard.putNumber("setDesiredState: " + moduleNumber, desiredState.angle.getDegrees());
+    desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+    SmartDashboard.putNumber("setDesiredState B: " + moduleNumber, desiredState.angle.getDegrees());
+    setAngle(desiredState, jitterCheck);
     setSpeed(desiredState, isOpenLoop);
 
   }

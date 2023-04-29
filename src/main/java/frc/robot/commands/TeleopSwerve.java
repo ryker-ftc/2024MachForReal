@@ -72,7 +72,7 @@ public class TeleopSwerve extends CommandBase {
         // The translation values will be from -maxSpeed to +maxSpeed
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity,
-        !robotCentricSup.getAsBoolean(),
+        robotCentricSup.getAsBoolean(),
         // Pass isOpenLoop as true
         true);
   }

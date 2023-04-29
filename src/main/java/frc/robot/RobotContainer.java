@@ -141,7 +141,7 @@ public class RobotContainer {
     dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
     //resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
     
-    dPad_Down.whileTrue(new StartEndCommand(() -> s_Swerve.setX(), () -> teleopInit()));
+    dPad_Down.whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
   
 
     back_resetPosition.onTrue(new InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));

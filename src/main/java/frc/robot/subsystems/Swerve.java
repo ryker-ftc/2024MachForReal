@@ -45,11 +45,21 @@ public class Swerve extends SubsystemBase {
 
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     SmartDashboard.putNumber("wheel 1 speede", translation.getX());
+    SmartDashboard.putNumber("drive() translation X", translation.getX());
+    SmartDashboard.putNumber("drive() translation Y", translation.getY());
+    SmartDashboard.putNumber("drive() rotation", rotation);
+    SmartDashboard.putNumber("drive() fieldRelative", fieldRelative ? 1.0 : 0.0);
     // Each SwerveModuleState contains an angle and a speedMetersPerSecond for the
     // module.
     // Calculate new values for these based on the values from the joystick. The
     // values defined in
     // the Constants for this are critical.
+    //ChassisSpeeds speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+      translation.getX(), translation.getY(), rotation, getYaw());
+    ChassisSpeeds robotCentricSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    ChassisSpeeds speeds = fieldRelative ? fieldRelativeSpeeds : robotCentricSpeeds;
+
     SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
         // If the fieldRelative/robotCentric button is pressed, calculate individual
         // module
@@ -58,18 +68,17 @@ public class Swerve extends SubsystemBase {
         // The calculated ChassisSpeeds object contains the intended x and y velocities
         // of
         // the robot (in m/s) as well as the intended angular velocity of the robot.
-        fieldRelative
+        speeds);
+        /*fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(), translation.getY(), rotation, getYaw())
-            : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
+            : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));*/
     // This function ensures that no individual Swerve module wheel is driven faster
     // than it
     // can physically handle. If any of the individual module speeds are above the
     // defined
     // constant, all speeds are readjusted accordingly.
-    SmartDashboard.putNumber("wheel 1 speeda", swerveModuleStates[0].speedMetersPerSecond);
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-    SmartDashboard.putNumber("wheel 1 speedb", swerveModuleStates[0].speedMetersPerSecond);
 
     // Updated each module with our desired speed and angle for it
     for (SwerveModule mod : mSwerveMods) {
@@ -150,12 +159,12 @@ public class Swerve extends SubsystemBase {
   }
 
    public void setX() {
-     removeDefaultCommand();
+     //removeDefaultCommand();
      SmartDashboard.putString("Last X?", new Date().toString());
-     mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Front Left
-     mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Front Right
-     mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false); //Back Left
-     mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false); //Back Right
+     mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false, false); //Front Left
+     mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false, false); //Front Right
+     mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false, false); //Back Left
+     mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false, false); //Back Right
 // }
 
   
