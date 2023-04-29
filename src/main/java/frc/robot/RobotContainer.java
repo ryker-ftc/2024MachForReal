@@ -126,19 +126,26 @@ public class RobotContainer {
    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
         // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
     // m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
+
+
     m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
     m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
     // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
+
+    // This sets up the button bindings for the manual lift control.
+    // This essentially works the same way as the intake commands, but this is more compact and doesn't involve an extra class.
     m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
     m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
+    // Button bindings for automatic lift control.
+    // These are InstantCommands and activate once when the corresponding button is pressed.
     // //TODO: Test position method for the lifter
-    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
-    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
-    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(1)));
+    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
+    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(3)));
     //resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
     
     dPad_Down.whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
