@@ -156,7 +156,7 @@ public class SwerveModule {
 
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+      double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed * .7;
       if (moduleNumber == 1) {
         SmartDashboard.putNumber("wheel 1 speed", percentOutput);
       }

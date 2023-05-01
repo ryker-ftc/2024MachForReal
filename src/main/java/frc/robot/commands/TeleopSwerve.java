@@ -16,6 +16,7 @@ public class TeleopSwerve extends CommandBase {
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
   private BooleanSupplier slowSpeedSup;
+  private BooleanSupplier fastSpeedSup;
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
@@ -27,7 +28,8 @@ public class TeleopSwerve extends CommandBase {
       DoubleSupplier strafeSup,
       DoubleSupplier rotationSup,
       BooleanSupplier robotCentricSup,
-      BooleanSupplier slowSpeedSup) {
+      BooleanSupplier slowSpeedSup,
+      BooleanSupplier fastSpeedSup) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
 
@@ -36,12 +38,14 @@ public class TeleopSwerve extends CommandBase {
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
     this.slowSpeedSup = slowSpeedSup;
+    this.fastSpeedSup = fastSpeedSup;
   }
 
   @Override
   public void execute() {
 
-    double speedMultiplier = slowSpeedSup.getAsBoolean() ? 0.2 : 1.0;
+    double slowSpeedMultiplier = slowSpeedSup.getAsBoolean() ? 0.2 : 1.0;
+    double fastSpeedMultiplier = fastSpeedSup.getAsBoolean() ? 3.0 : 1.0;
 
     /* Get Values, Deadband*/
     // translationLimiter, strafeLimiter, and rotationLimiter are all instances of SlewRateLimiter.
@@ -50,19 +54,22 @@ public class TeleopSwerve extends CommandBase {
     double translationVal = //forward/back
         translationLimiter.calculate(
             // speedMultiplier is set above and enables slow speed mode
-            speedMultiplier *
+            slowSpeedMultiplier *
+            fastSpeedMultiplier *
             // applyDeadband() clamps values that are near 0 to 0.0.  This ensures that the
             // joystick when at a neutral position will result in a halted robot, even if
             // the joystick leans slightly in one direction.
-            MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+            MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband, Constants.Swerve.maxSpeed));
     double strafeVal = //right/left
         strafeLimiter.calculate(
-            speedMultiplier *
-            MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
+            slowSpeedMultiplier *
+            fastSpeedMultiplier*
+            MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband, Constants.Swerve.maxSpeed));
     double rotationVal =
         rotationLimiter.calculate(
-            speedMultiplier *
-            MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+            slowSpeedMultiplier *
+            fastSpeedMultiplier*
+            MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband, Constants.Swerve.maxSpeed));
 
 
     /* Drive */
@@ -70,7 +77,7 @@ public class TeleopSwerve extends CommandBase {
     s_Swerve.drive(
         // Pass a Translation2d containing X and Y values proportional to the drive and strafe axes on the joystick.
         // The translation values will be from -maxSpeed to +maxSpeed
-        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.defaultSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         robotCentricSup.getAsBoolean(),
         // Pass isOpenLoop as true

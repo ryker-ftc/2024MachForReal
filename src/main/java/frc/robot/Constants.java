@@ -13,7 +13,7 @@ import frc.lib.config.SwerveModuleConstants;
 public final class Constants {
 
   public static final class Swerve {
-    public static final double stickDeadband = 0.1;
+    public static final double stickDeadband = 0.056;
 
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
@@ -67,6 +67,7 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // meters per second //4.5
+    public static final double defaultSpeed = 3.15;
     public static final double maxAngularVelocity = 6; // 11.5
 
     /* Neutral Modes */

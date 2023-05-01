@@ -104,8 +104,9 @@ public class RobotContainer {
             // is for movements to apply relative to the robot.
             () -> robotCentric.getAsBoolean(),
             // slowSpeed button, when held, causes translation and rotation to be performed at a slower speed
-            () -> slowSpeed.getAsBoolean()));
-
+            () -> slowSpeed.getAsBoolean(),
+            () -> fastSpeed.getAsBoolean()
+            ));
     // Configure the button bindings
     configureButtonBindings();
 
