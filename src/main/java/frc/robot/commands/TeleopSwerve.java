@@ -45,7 +45,8 @@ public class TeleopSwerve extends CommandBase {
   public void execute() {
 
     double slowSpeedMultiplier = slowSpeedSup.getAsBoolean() ? 0.2 : 1.0;
-    double fastSpeedMultiplier = fastSpeedSup.getAsBoolean() ? 3.0 : 1.0;
+    // double fastSpeedMultiplier = fastSpeedSup.getAsBoolean() ? 3.0 : 1.0;
+    double fastSpeedMultiplier = fastSpeedSup.getAsBoolean() ? 0.7 : 1.0;
 
     /* Get Values, Deadband*/
     // translationLimiter, strafeLimiter, and rotationLimiter are all instances of SlewRateLimiter.
@@ -77,7 +78,8 @@ public class TeleopSwerve extends CommandBase {
     s_Swerve.drive(
         // Pass a Translation2d containing X and Y values proportional to the drive and strafe axes on the joystick.
         // The translation values will be from -maxSpeed to +maxSpeed
-        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.defaultSpeed),
+        // new Translation2d(translationVal, strafeVal).times(Constants.Swerve.defaultSpeed),
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         robotCentricSup.getAsBoolean(),
         // Pass isOpenLoop as true
