@@ -16,6 +16,7 @@ public class TeleopSwerve extends CommandBase {
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
   private BooleanSupplier slowSpeedSup;
+  private BooleanSupplier turboSup;
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
@@ -27,7 +28,8 @@ public class TeleopSwerve extends CommandBase {
       DoubleSupplier strafeSup,
       DoubleSupplier rotationSup,
       BooleanSupplier robotCentricSup,
-      BooleanSupplier slowSpeedSup) {
+      BooleanSupplier slowSpeedSup,
+      BooleanSupplier turboSup) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
 
@@ -36,12 +38,18 @@ public class TeleopSwerve extends CommandBase {
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
     this.slowSpeedSup = slowSpeedSup;
+    this.turboSup = turboSup;
   }
 
   @Override
   public void execute() {
-
-    double speedMultiplier = slowSpeedSup.getAsBoolean() ? 0.2 : 1.0;
+    double defaultSpeedMultiplier = 0.7;
+    double speedMultiplier = defaultSpeedMultiplier;
+    if (slowSpeedSup.getAsBoolean()) {
+        speedMultiplier = 0.2;
+    } else if (turboSup.getAsBoolean()) {
+        speedMultiplier = 1.0;
+    }
 
     /* Get Values, Deadband*/
     // translationLimiter, strafeLimiter, and rotationLimiter are all instances of SlewRateLimiter.

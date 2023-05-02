@@ -60,7 +60,7 @@ public class RobotContainer {
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton back_resetPosition = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kBack.value);
   private int position;
   
   
@@ -104,7 +104,8 @@ public class RobotContainer {
             // is for movements to apply relative to the robot.
             () -> robotCentric.getAsBoolean(),
             // slowSpeed button, when held, causes translation and rotation to be performed at a slower speed
-            () -> slowSpeed.getAsBoolean()));
+            () -> slowSpeed.getAsBoolean(),
+            () -> turbo.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -144,7 +145,7 @@ public class RobotContainer {
     dPad_Down.whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
   
 
-    back_resetPosition.onTrue(new InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
+    //back_resetPosition.onTrue(new InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
     
     
     
