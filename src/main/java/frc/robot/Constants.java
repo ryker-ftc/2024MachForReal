@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.config.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public final class Constants {
 
@@ -67,7 +68,7 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // meters per second //4.5
-    public static final double defaultSpeed = 3.15;
+    //public static final double defaultSpeed = 4.0;
     public static final double maxAngularVelocity = 6; // 11.5
 
     /* Neutral Modes */
@@ -165,6 +166,11 @@ public final class Constants {
       /*Lifter Motor Conversion Factors */
       public static final double kLifterMotorPositionFactor = 1;
       public static final double kLifterMotorVelocityFactor = 1;
+
+      public static final DigitalInput toplimitSwitch = new DigitalInput(0);
+      public static final DigitalInput bottomlimitSwitch = new DigitalInput(1);
+      // PWMVictorSPX motor = new PWMVictorSPX(0);
+      // Joystick joystick = new Joystick(0);
     }
   }
 
