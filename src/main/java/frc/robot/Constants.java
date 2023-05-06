@@ -128,11 +128,11 @@ public final class Constants {
     /* Intake module - Module 4 */
     public static final class Mod4 {
       public static final int intakeMotorChannel = 1;
-      //public static final int intakeMotorID = 13;
-      // public static final int intakeEncoderPort = 13;
-      // public static final boolean kEncoderReversed = false;
-     // public static final int kEncoderCPR = 42;
-  //    public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
+      // public static final int intakeMotorID = 20;
+      //  public static final int intakeEncoderPort = 13;
+      //  public static final boolean kEncoderReversed = false;
+      // public static final int kEncoderCPR = 42;
+      // public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
 
     }
   }
@@ -147,7 +147,7 @@ public final class Constants {
      public static final double kEncoderDistancePerPulse = (1.0/42) * (kLifterDrumRadius * 2 * Math.PI);
      public static final double kLifterMinHeight = 0;
      public static final double kLifterMaxHeight = Units.inchesToMeters(50.0);
-      public static final int kLiftMotorID = 13;
+      public static final int kLiftMotorID = 14;
 
       public static final double kPulleyRatio = ((kLifterDrumRadius * 2.0) * Math.PI);
       public static final int kEncoderChannelA = 14;
