@@ -53,14 +53,14 @@ public class RobotContainer {
   
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  //private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
   
   
 
@@ -173,3 +173,4 @@ public class RobotContainer {
   }
   
 }
+
