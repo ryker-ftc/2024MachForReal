@@ -127,8 +127,8 @@ public final class Constants {
   public static final class IntakeConstants {
     /* Intake module - Module 4 */
     public static final class Mod4 {
-      public static final int intakeMotorChannel = 1;
-      // public static final int intakeMotorID = 20;
+      // public static final int intakeMotorChannel = 1;
+      // public static final int intakeMotorID = 6;
       //  public static final int intakeEncoderPort = 13;
       //  public static final boolean kEncoderReversed = false;
       // public static final int kEncoderCPR = 42;

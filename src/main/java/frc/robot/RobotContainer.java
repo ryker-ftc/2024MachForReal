@@ -124,10 +124,10 @@ public class RobotContainer {
 
         
    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-        // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
-    // m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
-    m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
-    m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
+        m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
+    m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
+    // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
+    // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));

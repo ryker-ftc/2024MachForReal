@@ -12,6 +12,7 @@ public class IntakeIn extends CommandBase{
     public void execute() {
         m_Intaker.pull();
     }
+    
     @Override
     public boolean isFinished() {
 return false;
