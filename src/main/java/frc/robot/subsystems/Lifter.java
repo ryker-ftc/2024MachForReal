@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 //import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.CANSparkMax;
 //import com.revrobotics.RelativeEncoder;
@@ -9,11 +10,19 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
-public class Lifter extends SubsystemBase{
-    /*Config motors and encoders */
-    //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
-    //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
-    private final CANSparkMax lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
+public class Lifter extends SubsystemBase {
+    /* Config motors and encoders */
+    // private final CANSparkMax m_intake = new
+    // CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
+    // private Encoder intakeEncoder = new
+    // Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1,
+    // Constants.IntakeConstants.Mod4.intakeMotorID2,
+    // Constants.IntakeConstants.Mod4.kEncoderReversed);
+    private CANSparkMax lifterMotor;
+
+    public Lifter() {
+        lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
+    }
 
     // Define the inputs for the limit switches.
     DigitalInput topLimitSwitch = new DigitalInput(0);

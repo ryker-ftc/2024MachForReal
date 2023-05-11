@@ -17,7 +17,7 @@ public class Intaker extends SubsystemBase {
     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
     //private final CANSparkMax intakeMotor = new CANSparkMax(13, MotorType.kBrushless);
-    private final PWMSparkMax intakeMotor = new PWMSparkMax(1);
+    private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
   
     public void periodic() {
         SmartDashboard.putNumber("Intake speed", intakeMotor.get());

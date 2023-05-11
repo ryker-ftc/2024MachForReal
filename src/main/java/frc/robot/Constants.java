@@ -9,11 +9,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.config.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public final class Constants {
 
   public static final class Swerve {
-    public static final double stickDeadband = 0.1;
+    public static final double stickDeadband = 0.056;
 
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
@@ -67,6 +68,7 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // meters per second //4.5
+    //public static final double defaultSpeed = 4.0;
     public static final double maxAngularVelocity = 6; // 11.5
 
     /* Neutral Modes */
@@ -125,12 +127,12 @@ public final class Constants {
   public static final class IntakeConstants {
     /* Intake module - Module 4 */
     public static final class Mod4 {
-      public static final int intakeMotorChannel = 1;
-      //public static final int intakeMotorID = 13;
-      // public static final int intakeEncoderPort = 13;
-      // public static final boolean kEncoderReversed = false;
-     // public static final int kEncoderCPR = 42;
-  //    public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
+      // public static final int intakeMotorChannel = 1;
+      // public static final int intakeMotorID = 6;
+      //  public static final int intakeEncoderPort = 13;
+      //  public static final boolean kEncoderReversed = false;
+      // public static final int kEncoderCPR = 42;
+      // public static final double kEnocderDistancePerPulse = 1.0 / (double) kEncoderCPR;
 
     }
   }
@@ -145,7 +147,7 @@ public final class Constants {
      public static final double kEncoderDistancePerPulse = (1.0/42) * (kLifterDrumRadius * 2 * Math.PI);
      public static final double kLifterMinHeight = 0;
      public static final double kLifterMaxHeight = Units.inchesToMeters(50.0);
-      public static final int kLiftMotorID = 13;
+      public static final int kLiftMotorID = 14;
 
       public static final double kPulleyRatio = ((kLifterDrumRadius * 2.0) * Math.PI);
       public static final int kEncoderChannelA = 14;
@@ -164,6 +166,11 @@ public final class Constants {
       /*Lifter Motor Conversion Factors */
       public static final double kLifterMotorPositionFactor = 1;
       public static final double kLifterMotorVelocityFactor = 1;
+
+      public static final DigitalInput toplimitSwitch = new DigitalInput(0);
+      public static final DigitalInput bottomlimitSwitch = new DigitalInput(1);
+      // PWMVictorSPX motor = new PWMVictorSPX(0);
+      // Joystick joystick = new Joystick(0);
     }
   }
 

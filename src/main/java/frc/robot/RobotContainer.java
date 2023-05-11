@@ -38,7 +38,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class RobotContainer {
   /* Controllers */
-  
+
   private final Joystick driver = new Joystick(0);
 
   /* Drive Controls */
@@ -50,35 +50,36 @@ public class RobotContainer {
   private final POVButton dPad_Top = new POVButton(driver, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver, 270, 0);
   private final POVButton dPad_Down = new POVButton(driver, 180);
-  
+
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton fastSpeed = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  // private final JoystickButton fastSpeed = new JoystickButton(driver,
+  // XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton back_resetPosition = new JoystickButton(driver, XboxController.Button.kBack.value);
-  private int position;
-  
-  
+  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Intaker s_Intaker = new Intaker();
   public final Lifter s_Lifter = new Lifter();
 
+  /* Commands */
+  public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
+  public final IntakeOut c_IntakeOut = new IntakeOut(s_Intaker);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    
+
     chooser = new SendableChooser<String>();
     chooser.setDefaultOption("straight forward", "straight");
-    chooser.addOption("straight right", "right"); //etc
+    chooser.addOption("straight right", "right"); // etc
     chooser.addOption("straight left", "left");
     chooser.addOption("does nothing", "stand still");
 
@@ -87,6 +88,7 @@ public class RobotContainer {
 
     new ShuffleboardWrapper(chooser);
   }
+
   public void teleopInit() {
     this.resetToAbsoluteNorth();
 
@@ -100,11 +102,14 @@ public class RobotContainer {
             () -> driver.getRawAxis(strafeAxis),
             () -> driver.getRawAxis(rotationAxis),
             // robotCentric and slowSpeed are both buttons on the joystick
-            // The robotCentric button, when held down, enables axis behavior relative to the field (and requires a working gyroscope).  The default
+            // The robotCentric button, when held down, enables axis behavior relative to
+            // the field (and requires a working gyroscope). The default
             // is for movements to apply relative to the robot.
             () -> robotCentric.getAsBoolean(),
-            // slowSpeed button, when held, causes translation and rotation to be performed at a slower speed
-            () -> slowSpeed.getAsBoolean()));
+            // slowSpeed button, when held, causes translation and rotation to be performed
+            // at a slower speed
+            () -> slowSpeed.getAsBoolean(),
+            () -> turbo.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -122,14 +127,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
 
-        
-   // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-        // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () -> s_Intaker.stop()));
-    // m_intakeOut.whileTrue(new StartEndCommand(() -> s_Intaker.push(), () -> s_Intaker.stop()));
-
-
-    m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
-    m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
+    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
+    // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
+    // s_Intaker.stop()));
+    m_intakeIn.whileTrue(c_IntakeIn);
+    m_intakeOut.whileTrue(c_IntakeOut);
+    // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
+    // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
@@ -143,20 +147,15 @@ public class RobotContainer {
     // Button bindings for automatic lift control.
     // These are InstantCommands and activate once when the corresponding button is pressed.
     // //TODO: Test position method for the lifter
-    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(1)));
-    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
-    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(3)));
-    //resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
-    
+    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
+    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
+    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    // resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
+
     dPad_Down.whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
-  
 
-    back_resetPosition.onTrue(new InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
-    
-    
-    
-
-
+    // back_resetPosition.onTrue(new
+    // InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
   }
 
   /**
@@ -181,8 +180,9 @@ public class RobotContainer {
     s_Intaker.periodic();
     SmartDashboard.putString("Choosen Auto", chooser.getSelected());
   }
+
   public void killTeleop() {
     s_Swerve.removeDefaultCommand();
   }
-  
+
 }
