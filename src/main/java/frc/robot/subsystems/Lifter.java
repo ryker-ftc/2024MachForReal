@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 //import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
 //import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,10 +20,7 @@ public class Lifter extends SubsystemBase {
     // Constants.IntakeConstants.Mod4.intakeMotorID2,
     // Constants.IntakeConstants.Mod4.kEncoderReversed);
     private CANSparkMax lifterMotor;
-
-    public Lifter() {
-        lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
-    }
+        
 
     // Define the inputs for the limit switches.
     DigitalInput topLimitSwitch = new DigitalInput(0);
@@ -42,8 +40,10 @@ public class Lifter extends SubsystemBase {
 
     // Constructor
     public Lifter() {
+        lifterMotor = new CANSparkMax(13, MotorType.kBrushless);
         integratedEncoder = lifterMotor.getEncoder();
         pidController = lifterMotor.getPIDController();
+        
     }
 
     // turn on the intake motor to pull in objects.
@@ -94,31 +94,34 @@ public class Lifter extends SubsystemBase {
         }
     }
 
-    @Override
-    void periodic() {
+    // @Override
+    // public void periodic() {
         // Every tick, make sure we're not hitting limit switches.
-        checkLimits();
-    }
+        // checkLimits();
+    // }
 
-    public void checkLimits() {
+    // public void checkLimits() {
         // Limit switch checks depend on the current direction of movement.  This is required because, for example,
         // if the lift is contacting the bottom limit switch, it needs to be able to move up but not down.
-        if (liftDirection == 1 && topLimitSwitch.get()) {
-            // We're lifting UP and hit the top limit switch.
-            lifterMotor.set(0);
-        } else if (liftDirection == -1 && bottomLimitSwitch.get()) {
+        // SmartDashboard.putBoolean("top limit switch", topLimitSwitch.get());
+        // SmartDashboard.putBoolean("bottom limit switch", bottomLimitSwitch.get());
+        // if (liftDirection == 1 && topLimitSwitch.get()) {
+            // We're lifting UP and hit the topt limit switch.
+            // lifterMotor.set(0);
+        // } else if (liftDirection == -1 && bottomLimitSwitch.get()) {
             // We're going DOWN and hit the bottom limit switch.
-            lifterMotor.set(0);
-        }
+            // lifterMotor.set(0);
+        // }
         // Regardless of current direction, if we're hitting the bottom limit switch, use it to calibrate the lifter motor's
         // internal encoder so we can use it for set-to-position.
         // Note that this will continuously recalibrate it for as long as the bottom limit switch is held down.  This isn't a
         // problem, and will ensure that the encoder is zeroed at exactly the point the bottom limit switch is depressed.
-        if (bottomLimitSwitch.get()) {
-            integratedEncoder.setPosition(0);
-            calibratedIntegratedEncoder = true;
-        }
-    }
+        // if (bottomLimitSwitch.get()) {
+            // integratedEncoder.setPosition(0);
+            // calibratedIntegratedEncoder = true;
+
+        // }
+    // }
 }
 
 

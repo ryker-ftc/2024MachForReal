@@ -176,7 +176,7 @@ public class RobotContainer {
    * This is run constantly as soon as the robot is plugged in.
    */
   public void periodic() {
-    s_Lifter.checkLimits();
+    // s_Lifter.checkLimits();
     s_Intaker.periodic();
     SmartDashboard.putString("Choosen Auto", chooser.getSelected());
   }
