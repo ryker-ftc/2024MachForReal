@@ -48,7 +48,7 @@ public class Lifter extends SubsystemBase {
         SmartDashboard.putString("Lifter Status", "STOPPED");
     }
 
-    public Object setToPosition(int i) {
+    public Object setToPosition(int position) {
         return null;
     }
 
