@@ -12,7 +12,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.TurnToAngleCommand;
-import frc.robot.subsystems.Intaker;
+// import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Swerve;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -40,9 +40,9 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "left":
         addCommands(
-          new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-           new WaitCommand(3),
-           new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+          // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+          //  new WaitCommand(3),
+          //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.25, 0), 0, false, false)),
             new WaitCommand(2.5),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
@@ -51,9 +51,9 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "right":
         addCommands(
-            new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-            new WaitCommand(3),
-            new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+            // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+            // new WaitCommand(3),
+            // new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
             new WaitCommand(3),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),

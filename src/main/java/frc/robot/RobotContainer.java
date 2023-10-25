@@ -65,12 +65,12 @@ public class RobotContainer {
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
-  public final Intaker s_Intaker = new Intaker();
-  public final Lifter s_Lifter = new Lifter();
+  // public final Intaker s_Intaker = new Intaker();
+  // public final Lifter s_Lifter = new Lifter();
 
-  /* Commands */
-  public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
-  public final IntakeOut c_IntakeOut = new IntakeOut(s_Intaker);
+  // /* Commands */
+  // public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
+  // public final IntakeOut c_IntakeOut = new IntakeOut(s_Intaker);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -130,21 +130,21 @@ public class RobotContainer {
     // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
     // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
     // s_Intaker.stop()));
-    m_intakeIn.whileTrue(c_IntakeIn);
-    m_intakeOut.whileTrue(c_IntakeOut);
+    // m_intakeIn.whileTrue(c_IntakeIn);
+    // m_intakeOut.whileTrue(c_IntakeOut);
     // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
     // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
     // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
     // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
-    m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
-    m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
+    // m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
+    // m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
-    // //TODO: Test position method for the lifter
-    dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
-    dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
-    dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
+    // // //TODO: Test position method for the lifter
+    // dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
+    // dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
+    // dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
     // resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
 
     dPad_Down.whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
@@ -171,8 +171,8 @@ public class RobotContainer {
    * This is run constantly as soon as the robot is plugged in.
    */
   public void periodic() {
-    s_Lifter.checkLimits();
-    s_Intaker.periodic();
+    // s_Lifter.checkLimits();
+    // s_Intaker.periodic();
     SmartDashboard.putString("Choosen Auto", chooser.getSelected());
   }
 
