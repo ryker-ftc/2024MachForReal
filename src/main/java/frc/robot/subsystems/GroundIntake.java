@@ -11,7 +11,7 @@
 // //import frc.robot.Constants.IntakeConstants;
 
 
-// public class Intaker extends SubsystemBase {
+// public class GroundIntake extends SubsystemBase {
 
 //     /*Config motors and encoders */
 //     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
