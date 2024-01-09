@@ -1,6 +1,6 @@
 //tej
 package frc.robot.subsystems;
 
-public class Outtake{
+public class Upper{
     
 }
