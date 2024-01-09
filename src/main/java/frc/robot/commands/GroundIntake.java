@@ -6,14 +6,14 @@ import frc.robot.subsystems.Ground;
 public class GroundIntake extends CommandBase {
 	Ground m_ground;
 
-    public GroundIntake(Ground m_ground) {
-        m_ground = m_ground;
+    public GroundIntake(Ground ground) {
+        m_ground = ground;
         addRequirements(m_ground);
     }
 
     @Override
     public void execute() {
-        m_ground.pull();
+        m_ground.intake();
     }
 
     @Override

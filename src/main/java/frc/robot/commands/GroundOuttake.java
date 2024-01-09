@@ -1,28 +1,28 @@
-// package frc.robot.commands;
+package frc.robot.commands;
 
-// import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.subsystems.Intaker;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Ground;
 
-// public class IntakeOut extends CommandBase {
-//     Intaker m_Intaker;
+public class GroundOuttake extends CommandBase {
+	Ground m_ground;
 
-//     public IntakeOut(Intaker intake) {
-//         m_Intaker = intake;
-//         addRequirements(m_Intaker);
-//     }
+    public GroundOuttake(Ground ground) {
+        m_ground = ground;
+        addRequirements(m_ground);
+    }
 
-//     @Override
-//     public void execute() {
-//         m_Intaker.push();
-//     }
+    @Override
+    public void execute() {
+        m_ground.outtake();
+    }
 
-//     @Override
-//     public boolean isFinished() {
-//         return false;
-//     }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 
-//     @Override
-//     public void end(boolean interrupted) {
-//         m_Intaker.stop();
-//     }
-// }
+    @Override
+    public void end(boolean interrupted) {
+        m_ground.stop();
+    }
+}

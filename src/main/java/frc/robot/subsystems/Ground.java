@@ -25,14 +25,14 @@ public class Ground extends SubsystemBase {
     }
 
     // turn on the intake motor to pull in objects.
-    public void pull() {
+    public void intake() {
         SmartDashboard.putString("Intake Status", "PULL");
         //intakeMotor.setInverted(false);
         intakeMotor.set(1);
     }
 
     // turn on the intake motor to push out objects.
-    public void push() {
+    public void outtake() {
         SmartDashboard.putString("Intake Status", "PUSH");
         // intakeMotor.setInverted(true);
         intakeMotor.set(-1.0);
