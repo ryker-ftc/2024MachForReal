@@ -65,6 +65,7 @@ public class RobotContainer {
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
+  public final Camera s_Camera = new Camera();
   // public final Intaker s_Intaker = new Intaker();
   // public final Lifter s_Lifter = new Lifter();
 
@@ -160,7 +161,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new BusterAuto(this, this.chooser);
+    return new BusterAuto(this, this.chooser, s_Camera);
   }
 
   public void resetToAbsoluteNorth() {

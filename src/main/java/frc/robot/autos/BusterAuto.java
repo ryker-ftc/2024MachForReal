@@ -21,47 +21,56 @@ import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.subsystems.Camera;
+
 
 public class BusterAuto extends SequentialCommandGroup {
   private RobotContainer m_robotContainer;
 
-  public BusterAuto(RobotContainer container, SendableChooser<String> chooser) {
+  public BusterAuto(RobotContainer container, SendableChooser<String> chooser, Camera camera) {
     m_robotContainer = container;
 
     switch (chooser.getSelected()) {
-      case "straight":
+
+      case "speaker":
         addCommands(
-            //  new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-            //  new WaitCommand(3),
-            //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2, 0), 0, false, false)),
             new WaitCommand(2),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
         break;
-      case "left":
-        addCommands(
-          // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-          //  new WaitCommand(3),
-          //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.25, 0), 0, false, false)),
-            new WaitCommand(2.5),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
+      // case "straight":
+      //   addCommands(
+      //       //  new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+      //       //  new WaitCommand(3),
+      //       //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2, 0), 0, false, false)),
+      //       new WaitCommand(2),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
+      //   break;
+      // case "left":
+      //   addCommands(
+      //     // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+      //     //  new WaitCommand(3),
+      //     //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.25, 0), 0, false, false)),
+      //       new WaitCommand(2.5),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
 
-        );
-        break;
-      case "right":
-        addCommands(
-            // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-            // new WaitCommand(3),
-            // new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
-            new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-            new WaitCommand(3),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+      //   );
+      //   break;
+      // case "right":
+      //   addCommands(
+      //       // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
+      //       // new WaitCommand(3),
+      //       // new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
+      //       new WaitCommand(3),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
+      //       new WaitCommand(3),
+      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
 
-        );
-        break;
+      //   );
+      //   break;
       case "none":
         break;
 
