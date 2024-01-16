@@ -15,8 +15,8 @@ import frc.robot.Constants.IntakeConstants;
 public class Ground extends SubsystemBase {
 
     /*Config motors and encoders */
-    private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
-    //rivate Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
+    //private final CANSparkMax m_intakein = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
+     //rivate Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
     private final CANSparkMax intakeMotor = new CANSparkMax(13, MotorType.kBrushless);
    // private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
   

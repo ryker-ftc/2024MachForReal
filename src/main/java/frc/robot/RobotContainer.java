@@ -40,16 +40,16 @@ public class RobotContainer {
   /* Controllers */
 
   private final Joystick driver = new Joystick(0);
-
+  private final Joystick driver2 = new Joystick(1);
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  private final POVButton dPad_Right = new POVButton(driver, 90, 0);
-  private final POVButton dPad_Top = new POVButton(driver, 0, 0);
-  private final POVButton dPad_Left = new POVButton(driver, 270, 0);
-  private final POVButton dPad_Down = new POVButton(driver, 180);
+  private final POVButton dPad_Right = new POVButton(driver2, 90, 0);
+  private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
+  private final POVButton dPad_Left = new POVButton(driver2, 270, 0);
+  private final POVButton dPad_Down = new POVButton(driver2, 180);
 
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
@@ -57,11 +57,11 @@ public class RobotContainer {
   // XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton m_intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton m_intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton m_push = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton m_pull = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_intakeIn = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton m_intakeOut = new JoystickButton(driver2, XboxController.Button.kY.value);
+  private final JoystickButton m_push = new JoystickButton(driver2, XboxController.Button.kA.value);
+  private final JoystickButton m_pull = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton turbo = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
