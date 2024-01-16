@@ -16,24 +16,28 @@ public class Upper extends SubsystemBase {
     // Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1,
     // Constants.IntakeConstants.Mod4.intakeMotorID2,
     // Constants.IntakeConstants.Mod4.kEncoderReversed);
-    private CANSparkMax lifterMotor;
+    private CANSparkMax placementMotor;
+    private CANSparkMax flywheelMotor;
+
 
     public Upper() {
-        lifterMotor = new CANSparkMax(14, MotorType.kBrushless);
+        placementMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
     }
 
-    public void junk() {
-        lifterMotor.getPIDController().getP();
-        lifterMotor.getPIDController().getI();
-        lifterMotor.getPIDController().getD();
-        SmartDashboard.putNumber("P value", lifterMotor.getPIDController().getP());
-        SmartDashboard.putNumber("I value", lifterMotor.getPIDController().getI());
-        SmartDashboard.putNumber("D value", lifterMotor.getPIDController().getD());
-    }
+    // public void junk() {
+    //     lifterMotor.getPIDController().getP();
+    //     lifterMotor.getPIDController().getI();
+    //     lifterMotor.getPIDController().getD();
+    //     SmartDashboard.putNumber("P value", lifterMotor.getPIDController().getP());
+    //     SmartDashboard.putNumber("I value", lifterMotor.getPIDController().getI());
+    //     SmartDashboard.putNumber("D value", lifterMotor.getPIDController().getD());
+    // }
 
     // turn on the intake motor to pull in objects.
     public void intake() {
-        lifterMotor.set(0.25);
+        placementMotor.set(-0.25);
+
         SmartDashboard.putString("Lifter Status", "PUSHING");
     }
 
@@ -42,7 +46,7 @@ public class Upper extends SubsystemBase {
     }
 
     public void speakerShoot() {
-        // stuff goes here
+        placementMotor.set(-0.25);
     }
 
     // this is the default state of the intake motor - do not move.
