@@ -66,8 +66,8 @@ public class RobotContainer {
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
-  // public final Intaker s_Intaker = new Intaker();
-  // public final Lifter s_Lifter = new Lifter();
+  public final Ground s_Ground = new Ground();
+ //  public final Lifter s_Lifter = new Lifter();
 
   // /* Commands */
   // public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
@@ -128,10 +128,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
 
-    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-    // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
-    // s_Intaker.stop()));
-    // m_intakeIn.whileTrue(c_IntakeIn);
+     m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
+     m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
+     s_Ground.stop()));
+    m_intakeIn.whileTrue(c_IntakeIn);
     // m_intakeOut.whileTrue(c_IntakeOut);
     // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
     // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
