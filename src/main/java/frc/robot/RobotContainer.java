@@ -70,8 +70,8 @@ public class RobotContainer {
  //  public final Lifter s_Lifter = new Lifter();
 
   // /* Commands */
-  // public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
-  // public final IntakeOut c_IntakeOut = new IntakeOut(s_Intaker);
+   public final GroundIntake c_IntakeIn = new GroundIntake(s_Ground);
+   public final GroundOuttake c_IntakeOut = new GroundOuttake(s_Ground);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -128,19 +128,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
 
-     m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-     m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
-     s_Ground.stop()));
+     m_intakeIn.whileTrue(new RunCommand(() -> s_Ground.intake()));
+     m_intakeIn.whileTrue(new StartEndCommand(() -> s_Ground.outtake(), () -> s_Ground.stop()));
     m_intakeIn.whileTrue(c_IntakeIn);
-    // m_intakeOut.whileTrue(c_IntakeOut);
-    // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
-    // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
-    // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
-    // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
-    // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
-    // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
-    // m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
-    // m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
+    m_intakeOut.whileTrue(c_IntakeOut);
+     m_intakeIn.whileTrue(new GroundIntake(s_Ground));
+     m_intakeOut.whileTrue(new GroundOuttake(s_Ground));
+     //m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
+     //m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
+     //m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
+     //m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
+     //m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
+     //m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
 
     // // //TODO: Test position method for the lifter
     // dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
