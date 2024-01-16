@@ -37,12 +37,6 @@ public class Upper extends SubsystemBase {
         SmartDashboard.putString("Lifter Status", "PUSHING");
     }
 
-    // turn on the intake motor to push out objects.
-    public void outtake() {
-        lifterMotor.set(-0.25);
-        SmartDashboard.putString("Lifter Status", "PULLING");
-    }
-
     public void ampShoot() {
         // stuff goes here
     }

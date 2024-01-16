@@ -18,8 +18,10 @@ public class Ground extends SubsystemBase {
     //private final CANSparkMax m_intake = new CANSparkMax(Constants.IntakeConstants.Mod4.intakeMotorID,MotorType.kBrushless);
     //private Encoder intakeEncoder = new Encoder(Constants.IntakeConstants.Mod4.intakeMotorID1, Constants.IntakeConstants.Mod4.intakeMotorID2, Constants.IntakeConstants.Mod4.kEncoderReversed);
     //private final CANSparkMax intakeMotor = new CANSparkMax(13, MotorType.kBrushless);
-    private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
-  
+    //private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
+    private final CANSparkMax intakeMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
+
+
     public void periodic() {
         SmartDashboard.putNumber("Intake speed", intakeMotor.get());
     }
@@ -43,8 +45,5 @@ public class Ground extends SubsystemBase {
         SmartDashboard.putString("Intake Status", "STOP");
         intakeMotor.set(0);
     }
-
-    
-
 
 }
