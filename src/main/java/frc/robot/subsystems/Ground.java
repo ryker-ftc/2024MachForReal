@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-//import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.IntakeConstants;
 
 
 public class Ground extends SubsystemBase {
