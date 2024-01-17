@@ -66,6 +66,9 @@ public class RobotContainer {
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
+  public final Ground s_Ground = new Ground();
+  public final Upper s_Upper = new Upper();
+  public final Hangarm s_Hangarm = new Hangarm();
   // public final Intaker s_Intaker = new Intaker();
   // public final Lifter s_Lifter = new Lifter();
 

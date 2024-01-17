@@ -51,7 +51,7 @@ public class Upper extends SubsystemBase {
 
     // this is the default state of the intake motor - do not move.
     public void stop() {
-        lifterMotor.set(0);
+        placementMotor.set(0);
         SmartDashboard.putString("Lifter Status", "STOPPED");
     }
 
