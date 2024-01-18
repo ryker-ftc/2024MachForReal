@@ -135,7 +135,7 @@ public class RobotContainer {
     m_GroundOutakeButton.whileTrue(c_IntakeOut);
     m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
     m_GroundOutakeButton.whileTrue(new GroundOuttake(s_Intake));
-    m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
+    //m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
     // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
