@@ -38,6 +38,13 @@ public class BusterAuto extends SequentialCommandGroup {
             new WaitCommand(2),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
         break;
+      case "amp blue":
+        addCommands();
+        break;
+      case "amp red":
+        addCommands();
+        break;
+    
       // case "straight":
       //   addCommands(
       //       //  new InstantCommand(() -> m_robotContainer.s_Intaker.push()),

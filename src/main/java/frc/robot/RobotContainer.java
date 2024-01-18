@@ -83,8 +83,8 @@ public class RobotContainer {
 
     chooser = new SendableChooser<String>();
     chooser.setDefaultOption("straight forward", "straight");
-    chooser.addOption("straight right", "right"); // etc
-    chooser.addOption("straight left", "left");
+    chooser.addOption("amp blue", "amp blue"); // etc
+    chooser.addOption("amp red", "amo red");
     chooser.addOption("does nothing", "stand still");
 
     SmartDashboard.putData("Auto Selector", chooser);
