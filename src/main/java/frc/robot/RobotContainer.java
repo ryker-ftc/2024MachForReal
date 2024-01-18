@@ -57,21 +57,21 @@ public class RobotContainer {
   // XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton m_intakeIn = new JoystickButton(driver2, XboxController.Button.kX.value);
-  private final JoystickButton m_intakeOut = new JoystickButton(driver2, XboxController.Button.kY.value);
-  private final JoystickButton m_push = new JoystickButton(driver2, XboxController.Button.kA.value);
-  private final JoystickButton m_pull = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton m_GroundIntakeButton = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton m_GroundOutakeButton = new JoystickButton(driver2, XboxController.Button.kY.value);
+  // private final JoystickButton m_push = new JoystickButton(driver2, XboxController.Button.kA.value);
+  // private final JoystickButton m_pull = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton turbo = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
-  // public final Intaker s_Intaker = new Intaker();
+  public final Ground s_Intake = new Ground();
   // public final Lifter s_Lifter = new Lifter();
 
   // /* Commands */
-  // public final IntakeIn c_IntakeIn = new IntakeIn(s_Intaker);
-  // public final IntakeOut c_IntakeOut = new IntakeOut(s_Intaker);
+  public final GroundIntake c_IntakeIn = new GroundIntake(s_Intake);
+  public final GroundOuttake c_IntakeOut = new GroundOuttake(s_Intake);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -128,14 +128,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
 
-    // m_intakeIn.whileTrue(new RunCommand(() -> s_Intaker.pull()));
-    // m_intakeIn.whileTrue(new StartEndCommand(() -> s_Intaker.pull(), () ->
-    // s_Intaker.stop()));
-    // m_intakeIn.whileTrue(c_IntakeIn);
-    // m_intakeOut.whileTrue(c_IntakeOut);
-    // m_intakeIn.whileTrue(new IntakeIn(s_Intaker));
-    // m_intakeOut.whileTrue(new IntakeOut(s_Intaker));
-    // m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
+    m_GroundIntakeButton.whileTrue(new RunCommand(() -> s_Intake.intake()));
+    m_GroundIntakeButton.whileTrue(new StartEndCommand(() -> s_Intake.intake(), () ->
+    s_Intake.stop()));
+    m_GroundIntakeButton.whileTrue(c_IntakeIn);
+    m_GroundOutakeButton.whileTrue(c_IntakeOut);
+    m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
+    m_GroundOutakeButton.whileTrue(new GroundOuttake(s_Intake));
+    m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
     // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
