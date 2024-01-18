@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Upper;
+import frc.robot.subsystems.Conveyor;
 
 public class AmpShoot extends CommandBase {
-	Upper m_upper;
+	Conveyor m_Conveyor;
 
-    public AmpShoot(Upper upper) {
-        m_upper = upper;
-        addRequirements(m_upper);
+    public AmpShoot(Conveyor conveyor) {
+        m_Conveyor = conveyor;
+        addRequirements(m_Conveyor);
     }
 
     @Override
     public void execute() {
-        m_upper.ampShoot();
+        m_Conveyor.ampShoot();
     }
 
     @Override
@@ -23,6 +23,6 @@ public class AmpShoot extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_upper.stop();
+        m_Conveyor.stop();
     }
 }

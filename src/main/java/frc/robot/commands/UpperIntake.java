@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Upper;
+import frc.robot.subsystems.Conveyor;
 
 public class UpperIntake extends CommandBase {
-	Upper m_upper;
+	Conveyor m_Conveyor;
 
-    public UpperIntake(Upper upper) {
-        m_upper = upper;
-        addRequirements(m_upper);
+    public UpperIntake(Conveyor conveyor) {
+        m_Conveyor = conveyor;
+        addRequirements(m_Conveyor);
     }
 
     @Override
     public void execute() {
-        m_upper.intake();
+        m_Conveyor.intake();
     }
 
     @Override
@@ -23,6 +23,6 @@ public class UpperIntake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_upper.stop();
+        m_Conveyor.stop();
     }
 }

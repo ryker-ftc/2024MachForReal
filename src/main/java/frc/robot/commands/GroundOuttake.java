@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Ground;
+import frc.robot.subsystems.Conveyor;
 
 public class GroundOuttake extends CommandBase {
-	Ground m_ground;
+	Conveyor m_Conveyor;
 
-    public GroundOuttake(Ground ground) {
-        m_ground = ground;
-        addRequirements(m_ground);
+    public GroundOuttake(Conveyor conveyor) {
+        m_Conveyor = conveyor;
+        addRequirements(m_Conveyor);
     }
 
     @Override
     public void execute() {
-        m_ground.outtake();
+        m_Conveyor.outtake();
     }
 
     @Override
@@ -23,6 +23,6 @@ public class GroundOuttake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_ground.stop();
+        m_Conveyor.stop();
     }
 }

@@ -66,12 +66,17 @@ public class RobotContainer {
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
-  public final Ground s_Intake = new Ground();
+  public final Conveyor s_Conveyor = new Conveyor();
   // public final Lifter s_Lifter = new Lifter();
 
   // /* Commands */
-  public final GroundIntake c_IntakeIn = new GroundIntake(s_Intake);
-  public final GroundOuttake c_IntakeOut = new GroundOuttake(s_Intake);
+  public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
+  public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
+  public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
+  public final AmpShoot c_AmpShoot = new AmpShoot(s_Conveyor);
+  public final SpeakerShoot c_SpeakerShoot = new SpeakerShoot(s_Conveyor);
+
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
