@@ -58,7 +58,7 @@ public class RobotContainer {
   private final SendableChooser<String> chooser;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_GroundIntakeButton = new JoystickButton(driver2, XboxController.Button.kX.value);
-  private final JoystickButton m_GroundOutakeButton = new JoystickButton(driver2, XboxController.Button.kY.value);
+  private final JoystickButton m_GroundOuttakeButton = new JoystickButton(driver2, XboxController.Button.kY.value);
   // private final JoystickButton m_push = new JoystickButton(driver2, XboxController.Button.kA.value);
   // private final JoystickButton m_pull = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton turbo = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
@@ -132,9 +132,9 @@ public class RobotContainer {
     m_GroundIntakeButton.whileTrue(new StartEndCommand(() -> s_Intake.intake(), () ->
     s_Intake.stop()));
     m_GroundIntakeButton.whileTrue(c_IntakeIn);
-    m_GroundOutakeButton.whileTrue(c_IntakeOut);
+    m_GroundOuttakeButton.whileTrue(c_IntakeOut);
     m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
-    m_GroundOutakeButton.whileTrue(new GroundOuttake(s_Intake));
+    m_GroundOuttakeButton.whileTrue(new GroundOuttake(s_Intake));
     //m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
     // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
     // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
