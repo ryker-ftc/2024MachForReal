@@ -35,51 +35,42 @@ public class Conveyor extends SubsystemBase {
     }
 
 
-
-
     public void groundIntake() {
-
+        SmartDashboard.putString("Conveyor Status", "GROUNDINTAKE");
+        intakeMotor.set(0.1);
+        placementMotor.set(0.1);
     }
 
     public void groundOuttake() {
-        
+        SmartDashboard.putString("Conveyor Status", "GROUNDOUTTAKE");
+        intakeMotor.set(-0.1);
+        placementMotor.set(-0.1);
     }
 
     public void upperIntake() {
-        
+        SmartDashboard.putString("Conveyor Status", "UPPERINTAKE");
+        flywheelMotor.set(-0.1);
     }
 
     public void ampShoot() {
-        
+        SmartDashboard.putString("Conveyor Status", "AMPSHOOT");
+        placementMotor.set(0.1);
+        flywheelMotor.set(0.15);
     }
 
     public void speakerShoot() {
-        
-    }
-
-
-
-
-
-
-    // turn on the intake motor to pull in objects.
-    public void intake() {
-        SmartDashboard.putString("Intake Status", "PULL");
-        //intakeMotor.setInverted(false);
-        intakeMotor.set(1);
-    }
-
-    // turn on the intake motor to push out objects.
-    public void outtake() {
-        SmartDashboard.putString("Intake Status", "PUSH");
-        // intakeMotor.setInverted(true);
-        intakeMotor.set(-1.0);
+        SmartDashboard.putString("Conveyor Status", "SPEAKERSHOOT");
+        placementMotor.set(0.1);
+        flywheelMotor.set(0.2);
     }
 
     // this is the default state of the intake motor - do not move.
     public void stop() {
-        SmartDashboard.putString("Intake Status", "STOP");
+        SmartDashboard.putString("Conveyor Status", "STOP");
         intakeMotor.set(0);
+        placementMotor.set(0);
+        flywheelMotor.set(0);
+
     }
 
 }

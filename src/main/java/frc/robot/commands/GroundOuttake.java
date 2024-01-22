@@ -13,7 +13,7 @@ public class GroundOuttake extends CommandBase {
 
     @Override
     public void execute() {
-        m_Conveyor.outtake();
+        m_Conveyor.groundOuttake();
     }
 
     @Override

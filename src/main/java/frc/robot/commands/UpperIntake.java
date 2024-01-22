@@ -13,7 +13,7 @@ public class UpperIntake extends CommandBase {
 
     @Override
     public void execute() {
-        m_Conveyor.intake();
+        m_Conveyor.upperIntake();
     }
 
     @Override
