@@ -50,18 +50,22 @@ public class RobotContainer {
   private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver2, 270, 0);
   private final POVButton dPad_Down = new POVButton(driver2, 180);
+  private final JoystickButton leftTrigger = new JoystickButton(driver2, 2);
+  private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
 
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
   // private final JoystickButton fastSpeed = new JoystickButton(driver,
   // XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
-  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton m_GroundIntakeButton = new JoystickButton(driver2, XboxController.Button.kX.value);
-  private final JoystickButton m_GroundOuttakeButton = new JoystickButton(driver2, XboxController.Button.kY.value);
+  private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  //private final JoystickButton m_hangArmDownButton = new JoystickButton(driver2, XboxController.Button.kY.value);
+  //private final JoystickButton m_hangArmUpButton = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
-  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
-  private final JoystickButton turbo = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
+  private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
@@ -133,8 +137,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     // Changed version 
-    m_GroundIntakeButton.whileTrue(new RunCommand(() -> s_Conveyor.groundIntake()));
-    m_GroundOuttakeButton.whileTrue(new RunCommand(() -> s_Conveyor.groundOuttake()));
+    leftTrigger.whileTrue(new RunCommand(() -> s_Conveyor.groundIntake()));
+    rightTrigger.whileTrue(new RunCommand(() -> s_Conveyor.upperIntake()));
     m_ampShootButton.whileTrue(new RunCommand(() -> s_Conveyor.ampShoot()));
     m_speakerShootButton.whileTrue(new RunCommand(() -> s_Conveyor.speakerShoot()));
     // s_Intake.stop()));

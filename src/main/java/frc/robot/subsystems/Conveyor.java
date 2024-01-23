@@ -49,7 +49,7 @@ public class Conveyor extends SubsystemBase {
 
     public void upperIntake() {
         SmartDashboard.putString("Conveyor Status", "UPPERINTAKE");
-        flywheelMotor.set(-0.1);
+        placementMotor.set(-0.1);
     }
 
     public void ampShoot() {

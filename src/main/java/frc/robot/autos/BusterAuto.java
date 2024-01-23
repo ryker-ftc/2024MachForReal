@@ -22,6 +22,8 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Camera;
+import frc.robot.commands.SpeakerShoot;
+
 
 
 public class BusterAuto extends SequentialCommandGroup {
@@ -32,17 +34,29 @@ public class BusterAuto extends SequentialCommandGroup {
 
     switch (chooser.getSelected()) {
 
-      case "speaker":
+      case "speaker blue":
         addCommands(
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2, 0), 0, false, false)),
-            new WaitCommand(2),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.speakerShoot()));
+        break;
+      case "speaker red":
+        addCommands(
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.speakerShoot()));
         break;
       case "amp blue":
-        addCommands();
+        addCommands(
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
         break;
       case "amp red":
-        addCommands();
+        addCommands(
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
         break;
     
       // case "straight":
