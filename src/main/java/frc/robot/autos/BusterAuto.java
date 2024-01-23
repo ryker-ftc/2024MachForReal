@@ -50,10 +50,13 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "amp blue":
         addCommands(
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
         break;
       case "amp red":
-        addCommands();
+        addCommands(
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
         break;
     
       // case "straight":
