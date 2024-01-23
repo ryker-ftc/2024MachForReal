@@ -24,9 +24,9 @@ public class Conveyor extends SubsystemBase {
     private final CANSparkMax flywheelMotor;
 
     public Conveyor() {
-        intakeMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
-        placementMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor = new CANSparkMax(-1 /* CHANGE THIS */, MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(9 /* CHANGE THIS */, MotorType.kBrushless);
+        placementMotor = new CANSparkMax(10 /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor = new CANSparkMax(11 /* CHANGE THIS */, MotorType.kBrushless);
     }
 
 
