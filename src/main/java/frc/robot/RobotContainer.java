@@ -59,8 +59,8 @@ public class RobotContainer {
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_GroundIntakeButton = new JoystickButton(driver2, XboxController.Button.kX.value);
   private final JoystickButton m_GroundOuttakeButton = new JoystickButton(driver2, XboxController.Button.kY.value);
-  // private final JoystickButton m_push = new JoystickButton(driver2, XboxController.Button.kA.value);
-  // private final JoystickButton m_pull = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
+  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton turbo = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
@@ -133,10 +133,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     // Changed version 
-    // m_GroundIntakeButton.whileTrue(new RunCommand(() -> s_Intake.intake()));
-    // m_GroundIntakeButton.whileTrue(new StartEndCommand(() -> s_Intake.intake(), () ->
+    m_GroundIntakeButton.whileTrue(new RunCommand(() -> s_Conveyor.groundIntake()));
+    m_GroundOuttakeButton.whileTrue(new RunCommand(() -> s_Conveyor.groundOuttake()));
+    m_ampShootButton.whileTrue(new RunCommand(() -> s_Conveyor.ampShoot()));
+    m_speakerShootButton.whileTrue(new RunCommand(() -> s_Conveyor.speakerShoot()));
     // s_Intake.stop()));
-    // m_GroundIntakeButton.whileTrue(c_IntakeIn);
     // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
     // m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
     // m_GroundOuttakeButton.whileTrue(new GroundOuttake(s_Intake));
