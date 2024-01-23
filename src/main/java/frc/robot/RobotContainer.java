@@ -63,6 +63,8 @@ public class RobotContainer {
   //private final JoystickButton m_hangArmUpButton = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
   private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
   /* Subsystems */
@@ -100,24 +102,24 @@ public class RobotContainer {
   public void teleopInit() {
     this.resetToAbsoluteNorth();
 
-    //s_Swerve.setDefaultCommand(
+    s_Swerve.setDefaultCommand(
         // Command that's continuously run to update the swerve state
-        //new TeleopSwerve(
+        new TeleopSwerve(
             // The Swerve subsystem
-            //s_Swerve,
+            s_Swerve,
             // getRawAxis() returns a value for the controller axis from -1 to 1
-            //() -> driver.getRawAxis(translationAxis),
-            //() -> driver.getRawAxis(strafeAxis),
-            //() -> driver.getRawAxis(rotationAxis),
+            () -> driver.getRawAxis(translationAxis),
+            () -> driver.getRawAxis(strafeAxis),
+            () -> driver.getRawAxis(rotationAxis),
             // robotCentric and slowSpeed are both buttons on the joystick
             // The robotCentric button, when held down, enables axis behavior relative to
             // the field (and requires a working gyroscope). The default
             // is for movements to apply relative to the robot.
-            //() -> robotCentric.getAsBoolean(),
+            () -> robotCentric.getAsBoolean(),
             // slowSpeed button, when held, causes translation and rotation to be performed
             // at a slower speed
-            //() -> slowSpeed.getAsBoolean(),
-            ///() -> turbo.getAsBoolean()));
+            () -> slowSpeed.getAsBoolean(),
+            () -> turbo.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
