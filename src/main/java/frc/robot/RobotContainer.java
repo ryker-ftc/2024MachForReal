@@ -137,10 +137,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     // Changed version 
-    leftTrigger.whileTrue(new RunCommand(() -> s_Conveyor.groundIntake()));
-    rightTrigger.whileTrue(new RunCommand(() -> s_Conveyor.upperIntake()));
-    m_ampShootButton.whileTrue(new RunCommand(() -> s_Conveyor.ampShoot()));
-    m_speakerShootButton.whileTrue(new RunCommand(() -> s_Conveyor.speakerShoot()));
+    leftTrigger.whileTrue(c_GroundIntake);
+    rightTrigger.whileTrue(c_UpperIntake);
+    m_ampShootButton.onTrue(c_AmpShoot);
+    m_speakerShootButton.onTrue(c_SpeakerShoot);
     // s_Intake.stop()));
     // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
     // m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
