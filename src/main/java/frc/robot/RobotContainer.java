@@ -80,8 +80,6 @@ public class RobotContainer {
   public final AmpShoot c_AmpShoot = new AmpShoot(s_Conveyor);
   public final SpeakerShoot c_SpeakerShoot = new SpeakerShoot(s_Conveyor);
 
-
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
