@@ -21,12 +21,15 @@ public class Conveyor extends SubsystemBase {
     //private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
     private final CANSparkMax intakeMotor;
     private final CANSparkMax placementMotor;
-    private final CANSparkMax flywheelMotor;
+    private final CANSparkMax flywheelMotor1;
+    private final CANSparkMax flywheelMotor2;
+    
 
     public Conveyor() {
         intakeMotor = new CANSparkMax(9 /* CHANGE THIS */, MotorType.kBrushless);
         placementMotor = new CANSparkMax(10 /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor = new CANSparkMax(11 /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor1 = new CANSparkMax(11 /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor2 = new CANSparkMax(12 /* CHANGE THIS */, MotorType.kBrushless);
     }
 
 
@@ -55,13 +58,15 @@ public class Conveyor extends SubsystemBase {
     public void ampShoot() {
         SmartDashboard.putString("Conveyor Status", "AMPSHOOT");
         placementMotor.set(0.1);
-        flywheelMotor.set(0.15);
+        flywheelMotor1.set(0.6);
+        flywheelMotor2.set(-0.6);
     }
 
     public void speakerShoot() {
         SmartDashboard.putString("Conveyor Status", "SPEAKERSHOOT");
         placementMotor.set(0.1);
-        flywheelMotor.set(0.2);
+        flywheelMotor1.set(0.6);
+        flywheelMotor2.set(-0.6);
     }
 
     // this is the default state of the intake motor - do not move.
@@ -69,7 +74,8 @@ public class Conveyor extends SubsystemBase {
         SmartDashboard.putString("Conveyor Status", "STOP");
         intakeMotor.set(0);
         placementMotor.set(0);
-        flywheelMotor.set(0);
+        flywheelMotor1.set(0);
+        flywheelMotor2.set(0);
 
     }
 
