@@ -12,6 +12,16 @@ public class Camera extends SubsystemBase {
     private NetworkTableEntry tx = table.getEntry("tx");
     private NetworkTableEntry ty = table.getEntry("ty");
     private NetworkTableEntry ta = table.getEntry("ta");
+
+    // how many degrees back is your limelight rotated from perfectly vertical?
+    private final double limelightMountAngleDegrees = 45.0; 
+
+    // distance from the center of the Limelight lens to the floor
+    private final double limelightLensHeightInches = 4.5; 
+
+    // distance from the target to the floor
+    private final double goalHeightInches = 60.0; 
+
     public void periodic() {
         double x = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
@@ -20,5 +30,13 @@ public class Camera extends SubsystemBase {
         SmartDashboard.putNumber("LimelightX", x);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
+
+        double angleToGoalDegrees = limelightMountAngleDegrees + y;
+        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+
+        SmartDashboard.putNumber("LimelightDistance", distanceFromLimelightToGoalInches);
     }
 }
