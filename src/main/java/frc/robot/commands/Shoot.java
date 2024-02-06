@@ -3,17 +3,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Conveyor;
 
-public class AmpShoot extends CommandBase {
-	Conveyor m_Conveyor;
+public class Shoot extends CommandBase {
+	private Conveyor m_Conveyor;
+    private double speed;
 
-    public AmpShoot(Conveyor conveyor) {
+    public Shoot(Conveyor conveyor, double speed) {
         m_Conveyor = conveyor;
+        this.speed = speed;
         addRequirements(m_Conveyor);
     }
 
     @Override
     public void execute() {
-        m_Conveyor.ampShoot();
+        m_Conveyor.shoot(speed);
     }
 
     @Override

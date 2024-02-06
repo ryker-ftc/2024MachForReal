@@ -55,18 +55,12 @@ public class Conveyor extends SubsystemBase {
         placementMotor.set(-0.1);
     }
 
-    public void ampShoot() {
-        SmartDashboard.putString("Conveyor Status", "AMPSHOOT");
+    public void shoot(double speed) {
+        SmartDashboard.putString("Conveyor Status", "SHOOT");
+        SmartDashboard.putNumber("Conveyor Shoot Speed", speed);
         placementMotor.set(0.1);
-        flywheelMotor1.set(0.6);
-        flywheelMotor2.set(-0.6);
-    }
-
-    public void speakerShoot() {
-        SmartDashboard.putString("Conveyor Status", "SPEAKERSHOOT");
-        placementMotor.set(0.1);
-        flywheelMotor1.set(0.6);
-        flywheelMotor2.set(-0.6);
+        flywheelMotor1.set(speed);
+        flywheelMotor2.set(-speed);
     }
 
     // this is the default state of the intake motor - do not move.
