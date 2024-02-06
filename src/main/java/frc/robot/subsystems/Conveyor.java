@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ConveyorConstants;
 
 
 public class Conveyor extends SubsystemBase {
@@ -26,10 +26,9 @@ public class Conveyor extends SubsystemBase {
     
 
     public Conveyor() {
-        intakeMotor = new CANSparkMax(9 /* CHANGE THIS */, MotorType.kBrushless);
-        placementMotor = new CANSparkMax(10 /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor1 = new CANSparkMax(11 /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor2 = new CANSparkMax(12 /* CHANGE THIS */, MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(ConveyorConstants.Mod4.intakeMotorID /* CHANGE THIS */, MotorType.kBrushless);
+        placementMotor = new CANSparkMax(ConveyorConstants.Mod4.placementMotorID /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorID /* CHANGE THIS */, MotorType.kBrushless);
     }
 
 
