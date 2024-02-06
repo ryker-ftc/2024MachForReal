@@ -131,7 +131,9 @@ public final class Constants {
       public static final int intakeMotorID = 13;
       public static final int intakeEncoderPort = 15;
       public static final int placementMotorID = 14;
-      public static final int flywheelMotorID = 15;
+      public static final int flywheelMotorIDLeft = 15;
+      public static final int flywheelMotorIDRight = 16;
+      
 
 
       //  public static final boolean kEncoderReversed = false;

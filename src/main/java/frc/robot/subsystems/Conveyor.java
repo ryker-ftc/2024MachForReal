@@ -28,7 +28,8 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         intakeMotor = new CANSparkMax(ConveyorConstants.Mod4.intakeMotorID /* CHANGE THIS */, MotorType.kBrushless);
         placementMotor = new CANSparkMax(ConveyorConstants.Mod4.placementMotorID /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorID /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor1 = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorIDLeft /* CHANGE THIS */, MotorType.kBrushless);
+        flywheelMotor2 = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorIDRight /* CHANGE THIS */, MotorType.kBrushless);
     }
 
 
