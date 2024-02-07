@@ -63,7 +63,6 @@ public class Conveyor extends SubsystemBase {
         flywheelMotorLeft.set(speed);
         flywheelMotorRight.set(-speed);
     }
-
     // this is the default state of the intake motor - do not move.
     public void stop() {
         SmartDashboard.putString("Conveyor Status", "STOP");

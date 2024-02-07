@@ -131,9 +131,9 @@ public final class Constants {
       public static final int intakeMotorID = 13;
       public static final int intakeEncoderPort = 15;
       public static final int placementMotorID = 14;
+      // these ID's are left and right from the POV of the shooter
       public static final int flywheelMotorIDLeft = 15;
       public static final int flywheelMotorIDRight = 16;
-      
 
 
       //  public static final boolean kEncoderReversed = false;
