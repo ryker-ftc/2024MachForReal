@@ -60,9 +60,8 @@ public class RobotContainer {
   private final SendableChooser<String> chooser;
   private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   //private final JoystickButton m_hangArmDownButton = new JoystickButton(driver2, XboxController.Button.kY.value);
-  //private final JoystickButton m_hangArmUpButton = new JoystickButton(driver2, XboxController.Button.kB.value);
-  private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
-  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);;
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -77,9 +76,6 @@ public class RobotContainer {
   public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
   public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
   public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
-  public final AmpShoot c_AmpShoot = new AmpShoot(s_Conveyor);
-  public final SpeakerShoot c_SpeakerShoot = new SpeakerShoot(s_Conveyor);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -137,8 +133,12 @@ public class RobotContainer {
     // Changed version 
     leftTrigger.whileTrue(c_GroundIntake);
     rightTrigger.whileTrue(c_UpperIntake);
-    m_ampShootButton.onTrue(c_AmpShoot);
-    m_speakerShootButton.onTrue(c_SpeakerShoot);
+    m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
+    m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
+    dPad_Top.whileTrue(new Shoot(s_Conveyor, 1.0)); 
+    dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); 
+    dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.4)); 
+    dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); 
     // s_Intake.stop()));
     // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
     // m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));

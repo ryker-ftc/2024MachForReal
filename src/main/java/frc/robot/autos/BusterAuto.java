@@ -22,7 +22,7 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Camera;
-import frc.robot.commands.SpeakerShoot;
+import frc.robot.commands.Shoot;
 
 
 
@@ -39,24 +39,24 @@ public class BusterAuto extends SequentialCommandGroup {
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.speakerShoot()));
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
       case "speaker red":
         addCommands(
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.speakerShoot()));
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
       case "amp blue":
         addCommands(
           new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
       case "amp red":
         addCommands(
           new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.ampShoot()));
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
     
       // case "straight":
