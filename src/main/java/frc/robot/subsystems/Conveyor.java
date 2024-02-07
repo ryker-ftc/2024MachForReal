@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ConveyorConstants;
+import frc.robot.Constants.ConveyorConstants.Mod4;
 
 
 public class Conveyor extends SubsystemBase {
@@ -21,15 +22,15 @@ public class Conveyor extends SubsystemBase {
     //private final PWMSparkMax intakeMotor = new PWMSparkMax(6);
     private final CANSparkMax intakeMotor;
     private final CANSparkMax placementMotor;
-    private final CANSparkMax flywheelMotor1;
-    private final CANSparkMax flywheelMotor2;
+    private final CANSparkMax flywheelMotorLeft;
+    private final CANSparkMax flywheelMotorRight;
     
 
     public Conveyor() {
-        intakeMotor = new CANSparkMax(ConveyorConstants.Mod4.intakeMotorID /* CHANGE THIS */, MotorType.kBrushless);
-        placementMotor = new CANSparkMax(ConveyorConstants.Mod4.placementMotorID /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor1 = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorIDLeft /* CHANGE THIS */, MotorType.kBrushless);
-        flywheelMotor2 = new CANSparkMax(ConveyorConstants.Mod4.flywheelMotorIDRight /* CHANGE THIS */, MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(Mod4.intakeMotorID, MotorType.kBrushless);
+        placementMotor = new CANSparkMax(Mod4.placementMotorID, MotorType.kBrushless);
+        flywheelMotorLeft = new CANSparkMax(Mod4.flywheelMotorIDLeft, MotorType.kBrushless);
+        flywheelMotorRight = new CANSparkMax(Mod4.flywheelMotorIDRight, MotorType.kBrushless);
     }
 
 
@@ -59,8 +60,8 @@ public class Conveyor extends SubsystemBase {
         SmartDashboard.putString("Conveyor Status", "SHOOT");
         SmartDashboard.putNumber("Conveyor Shoot Speed", speed);
         placementMotor.set(0.1);
-        flywheelMotor1.set(speed);
-        flywheelMotor2.set(-speed);
+        flywheelMotorLeft.set(speed);
+        flywheelMotorRight.set(-speed);
     }
 
     // this is the default state of the intake motor - do not move.
@@ -68,8 +69,8 @@ public class Conveyor extends SubsystemBase {
         SmartDashboard.putString("Conveyor Status", "STOP");
         intakeMotor.set(0);
         placementMotor.set(0);
-        flywheelMotor1.set(0);
-        flywheelMotor2.set(0);
+        flywheelMotorLeft.set(0);
+        flywheelMotorRight.set(0);
 
     }
 
