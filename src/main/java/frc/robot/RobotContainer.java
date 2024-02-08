@@ -50,7 +50,9 @@ public class RobotContainer {
   private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver2, 270, 0);
   private final POVButton dPad_Down = new POVButton(driver2, 180);
-  private final JoystickButton leftTrigger = new JoystickButton(driver2, 2);
+  private final JoystickButton leftTrigger = new JoystickButton(driver2, XboxController.Axis.kLeftTrigger.value);
+  private final JoystickButton leftButton = new JoystickButton(driver2, XboxController.Button.kStart.value);
+
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
 
   /* Driver Buttons */
@@ -132,6 +134,7 @@ public class RobotContainer {
     /* Driver Buttons */
     // Changed version 
     leftTrigger.whileTrue(c_GroundIntake);
+    leftButton.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
     m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
