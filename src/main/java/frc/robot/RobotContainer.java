@@ -50,8 +50,8 @@ public class RobotContainer {
   private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver2, 270, 0);
   private final POVButton dPad_Down = new POVButton(driver2, 180);
-  private final JoystickButton leftTrigger = new JoystickButton(driver2, XboxController.Axis.kLeftTrigger.value);
-  private final JoystickButton leftButton = new JoystickButton(driver2, XboxController.Button.kStart.value);
+  private final JoystickButton leftTrigger = new JoystickButton(driver2, XboxController.Button.kA.value);
+  private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
 
@@ -60,10 +60,10 @@ public class RobotContainer {
   // private final JoystickButton fastSpeed = new JoystickButton(driver,
   // XboxController.Button.kRightBumper.value);
   private final SendableChooser<String> chooser;
-  private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  // private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   //private final JoystickButton m_hangArmDownButton = new JoystickButton(driver2, XboxController.Button.kY.value);
-  private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
-  private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);;
+  // private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
+  // private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -134,13 +134,13 @@ public class RobotContainer {
     /* Driver Buttons */
     // Changed version 
     leftTrigger.whileTrue(c_GroundIntake);
-    leftButton.whileTrue(c_GroundOuttake);
+    aButton.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
-    m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
-    m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
+    // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
+    // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
     dPad_Top.whileTrue(new Shoot(s_Conveyor, 1.0)); 
     dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); 
-    dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.4)); 
+    dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); 
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); 
     // s_Intake.stop()));
     // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
