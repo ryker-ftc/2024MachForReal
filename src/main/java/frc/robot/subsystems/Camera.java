@@ -21,13 +21,15 @@ public class Camera extends SubsystemBase {
 
     // distance from the target to the floor
     private final double goalHeightInches = 60.0; 
+    private double distanceToGoalInches;
+    private double heading;
 
     public void periodic() {
-        double x = tx.getDouble(0.0);
+        heading = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
 
-        SmartDashboard.putNumber("LimelightX", x);
+        SmartDashboard.putNumber("LimelightX", heading);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
 
@@ -35,8 +37,16 @@ public class Camera extends SubsystemBase {
         double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
     //calculate distance
-        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+        distanceToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
 
-        SmartDashboard.putNumber("LimelightDistance", distanceFromLimelightToGoalInches);
+        SmartDashboard.putNumber("LimelightDistance", distanceToGoalInches);
+    }
+
+    public double getDistanceToGoal() {
+        return distanceToGoalInches;
+    }
+
+    public double getHeading() {
+        return heading;
     }
 }
