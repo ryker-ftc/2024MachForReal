@@ -33,18 +33,12 @@ public class TurnToAngleCommand extends CommandBase {
     
     @Override
     public void execute(){
-        double gyroAngle = m_robotDrive.getYaw().getDegrees();
 
         final double kP = 0.2;
-        SmartDashboard.putNumber("gyroAngle", gyroAngle);
+        SmartDashboard.putNumber("gyroAngle", angle);
     
-        if (angle > 180) {
-            angle = -(360 - angle);
-        } else if (angle < -180) {
-            angle = 360 + angle;
-        }
     
-        double err = angle - gyroAngle;
+        double err = angle;
         double speed = MathUtil.clamp(err * kP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
     
         if (Math.abs(err) > 2 && timer.get() < timeout) {
