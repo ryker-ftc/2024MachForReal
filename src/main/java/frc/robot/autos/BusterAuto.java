@@ -22,23 +22,26 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Camera;
+import frc.robot.commands.LimelightDrive;
 import frc.robot.commands.Shoot;
 
 
 
 public class BusterAuto extends SequentialCommandGroup {
   private RobotContainer m_robotContainer;
-
+  private LimelightDrive limelightDrive;
   public BusterAuto(RobotContainer container, SendableChooser<String> chooser, Camera camera) {
     m_robotContainer = container;
-
+addCommands(
+  new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
     switch (chooser.getSelected()) {
+  
 
       case "speaker blue":
         addCommands(
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
-          new WaitCommand(2),
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)),
+          new InstantCommand(() -> limelightDrive.LimelightDrive(camera, swerve)),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
       case "speaker red":
@@ -58,6 +61,10 @@ public class BusterAuto extends SequentialCommandGroup {
           new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
+      case "drive forward":
+          addCommands(
+          )
+          ;
     
       // case "straight":
       //   addCommands(
