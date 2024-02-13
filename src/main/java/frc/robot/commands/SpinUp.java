@@ -15,7 +15,7 @@ public class SpinUp extends CommandBase {
 
     @Override
     public void execute(){
-        m_Conveyor.sipnUp(speed);
+        m_Conveyor.spinUp(speed);
 
     }
 
