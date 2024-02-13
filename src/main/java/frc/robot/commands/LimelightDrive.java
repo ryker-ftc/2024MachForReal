@@ -1,23 +1,46 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class LimelightDrive extends CommandBase{ 
     private Camera m_camera;
     private Swerve m_swerve;
-    private TurnToAngleCommand c_turnToAngleCommand;
+    private boolean complete = false;
+    private double timeout;
+    private Timer timer = new Timer();
+    private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
 
-    public LimelightDrive(Camera camera, Swerve swerve) {
+    public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
         m_camera = camera;
         m_swerve  = swerve;
-        c_turnToAngleCommand = new TurnToAngleCommand(swerve, 0, 0);
+        this.timeout = timeout;
     }
 
-    public void execute() {}    
+    public void initialize() {
+        complete = false;
+    }
+
+    public void execute() {
+        final double anglekP = 0.2;
+        double distanceError = m_camera.getDistanceToGoal();
+        double angleError = m_camera.getHeading();
+
+        double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
+        double linearSpeed = limiter.calculate(distanceError);
+    
+        if (Math.abs(angleError) > 2 && Math.abs(distanceError) > 2 && timer.get() < timeout) {
+            m_swerve.drive(new Translation2d(linearSpeed,0), angularSpeed, false, true);
+        }
+    }    
 
     public boolean isFinished() {
-        return false;
+        return complete;
     }
 
     public void end(boolean interrupted) {
