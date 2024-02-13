@@ -55,6 +55,12 @@ public class Conveyor extends SubsystemBase {
         SmartDashboard.putString("Conveyor Status", "UPPERINTAKE");
         placementMotor.set(-0.2);
     }
+    public void sipnUp(double speed){
+        SmartDashboard.putString("Conveyor Status", "SPINUP");
+        SmartDashboard.putNumber("Conveyor Shoot Speed", speed);
+        flywheelMotorLeft.set(-speed);
+        flywheelMotorRight.set(-speed);
+    }
 
     public void shoot(double speed) {
         SmartDashboard.putString("Conveyor Status", "SHOOT");
