@@ -6,6 +6,7 @@ import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class LimelightDrive extends CommandBase{ 
@@ -15,6 +16,7 @@ public class LimelightDrive extends CommandBase{
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
+    private final double shootDistance = Units.inchesToMeters(58.0);
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
         m_camera = camera;
@@ -32,7 +34,7 @@ public class LimelightDrive extends CommandBase{
     public void execute() {
         final double anglekP = 0.2;
         final double distancekP = 0.2;
-        double distanceError = m_camera.getDistanceToGoal();
+        double distanceError = shootDistance - m_camera.getDistanceToGoal();
         double angleError = m_camera.getHeading();
 
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
