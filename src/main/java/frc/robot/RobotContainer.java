@@ -55,6 +55,7 @@ public class RobotContainer {
   private final POVButton dPad_Down = new POVButton(driver2, 180);
   private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton leftBumper = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kA.value);
 
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
 
@@ -81,6 +82,7 @@ public class RobotContainer {
   public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
   public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
   public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
+  public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -139,6 +141,7 @@ public class RobotContainer {
     aButton.whileTrue(c_GroundIntake);
     leftBumper.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
+    limeLightDriveButton.whileTrue(c_LimelightDrive);
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
     dPad_Top.whileTrue(new SequentialCommandGroup(new SpinUp(s_Conveyor, 1), new WaitCommand(0.5),new Shoot(s_Conveyor, 1))); 
