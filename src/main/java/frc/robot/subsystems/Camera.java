@@ -40,6 +40,8 @@ public class Camera extends SubsystemBase {
         distanceToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians); //58 inches
 
         SmartDashboard.putNumber("LimelightDistance", distanceToGoalInches);
+        SmartDashboard.putNumber("LimelightHeading", heading);
+
     }
 
     public double getDistanceToGoal() {
