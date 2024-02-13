@@ -32,6 +32,7 @@ public class BusterAuto extends SequentialCommandGroup {
   private LimelightDrive limelightDrive;
   public BusterAuto(RobotContainer container, SendableChooser<String> chooser, Camera camera) {
     m_robotContainer = container;
+    limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve);
 addCommands(
   new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2,0), 0, false, false)),
           new WaitCommand(2),
@@ -41,7 +42,7 @@ addCommands(
 
       case "speaker blue":
         addCommands(
-          new InstantCommand(() -> limelightDrive.LimelightDrive(camera, swerve)),
+          limelightDrive,
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
         break;
       case "speaker red":
