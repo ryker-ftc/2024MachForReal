@@ -33,8 +33,8 @@ public class LimelightDrive extends CommandBase{
 
     @Override
     public void execute() {
-        final double anglekP = 0.2;
-        final double distancekP = 0.2;
+        final double anglekP = 0.05;
+        final double distancekP = 0.05;
         double distanceError = shootDistance - m_camera.getDistanceToGoal();
         double angleError = m_camera.getHeading();
         SmartDashboard.putNumber("distanceError", distanceError);
@@ -44,7 +44,7 @@ public class LimelightDrive extends CommandBase{
         double linearSpeed = limiter.calculate(distanceError * distancekP);
     
         if (Math.abs(angleError) > 2 && Math.abs(distanceError) > 2 && timer.get() < timeout) {
-            m_swerve.drive(new Translation2d(linearSpeed,0), angularSpeed, false, true);
+            m_swerve.drive(new Translation2d(-linearSpeed,0), angularSpeed, false, true);
         } else {
             complete = true;
         }
