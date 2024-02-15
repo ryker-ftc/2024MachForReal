@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -36,6 +37,8 @@ public class LimelightDrive extends CommandBase{
         final double distancekP = 0.2;
         double distanceError = shootDistance - m_camera.getDistanceToGoal();
         double angleError = m_camera.getHeading();
+        SmartDashboard.putNumber("distanceError", distanceError);
+        SmartDashboard.putNumber("angleError", angleError);
 
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
         double linearSpeed = limiter.calculate(distanceError * distancekP);
