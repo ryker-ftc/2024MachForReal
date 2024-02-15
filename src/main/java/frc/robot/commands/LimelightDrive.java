@@ -32,8 +32,8 @@ public class LimelightDrive extends CommandBase{
 
     @Override
     public void execute() {
-        final double anglekP = 0.2;
-        final double distancekP = 0.2;
+        final double anglekP = 0.05;
+        final double distancekP = 0.05;
         double distanceError = shootDistance - m_camera.getDistanceToGoal();
         double angleError = m_camera.getHeading();
 
