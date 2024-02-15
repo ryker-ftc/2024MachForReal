@@ -144,10 +144,10 @@ public class RobotContainer {
     limeLightDriveButton.whileTrue(c_LimelightDrive);
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
-    dPad_Top.whileTrue(new SequentialCommandGroup(new SpinUp(s_Conveyor, 1), new WaitCommand(0.5),new Shoot(s_Conveyor, 1))); 
-    dPad_Right.whileTrue(new SequentialCommandGroup(new SpinUp(s_Conveyor, 0.6), new WaitCommand(0.5),new Shoot(s_Conveyor, 0.6))); //0.6
-    dPad_Left.whileTrue(new SequentialCommandGroup(new SpinUp(s_Conveyor, 0.5), new WaitCommand(0.5),new Shoot(s_Conveyor, 0.5))); //0.5
-    dPad_Down.whileTrue(new SequentialCommandGroup(new SpinUp(s_Conveyor, 0.2), new WaitCommand(0.5),new Shoot(s_Conveyor, 0.2))); //0.2
+    dPad_Top.whileTrue(new Shoot(s_Conveyor, 1)); 
+    dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); //0.6
+    dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); //0.5
+    dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); //0.2
     // s_Intake.stop()));
     // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
     // m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
