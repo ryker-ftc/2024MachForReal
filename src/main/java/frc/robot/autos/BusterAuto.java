@@ -52,8 +52,10 @@ addCommands(
         break;
       case "amp blue":
         addCommands(
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0,0),2,false,false)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0,0),0,false,false)),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)));
         break;
       case "amp red":
         addCommands(
