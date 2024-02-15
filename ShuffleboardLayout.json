@@ -11,19 +11,6 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "0,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Auto Selector",
-              "_title": "Auto Selector",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "1,0": {
             "size": [
               1,
@@ -106,32 +93,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/DB/Slider 2",
               "_title": "DB/Slider 2",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DB/Slider 1",
-              "_title": "DB/Slider 1",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DB/Slider 0",
-              "_title": "DB/Slider 0",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -658,6 +619,32 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "7,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Selector",
+              "_title": "/SmartDashboard/Auto Selector",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mod 3 Integrated",
+              "_title": "Mod 3 Integrated",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -846,7 +833,7 @@
       }
     },
     {
-      "title": "Tab 4",
+      "title": "TeleOp",
       "autoPopulate": false,
       "autoPopulatePrefix": "",
       "widgetPane": {
@@ -1050,12 +1037,91 @@
           }
         }
       }
+    },
+    {
+      "title": "wheels drifting?",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Angle: 0",
+              "_title": "/SmartDashboard/Angle: 0",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/M1- CanDegrees: 0",
+              "_title": "/SmartDashboard/M1- CanDegrees: 0",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/M1- CanDegrees: 1",
+              "_title": "/SmartDashboard/M1- CanDegrees: 1",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/M1- CanDegrees: 2",
+              "_title": "/SmartDashboard/M1- CanDegrees: 2",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/M1- CanDegrees: 3",
+              "_title": "/SmartDashboard/M1- CanDegrees: 3",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
-    "x": 0.0,
-    "y": 0.0,
-    "width": 1536.0,
-    "height": 881.5999755859375
+    "x": 0.4000000059604645,
+    "y": 0.4000000059604645,
+    "width": 1535.199951171875,
+    "height": 911.2000122070312
   }
 }
