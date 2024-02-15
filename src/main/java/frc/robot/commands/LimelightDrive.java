@@ -41,7 +41,7 @@ public class LimelightDrive extends CommandBase{
         double linearSpeed = limiter.calculate(distanceError * distancekP);
     
         if (Math.abs(angleError) > 2 && Math.abs(distanceError) > 2 && timer.get() < timeout) {
-            m_swerve.drive(new Translation2d(linearSpeed,0), angularSpeed, false, true);
+            m_swerve.drive(new Translation2d(-linearSpeed,0), angularSpeed, false, true);
         } else {
             complete = true;
         }
