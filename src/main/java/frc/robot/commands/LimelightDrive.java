@@ -16,7 +16,7 @@ public class LimelightDrive extends CommandBase{
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private final double shootDistance = Units.inchesToMeters(65.0);
+    private final double shootDistance = 65.0;
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
         m_camera = camera;
@@ -32,8 +32,8 @@ public class LimelightDrive extends CommandBase{
 
     @Override
     public void execute() {
-        final double anglekP = 0.05;
-        final double distancekP = 0.05;
+        final double anglekP = 0.025;
+        final double distancekP = 0.025;
         double distanceError = shootDistance - m_camera.getDistanceToGoal();
         double angleError = m_camera.getHeading();
 
