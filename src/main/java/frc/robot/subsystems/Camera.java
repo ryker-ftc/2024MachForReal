@@ -23,15 +23,28 @@ public class Camera extends SubsystemBase {
     private final double goalHeightInches = 60.0; 
     private double distanceToGoalInches;
     private double heading;
+    double[] botpose;
+
+    public Camera() {
+        // table.getEntry("ledMode").setNumber(1);
+    }
 
     public void periodic() {
         heading = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
+        botpose = table.getEntry("botpose").getDoubleArray(new double[6]);
 
         SmartDashboard.putNumber("LimelightX", heading);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
+        SmartDashboard.putNumber("LimelightBotposeX", botpose[0]);
+        SmartDashboard.putNumber("LimelightBotposeY", botpose[1]);
+        SmartDashboard.putNumber("LimelightBotposeZ", botpose[2]);
+        SmartDashboard.putNumber("LimelightBotposeRoll", botpose[3]);
+        SmartDashboard.putNumber("LimelightBotposePitch", botpose[4]);
+        SmartDashboard.putNumber("LimelightBotposeYaw", botpose[5]);
+
 
         double angleToGoalDegrees = limelightMountAngleDegrees + y;
         double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
@@ -50,5 +63,9 @@ public class Camera extends SubsystemBase {
 
     public double getHeading() {
         return heading;
+    }
+
+    public double[] getBotpose() {
+        return botpose;
     }
 }

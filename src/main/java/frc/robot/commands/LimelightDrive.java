@@ -18,6 +18,7 @@ public class LimelightDrive extends CommandBase{
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
     private final double shootDistance = 65.0;
+    private double[] botpose;
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
         m_camera = camera;
@@ -33,17 +34,21 @@ public class LimelightDrive extends CommandBase{
 
     @Override
     public void execute() {
+        botpose = m_camera.getBotpose();
         final double anglekP = 0.025;
         final double distancekP = 0.025;
-        double distanceError = shootDistance - m_camera.getDistanceToGoal();
-        double angleError = m_camera.getHeading();
-        SmartDashboard.putNumber("distanceError", distanceError);
+        double xError = shootDistance - botpose[0];
+        double yError = botpose[1];
+        double angleError = 180;
+        
+        // SmartDashboard.putNumber("distanceError", distanceError);
+        SmartDashboard.putNumber("angleError", angleError);
         SmartDashboard.putNumber("angleError", angleError);
 
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
         double linearSpeed = limiter.calculate(distanceError * distancekP);
     
-        if (Math.abs(angleError) > 2 && Math.abs(distanceError) > 2 && timer.get() < timeout) {
+        if (Math.abs(angleError) > 2 || Math.abs(distanceError) > 2 || timer.get() < timeout) {
             m_swerve.drive(new Translation2d(-linearSpeed,0), angularSpeed, false, true);
         } else {
             complete = true;
