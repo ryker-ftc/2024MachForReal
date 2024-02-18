@@ -46,10 +46,12 @@ public class LimelightDrive extends CommandBase{
         SmartDashboard.putNumber("angleError", angleError);
 
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
-        double linearSpeed = limiter.calculate(distanceError * distancekP);
+        double xSpeed = limiter.calculate(xError * distancekP);
+        double ySpeed = limiter.calculate(yError * distancekP);
+
     
-        if (Math.abs(angleError) > 2 || Math.abs(distanceError) > 2 || timer.get() < timeout) {
-            m_swerve.drive(new Translation2d(-linearSpeed,0), angularSpeed, false, true);
+        if (Math.abs(angleError) > 2 || Math.abs(xError) > 2 || Math.abs(xError) > 2 || timer.get() < timeout) {
+            m_swerve.drive(new Translation2d(-xSpeed, ySpeed), angularSpeed, false, true);
         } else {
             complete = true;
         }
