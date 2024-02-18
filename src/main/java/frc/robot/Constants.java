@@ -67,7 +67,7 @@ public final class Constants {
     public static final int numberOfSensorCountsPerRevolution = 42;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 4.5; // meters per second //4.5
+    public static final double maxSpeed = 2.5; // meters per second //4.5
     //public static final double defaultSpeed = 4.0;
     public static final double maxAngularVelocity = 6; // 11.5
 
