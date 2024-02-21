@@ -33,7 +33,10 @@ public class Camera extends SubsystemBase {
         heading = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
-        botpose = table.getEntry("botpose").getDoubleArray(new double[6]);
+        botpose = table.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+
+        // if (botpose[5] < 0)
+        //     botpose[5] += 360;
 
         SmartDashboard.putNumber("LimelightX", heading);
         SmartDashboard.putNumber("LimelightY", y);

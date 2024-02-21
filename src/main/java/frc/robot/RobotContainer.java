@@ -45,9 +45,9 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(0);
   private final Joystick driver2 = new Joystick(1);
   /* Drive Controls */
-  private final int translationAxis = driver.getYChannel();
-  private final int strafeAxis = driver.getXChannel();
-  private final int rotationAxis = driver.getZChannel();
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   private final POVButton dPad_Right = new POVButton(driver2, 90, 0);
   private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
@@ -77,6 +77,7 @@ public class RobotContainer {
   public final Camera s_Camera = new Camera();
   public final Conveyor s_Conveyor = new Conveyor();
   // public final Lifter s_Lifter = new Lifter();
+
 
   // /* Commands */
   public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
@@ -192,6 +193,8 @@ public class RobotContainer {
     // s_Lifter.checkLimits();
     // s_Intaker.periodic();
     SmartDashboard.putString("Choosen Auto", chooser.getSelected());
+    SmartDashboard.putNumber("rotationAxis", rotationAxis);
+
   }
 
   public void killTeleop() {

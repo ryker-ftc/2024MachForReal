@@ -17,7 +17,7 @@ public class LimelightDrive extends CommandBase{
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private final double shootDistance = 65.0;
+    private final double shootDistance = Units.inchesToMeters(50);
     private double[] botpose;
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
@@ -36,22 +36,31 @@ public class LimelightDrive extends CommandBase{
     public void execute() {
         botpose = m_camera.getBotpose();
         final double anglekP = 0.025;
-        final double distancekP = 0.025;
-        double xError = shootDistance - botpose[0];
-        double yError = botpose[1];
-        double angleError = 180;
+        final double distancekP = 1;
+        double xError = shootDistance + botpose[2];
+        double yError = -botpose[0];
+        double angleError = -botpose[4];
+        
         
         // SmartDashboard.putNumber("distanceError", distanceError);
-        SmartDashboard.putNumber("angleError", angleError);
-        SmartDashboard.putNumber("angleError", angleError);
+        SmartDashboard.putNumber("LimelightxError", xError);
+        SmartDashboard.putNumber("LimelightyError", yError);
+        SmartDashboard.putNumber("LimelightangleError", angleError);
+
 
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
-        double xSpeed = limiter.calculate(xError * distancekP);
-        double ySpeed = limiter.calculate(yError * distancekP);
+        double xSpeed = xError * distancekP;
+        double ySpeed = yError * distancekP;
+
+        SmartDashboard.putNumber("LimelightxSpeed", xSpeed);
+        SmartDashboard.putNumber("LimelightySpeed", ySpeed);
+        SmartDashboard.putNumber("LimelightangleSpeed", angularSpeed);
+
+        
 
     
-        if (Math.abs(angleError) > 2 || Math.abs(xError) > 2 || Math.abs(xError) > 2 || timer.get() < timeout) {
-            m_swerve.drive(new Translation2d(-xSpeed, ySpeed), angularSpeed, false, true);
+        if (Math.abs(angleError) > 2 || Math.abs(xError) > 0.1 || Math.abs(yError) > 0.1 || timer.get() < timeout) {
+            m_swerve.drive(new Translation2d(-xSpeed, -ySpeed), angularSpeed, false, true);
         } else {
             complete = true;
         }
