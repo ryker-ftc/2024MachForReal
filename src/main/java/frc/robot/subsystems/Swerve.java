@@ -131,9 +131,10 @@ public class Swerve extends SubsystemBase {
   }
 
   public Rotation2d getYaw() {
-    return (Constants.Swerve.invertGyro)
-        ? Rotation2d.fromDegrees(360 - gyro.getAngle())
-        : Rotation2d.fromDegrees(gyro.getAngle());
+    return Rotation2d.fromDegrees(0);
+    // return (Constants.Swerve.invertGyro)
+    //     ? Rotation2d.fromDegrees(360 - gyro.getAngle())
+    //     : Rotation2d.fromDegrees(gyro.getAngle());
   }
 
   @Override

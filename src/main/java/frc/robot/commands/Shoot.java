@@ -6,6 +6,7 @@ import frc.robot.subsystems.Conveyor;
 public class Shoot extends CommandBase {
 	private Conveyor m_Conveyor;
     private double speed;
+    private boolean hasRun = false;
 
     public Shoot(Conveyor conveyor, double speed) {
         m_Conveyor = conveyor;
@@ -16,11 +17,12 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         m_Conveyor.shoot(speed);
+        hasRun = true;
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return hasRun;
     }
 
     @Override
