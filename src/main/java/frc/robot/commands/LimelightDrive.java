@@ -35,6 +35,8 @@ public class LimelightDrive extends CommandBase{
     @Override
     public void execute() {
         botpose = m_camera.getBotpose();
+        if (botpose[0] == 0)
+            return;
         final double anglekP = 0.025;
         final double distancekP = 1;
         double xError = shootDistance + botpose[2];

@@ -64,7 +64,9 @@ public class RobotContainer {
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
   // private final JoystickButton fastSpeed = new JoystickButton(driver,
   // XboxController.Button.kRightBumper.value);
-  private final SendableChooser<String> chooser;
+  private final SendableChooser<String> chooserColor;
+  private final SendableChooser<String> chooserTarget;
+
   // private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   //private final JoystickButton m_hangArmDownButton = new JoystickButton(driver2, XboxController.Button.kY.value);
   // private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
@@ -90,16 +92,24 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    chooser = new SendableChooser<String>();
-    chooser.setDefaultOption("straight forward", "straight");
-    chooser.addOption("amp blue", "amp blue"); // etc
-    chooser.addOption("amp red", "amo red");
-    chooser.addOption("does nothing", "stand still");
+    chooserColor = new SendableChooser<String>();
+    chooserColor.setDefaultOption("Red alliance", "red");
+    chooserColor.addOption("Blue alliance", "blue");
 
-    SmartDashboard.putData("Auto Selector", chooser);
+    chooserTarget = new SendableChooser<String>();
+    chooserTarget.setDefaultOption("Straight forward", "straight");
+    chooserTarget.addOption("Speaker", "speaker"); // etc
+    chooserTarget.addOption("Amp", "amp");
+    chooserTarget.addOption("Nothing", "nothing");
+
+    
+
+
+    SmartDashboard.putData("Color Auto Selector", chooserColor);
+    SmartDashboard.putData("Target Auto Selector", chooserTarget);
     // SendableRegistry.setName(chooser, "Auto Selector");
 
-    new ShuffleboardWrapper(chooser);
+    // new ShuffleboardWrapper(chooser);
   }
 
   public void teleopInit() {
@@ -181,7 +191,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     
-    return new BusterAuto(this, this.chooser, s_Camera);
+    return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
   }
 
   public void resetToAbsoluteNorth() {
@@ -194,8 +204,8 @@ public class RobotContainer {
   public void periodic() {
     // s_Lifter.checkLimits();
     // s_Intaker.periodic();
-    SmartDashboard.putString("Choosen Auto", chooser.getSelected());
-    SmartDashboard.putNumber("rotationAxis", rotationAxis);
+    SmartDashboard.putString("Choosen Auto Color", chooserColor.getSelected());
+    SmartDashboard.putString("Choosen Auto Target", chooserTarget.getSelected());
 
   }
 

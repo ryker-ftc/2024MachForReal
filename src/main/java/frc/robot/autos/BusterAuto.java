@@ -36,6 +36,7 @@ import frc.robot.commands.Shoot;
 
 
 public class BusterAuto extends SequentialCommandGroup {
+  private int color = 1;
   private RobotContainer m_robotContainer;
   private LimelightDrive limelightDrive;
   private Shoot c_shoot;
@@ -44,33 +45,39 @@ public class BusterAuto extends SequentialCommandGroup {
   private PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
 
-  public BusterAuto(RobotContainer container, SendableChooser<String> chooser, Camera camera) {
+  TrajectoryConfig trajectoryConfig;
+
+  public BusterAuto(RobotContainer container, SendableChooser<String> chooserColor, SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
     limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10);
     c_shoot = new Shoot(m_robotContainer.s_Conveyor, 1);
 
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+    trajectoryConfig = new TrajectoryConfig(
       AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared
     ).setKinematics(Constants.Swerve.swerveKinematics);
 
 
-    switch (chooser.getSelected()) {
-      case "speaker blue":
-        trajectory = TrajectoryGenerator.generateTrajectory(
-          new Pose2d(0, 0, new Rotation2d(0)),
-          List.of(
-            new Translation2d(0.5, 0)
-          ),
-          new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
-          trajectoryConfig);
+    if (chooserColor.getSelected() == "blue")
+      color = -1;
+      
+
+
+    switch (chooserTarget.getSelected()) {
+      case "speaker":
+        
 
 
         addCommands(
-          new InstantCommand(() -> c_shoot.execute()),
-          new WaitCommand(1),
-          trajectoryCmd(trajectory)
+          // new InstantCommand(() -> c_shoot.execute()),
+          // new WaitCommand(1),
+          
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          new WaitCommand(3),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0)),
+          trajectoryCmd(trajectory),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
 
           
         
@@ -78,12 +85,6 @@ public class BusterAuto extends SequentialCommandGroup {
 
           
         );
-
-      case "amp blue":
-
-      case "speaker red":
-
-      case "amp red":
   
 
       // case "speaker blue":
@@ -126,39 +127,7 @@ public class BusterAuto extends SequentialCommandGroup {
       //     new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.6)));
       //   break;
     
-      // case "straight":
-      //   addCommands(
-      //       //  new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-      //       //  new WaitCommand(3),
-      //       //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.2, 0), 0, false, false)),
-      //       new WaitCommand(2),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false)));
-      //   break;
-      // case "left":
-      //   addCommands(
-      //     // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-      //     //  new WaitCommand(3),
-      //     //  new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(2.25, 0), 0, false, false)),
-      //       new WaitCommand(2.5),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
 
-      //   );
-      //   break;
-      // case "right":
-      //   addCommands(
-      //       // new InstantCommand(() -> m_robotContainer.s_Intaker.push()),
-      //       // new WaitCommand(3),
-      //       // new InstantCommand((() -> m_robotContainer.s_Intaker.stop())),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, -4.5), 0, false, true)),
-      //       new WaitCommand(3),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(4.5, 0), 0, false, true)),
-      //       new WaitCommand(3),
-      //       new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
-
-      //   );
-      //   break;
       case "none":
         break;
 
@@ -166,6 +135,13 @@ public class BusterAuto extends SequentialCommandGroup {
   }
 
   public SwerveControllerCommand trajectoryCmd(Trajectory trajectory) {
+    trajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0 * color, new Rotation2d(0)),
+      List.of(
+        new Translation2d(0.1, 0 * color)
+      ),
+      new Pose2d(0.5, 0 * color, Rotation2d.fromDegrees(0)),
+      trajectoryConfig);
     return new SwerveControllerCommand(
       trajectory,
       m_robotContainer.s_Swerve::getPose,

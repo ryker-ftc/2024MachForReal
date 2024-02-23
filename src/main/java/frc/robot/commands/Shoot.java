@@ -17,12 +17,11 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         m_Conveyor.shoot(speed);
-        hasRun = true;
     }
 
     @Override
     public boolean isFinished() {
-        return hasRun;
+        return false;
     }
 
     @Override

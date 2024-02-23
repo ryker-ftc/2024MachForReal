@@ -68,6 +68,7 @@ public class Conveyor extends SubsystemBase {
         placementMotor.set(0.2);
         flywheelMotorLeft.set(-speed);
         flywheelMotorRight.set(-speed);
+        
     }
     // this is the default state of the intake motor - do not move.
     public void stop() {
