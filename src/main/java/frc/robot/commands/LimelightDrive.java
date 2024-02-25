@@ -10,14 +10,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
-public class LimelightDrive extends Command{ 
+public class LimelightDrive extends Command { 
     private Camera m_camera;
     private Swerve m_swerve;
     private boolean complete = false;
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private final double shootDistance = Units.inchesToMeters(45);
+    private final double shootDistance = Units.inchesToMeters(50);
     private double[] botpose;
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
@@ -50,8 +50,6 @@ public class LimelightDrive extends Command{
         SmartDashboard.putNumber("LimelightangleError", angleError);
 
 
-        // try using ProfiledPIDController or SlewRateLimiter to limit acceleration in the future
-
         double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
         double xSpeed = xError * distancekP;
         double ySpeed = yError * distancekP;
@@ -63,7 +61,7 @@ public class LimelightDrive extends Command{
         
 
     
-        if (Math.abs(angleError) > 4 || Math.abs(xError) > 0.1 || Math.abs(yError) > 0.1 || timer.get() < timeout) {
+        if (Math.abs(angleError) > 2 || Math.abs(xError) > 0.1 || Math.abs(yError) > 0.1 || timer.get() < timeout) {
             m_swerve.drive(new Translation2d(-xSpeed, -ySpeed), angularSpeed, false, true);
         } else {
             complete = true;
