@@ -98,8 +98,8 @@ public class RobotContainer {
 
     chooserTarget = new SendableChooser<String>();
     chooserTarget.setDefaultOption("Straight forward", "straight");
-    chooserTarget.addOption("Speaker", "speaker"); // etc
-    chooserTarget.addOption("Amp", "amp");
+    chooserTarget.addOption("4 note auto", "4 note auto"); // etc
+    chooserTarget.addOption("2 note auto", "2 note auto");
     chooserTarget.addOption("Nothing", "nothing");
 
     
