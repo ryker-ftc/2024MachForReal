@@ -89,6 +89,8 @@ public class BusterAuto extends SequentialCommandGroup {
 
         );
 
+        break;
+
 
       case "4 note auto":
         
