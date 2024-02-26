@@ -23,11 +23,9 @@ import frc.robot.subsystems.Swerve;
 import java.util.ArrayList;
 import java.util.List;
 
-// import com.pathplanner.lib.PathConstraints;
-// import com.pathplanner.lib.PathPlanner;
-// import com.pathplanner.lib.PathPlannerTrajectory;
-// import com.pathplanner.lib.PathPoint;
-// import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Camera;
@@ -66,32 +64,117 @@ public class BusterAuto extends SequentialCommandGroup {
 
 
     switch (chooserTarget.getSelected()) {
-      case "speaker":
-        
 
+      case "2 note auto":
 
         addCommands(
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+
+
+
+          
+        
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
+          new WaitCommand(1), 
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+
+        );
+
+
+      case "4 note auto":
+        
+        addCommands(
+
+
+
+
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("bottom speaker"))
+
+
+
+
+
+          
+
+        
           // new InstantCommand(() -> c_shoot.execute()),
           // new WaitCommand(1),
+
+          // intakeShootLoop(new double[]{1.1}, new double[]{0}, 1.2, 1.45);
+          // intakeShootLoop(new double[]{0, -0.6}, new double[]{-1.45, -1.45}, 0, 0);
+          // intakeShootLoop(new double[]{0.6}, new double[]{0}, 0, 0);
+          // intakeShootLoop(new double[]{0, -0.6}, new double[]{1.45, 1.45}, 0, 0);
           
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          trajectoryCmd(new double[]{}, new double[]{}, 1, 0),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          // // trajectoryCmd(new double[]{-1.1}, new double[]{0}, -1.2, 1.45),
+          
+          // new SwerveControllerCommand(
+          //   TrajectoryGenerator.generateTrajectory(
+          //   new Pose2d(0, 0 * colorFactor, new Rotation2d(0)),
+          //   // waypointList,
+          //   List.of(
+          //     // new Translation2d(-1.1, 0 * colorFactor)
+          //   ),
+          //   new Pose2d(0, 1 * colorFactor, Rotation2d.fromDegrees(0)),
+          //   trajectoryConfig),
+          //   m_robotContainer.s_Swerve::getPose,
+          //   Constants.Swerve.swerveKinematics,
+          //   xController,
+          //   yController,
+          //   thetaController,
+          //   m_robotContainer.s_Swerve::setModuleStates,
+          //   m_robotContainer.s_Swerve
+          // ),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0.2)),
+          // new WaitCommand(2),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          // trajectoryCmd(new double[]{0, -0.6}, new double[]{-1.45, -1.45}, 0, 0),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          // new WaitCommand(2),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          // trajectoryCmd(new double[]{0, -0.6}, new double[]{-1.45, -1.45}, 0, 0),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          // new WaitCommand(2),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+
+
+
           // check if have to reset odometry
 
-
+        );
           
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
-          new WaitCommand(3),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(0)),
-          trajectoryCmd(new double[]{}, new double[]{}, 1, 2),
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, false))
+          
 
           
         
          // new WaitCommand(1),
 
           
-        );
+        
+
+        break;
+
+      case "amp":
+        break;
 
       case "none":
         break;
@@ -122,6 +205,28 @@ public class BusterAuto extends SequentialCommandGroup {
       m_robotContainer.s_Swerve::setModuleStates,
       m_robotContainer.s_Swerve
     );
+  }
+
+  public void intakeShootLoop(double[] waypointX, double[] waypointY, double endX, double endY) {
+    addCommands(
+      new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+      trajectoryCmd(waypointX, waypointY, endX, endY),
+      new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+      m_robotContainer.c_LimelightDrive,
+      new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+      new WaitCommand(2),
+      new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+    );
+
+    // return new SequentialCommandGroup(
+    //   new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+    //   trajectoryCmd(waypointX, waypointY, endX, endY),
+    //   new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+    //   m_robotContainer.c_LimelightDrive,
+    //   new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+    //   new WaitCommand(2),
+    //   new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+    // );
   }
 
 }

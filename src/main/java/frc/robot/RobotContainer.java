@@ -54,7 +54,7 @@ public class RobotContainer {
   private final POVButton dPad_Top = new POVButton(driver2, 0, 0);
   private final POVButton dPad_Left = new POVButton(driver2, 270, 0);
   private final POVButton dPad_Down = new POVButton(driver2, 180);
-  private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
+  // private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton leftBumper = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
   private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kA.value);
 
@@ -150,7 +150,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     // Changed version 
-    aButton.whileTrue(c_GroundIntake);
+    // aButton.whileTrue(c_GroundIntake);
     leftBumper.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
     limeLightDriveButton.whileTrue(c_LimelightDrive);
@@ -204,6 +204,11 @@ public class RobotContainer {
   public void periodic() {
     // s_Lifter.checkLimits();
     // s_Intaker.periodic();
+
+    if (driver2.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5) {
+      s_Conveyor.groundIntake();
+    }
+
     SmartDashboard.putString("Choosen Auto Color", chooserColor.getSelected());
     SmartDashboard.putString("Choosen Auto Target", chooserTarget.getSelected());
 

@@ -45,10 +45,10 @@ public class TeleopSwerve extends Command {
   @Override
   public void execute() {
 
-    double defaultSpeedMultiplier = 0.1;
+    double defaultSpeedMultiplier = 0.7;
     double speedMultiplier = defaultSpeedMultiplier;
     if (slowSpeedSup.getAsBoolean()) {
-      speedMultiplier = 0.1;
+      speedMultiplier = 0.5;
     } else if (turboSup.getAsBoolean()) {
       speedMultiplier = 1.0;
     }
