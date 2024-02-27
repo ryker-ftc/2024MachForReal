@@ -99,7 +99,7 @@ public class BusterAuto extends SequentialCommandGroup {
 
 
 
-          AutoBuilder.followPath(PathPlannerPath.fromPathFile("bottom speaker"))
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("bottom to speaker"))
 
 
 
