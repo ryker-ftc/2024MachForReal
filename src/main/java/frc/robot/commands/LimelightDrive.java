@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Timer;
@@ -10,14 +10,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
-public class LimelightDrive extends Command { 
+public class LimelightDrive extends CommandBase{ 
     private Camera m_camera;
     private Swerve m_swerve;
     private boolean complete = false;
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private final double shootDistance = Units.inchesToMeters(50);
+    private final double shootDistance = Units.inchesToMeters(40);
     private double[] botpose;
 
     public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
@@ -35,12 +35,8 @@ public class LimelightDrive extends Command {
     @Override
     public void execute() {
         botpose = m_camera.getBotpose();
-        if (botpose[0] == 0) {
-            complete = true;
-            return;
-        }
-        final double anglekP = 0.025;
-        final double distancekP = 1;
+        final double anglekP = 0.005;
+        final double distancekP = 0.1;
         double xError = shootDistance + botpose[2];
         double yError = -botpose[0];
         double angleError = -botpose[4];

@@ -68,7 +68,7 @@ public class BusterAuto extends SequentialCommandGroup {
       case "2 note auto":
 
         addCommands(
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
@@ -81,7 +81,10 @@ public class BusterAuto extends SequentialCommandGroup {
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
           new WaitCommand(1), 
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0.2, 0), 0, false, true)),
+          new WaitCommand(1), 
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
@@ -97,9 +100,25 @@ public class BusterAuto extends SequentialCommandGroup {
         addCommands(
 
 
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 3")),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          new WaitCommand(2),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
 
 
-          AutoBuilder.followPath(PathPlannerPath.fromPathFile("bottom to speaker"))
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          // AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 1")),
+          // AutoBuilder.followPath(PathPlannerPath.fromPathFile("1 to speaker")),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          // new WaitCommand(2),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+
+
 
 
 
