@@ -31,7 +31,7 @@ public class Swerve extends SubsystemBase {
 
   private Field2d field;
 
-  private ChassisSpeeds lastChassisSpeeds;
+  private ChassisSpeeds lastChassisSpeeds = new ChassisSpeeds(0, 0, 0);
 
   public Swerve() {
     gyro = new AnalogGyro(0);
@@ -124,6 +124,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void driveFromChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+    chassisSpeeds = new ChassisSpeeds(-chassisSpeeds.vxMetersPerSecond, -chassisSpeeds.vyMetersPerSecond, 0);
     SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
 
 
@@ -181,7 +182,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public Rotation2d getYaw() {
-    return Rotation2d.fromDegrees(0);
+    return Rotation2d.fromDegrees(180);
     // return (Constants.Swerve.invertGyro)
     //     ? Rotation2d.fromDegrees(360 - gyro.getAngle())
     //     : Rotation2d.fromDegrees(gyro.getAngle());
