@@ -17,14 +17,16 @@ public class LimelightDrive extends CommandBase{
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private final double shootDistance = Units.inchesToMeters(40);
+    private double shootDistance = Units.inchesToMeters(40);
     private double[] botpose;
 
-    public LimelightDrive(Camera camera, Swerve swerve, double timeout) {
+    public LimelightDrive(Camera camera, Swerve swerve, double timeout, double distance) {
         m_camera = camera;
         m_swerve  = swerve;
         this.timeout = timeout;
         addRequirements(m_swerve);
+        shootDistance = Units.inchesToMeters(distance);
+
     }
 
     @Override
@@ -48,7 +50,7 @@ public class LimelightDrive extends CommandBase{
         SmartDashboard.putNumber("LimelightangleError", angleError);
 
 
-        double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity*0.5, Constants.Swerve.maxAngularVelocity*0.5);
+        double angularSpeed = MathUtil.clamp(angleError * anglekP, -Constants.Swerve.maxAngularVelocity, Constants.Swerve.maxAngularVelocity*0.5);
         double xSpeed = xError * distancekP;
         double ySpeed = yError * distancekP;
 
