@@ -48,9 +48,9 @@ public class TeleopSwerve extends Command {
     double defaultSpeedMultiplier = 0.7;
     double speedMultiplier = defaultSpeedMultiplier;
     if (slowSpeedSup.getAsBoolean()) {
-      speedMultiplier = 0.5;
+      speedMultiplier = 0.4;
     } else if (turboSup.getAsBoolean()) {
-      speedMultiplier = 1.0;
+      speedMultiplier = 0.1;
     }
 
     SmartDashboard.putNumber("Controller X", translationSup.getAsDouble());
@@ -88,7 +88,7 @@ public class TeleopSwerve extends Command {
         // strafe axes on the joystick.
         // The translation values will be from -maxSpeed to +maxSpeed
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
-        rotationVal * Constants.Swerve.maxAngularVelocity,
+        rotationVal * Constants.Swerve.maxAngularVelocity * 0.7,
         robotCentricSup.getAsBoolean(),
         // Pass isOpenLoop as true
         true);
