@@ -48,7 +48,7 @@ public class BusterAuto extends SequentialCommandGroup {
 
   public BusterAuto(RobotContainer container, SendableChooser<String> chooserColor, SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
-    limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10);
+    //limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10, );
     c_shoot = new Shoot(m_robotContainer.s_Conveyor, 1);
 
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -68,7 +68,7 @@ public class BusterAuto extends SequentialCommandGroup {
       case "2 note auto":
 
         addCommands(
-          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 50),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
@@ -78,13 +78,14 @@ public class BusterAuto extends SequentialCommandGroup {
           
         
           new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
-          new WaitCommand(1), 
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 115),
+          // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
+          // new WaitCommand(1), 
+          // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0.2, 0), 0, false, true)),
           new WaitCommand(1), 
           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
-          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 0),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
