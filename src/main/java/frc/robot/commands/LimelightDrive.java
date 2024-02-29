@@ -32,15 +32,21 @@ public class LimelightDrive extends CommandBase{
     @Override
     public void initialize() {
         complete = false;
+        timer.start();
     }
 
     @Override
     public void execute() {
+
         botpose = m_camera.getBotpose();
         final double anglekP = 0.005;
         final double distancekP = 0.1;
+        if (botpose[0] == 0) {
+            complete = true;
+            m_swerve.drive(new Translation2d(0, 0), 0, false, false);
+        }
         double xError = shootDistance + botpose[2];
-        double yError = -botpose[0];
+        double yError = -0.2-botpose[0];
         double angleError = -botpose[4];
         
         

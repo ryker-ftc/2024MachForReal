@@ -68,7 +68,7 @@ public class BusterAuto extends SequentialCommandGroup {
       case "2 note auto":
 
         addCommands(
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 50),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 2, 45),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
@@ -78,15 +78,15 @@ public class BusterAuto extends SequentialCommandGroup {
           
         
           new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 115),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 3.5, 98),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
           // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
           // new WaitCommand(1), 
           // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0.2, 0), 0, false, true)),
-          new WaitCommand(1), 
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100, 0),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),          
+
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 45),
+
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
           new WaitCommand(2),
           new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
@@ -195,7 +195,13 @@ public class BusterAuto extends SequentialCommandGroup {
 
         break;
 
-      case "amp":
+      case "drive forward":
+        addCommands(
+          new WaitCommand(12),
+           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(1, 0), 0, false, true)),
+           new WaitCommand(2),
+           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+        );
         break;
 
       case "none":
