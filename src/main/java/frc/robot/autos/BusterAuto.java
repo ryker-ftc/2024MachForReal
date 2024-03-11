@@ -88,8 +88,10 @@ public class BusterAuto extends SequentialCommandGroup {
           new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 45),
 
           new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
-          new WaitCommand(2),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+          new WaitCommand(1),
+          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 80)
+
 
         );
 
@@ -198,7 +200,7 @@ public class BusterAuto extends SequentialCommandGroup {
       case "drive forward":
         addCommands(
           new WaitCommand(12),
-           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(1, 0), 0, false, true)),
+           new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, -0.2 * colorFactor), 0, false, true)),
            new WaitCommand(2),
            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
         );
@@ -206,7 +208,18 @@ public class BusterAuto extends SequentialCommandGroup {
 
       case "none":
         break;
-
+      case "boom and zoom":
+      addCommands(
+        new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+        new WaitCommand(1),
+        new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+        new WaitCommand(10),
+        new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.1, 0), 0, false, true)),
+        new WaitCommand(1.5),
+        new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.1, 0.1*colorFactor), 0, false, true)),
+        new WaitCommand(1.5),
+        new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+      );
     }
   }
 

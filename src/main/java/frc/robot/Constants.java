@@ -145,35 +145,38 @@ public final class Constants {
   public static final class LiftConstants {
     /* Lift module - Module 5 */
     public static final class Mod5 {
+    public static final int leftMotorID = 17;
+    public static final int rightMotorID = 24;
+    
      /*Extra uneeded stuff (may need if we use the joystick to control the lifter)*/
-     public static final double kLiftGearing = 12;
-     public static final double kLifterDrumRadius = Units.inchesToMeters(0.046875);
-     public static final double kCarriageMass = 4.0;
-     public static final double kEncoderDistancePerPulse = (1.0/42) * (kLifterDrumRadius * 2 * Math.PI);
-     public static final double kLifterMinHeight = 0;
-     public static final double kLifterMaxHeight = Units.inchesToMeters(50.0);
-      public static final int kLiftMotorID = 14;
+    //  public static final double kLiftGearing = 12;
+    //  public static final double kLifterDrumRadius = Units.inchesToMeters(0.046875);
+    //  public static final double kCarriageMass = 4.0;
+    //  public static final double kEncoderDistancePerPulse = (1.0/42) * (kLifterDrumRadius * 2 * Math.PI);
+    //  public static final double kLifterMinHeight = 0;
+    //  public static final double kLifterMaxHeight = Units.inchesToMeters(50.0);
+    //   public static final int kLiftMotorID = 14;
 
-      public static final double kPulleyRatio = ((kLifterDrumRadius * 2.0) * Math.PI);
-      public static final int kEncoderChannelA = 14;
-      public static final int kEncoderChannelB = 15;
+    //   public static final double kPulleyRatio = ((kLifterDrumRadius * 2.0) * Math.PI);
+    //   public static final int kEncoderChannelA = 14;
+    //   public static final int kEncoderChannelB = 15;
 
-      /* Lifter Motor PID Values */
-      public static final double angleKP = 0.01;
-      public static final double angleKI = 0.0;
-      public static final double angleKD = 0.0;
-      public static final double angleKFF = 0.0;
+    //   /* Lifter Motor PID Values */
+    //   public static final double angleKP = 0.01;
+    //   public static final double angleKI = 0.0;
+    //   public static final double angleKD = 0.0;
+    //   public static final double angleKFF = 0.0;
 
       
 
-      public static final int demand = 1;
+      // public static final int demand = 1;
 
-      /*Lifter Motor Conversion Factors */
-      public static final double kLifterMotorPositionFactor = 1;
-      public static final double kLifterMotorVelocityFactor = 1;
+      // /*Lifter Motor Conversion Factors */
+      // public static final double kLifterMotorPositionFactor = 1;
+      // public static final double kLifterMotorVelocityFactor = 1;
 
-      public static final DigitalInput toplimitSwitch = new DigitalInput(0);
-      public static final DigitalInput bottomlimitSwitch = new DigitalInput(1);
+      // public static final DigitalInput toplimitSwitch = new DigitalInput(0);
+      // public static final DigitalInput bottomlimitSwitch = new DigitalInput(1);
       // PWMVictorSPX motor = new PWMVictorSPX(0);
       // Joystick joystick = new Joystick(0);
     }

@@ -13,7 +13,7 @@ public class HangarmUp extends Command {
 
     @Override
     public void execute() {
-        m_hangarm.retract();
+        m_hangarm.extend();
     }
 
     @Override

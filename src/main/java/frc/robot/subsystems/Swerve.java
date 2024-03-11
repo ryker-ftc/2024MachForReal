@@ -214,10 +214,10 @@ public class Swerve extends SubsystemBase {
   public void setX() {
      //removeDefaultCommand();
      SmartDashboard.putString("Last X?", new Date().toString());
-     mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false, false); //Front Left
-     mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false, false); //Front Right
-     mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false, false); //Back Left
-     mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false, false); //Back Right
+     mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-135)), false, false); //Front Left
+     mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)), false, false); //Front Right
+     mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)), false, false); //Back Left
+     mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-135)), false, false); //Back Right
   }
 
 
