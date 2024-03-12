@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import java.util.Date;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -16,7 +17,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,8 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
-  private final AnalogGyro gyro;
-
+  private PigeonIMU gyro = new PigeonIMU(0); /* example Pigeon with device ID 0 */
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
 
@@ -34,7 +33,6 @@ public class Swerve extends SubsystemBase {
   private ChassisSpeeds lastChassisSpeeds = new ChassisSpeeds(0, 0, 0);
 
   public Swerve() {
-    gyro = new AnalogGyro(0);
     // gyro.configFactoryDefault();
     zeroGyro();
 
@@ -149,9 +147,10 @@ public class Swerve extends SubsystemBase {
 
   // note: pose and odometry are only used for status readouts
   public Pose2d getPose() {
+
     SmartDashboard.putNumber("pose X", swerveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("pose Y", swerveOdometry.getPoseMeters().getY());
-    SmartDashboard.putNumber("gyro angle", gyro.getAngle());
+    SmartDashboard.putNumber("gyro angle", getYaw().getDegrees());
     return swerveOdometry.getPoseMeters();
   }
 
@@ -178,11 +177,14 @@ public class Swerve extends SubsystemBase {
   }
 
   public void zeroGyro() {
-    gyro.reset();
   }
 
   public Rotation2d getYaw() {
-    return Rotation2d.fromDegrees(180);
+    PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+    gyro.getGeneralStatus(genStatus);
+    double [] ypr = new double[3];
+    gyro.getYawPitchRoll(ypr);
+    return Rotation2d.fromDegrees(ypr[0]);
     // return (Constants.Swerve.invertGyro)
     //     ? Rotation2d.fromDegrees(360 - gyro.getAngle())
     //     : Rotation2d.fromDegrees(gyro.getAngle());
