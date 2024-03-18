@@ -62,6 +62,9 @@ public class RobotContainer {
   private final JoystickButton trapLightDriveButton = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
+  private final JoystickButton hangarmUpButton = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton hangarmDownButton = new JoystickButton(driver, XboxController.Button.kA.value);
+
   // private final JoystickButton ykey = new JoystickButton(driver, XboxController.Button.kY.value);
   // private final JoystickButton xKey = new JoystickButton(driver, XboxController.Button.kX.value);
 
@@ -84,7 +87,7 @@ public class RobotContainer {
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
   public final Conveyor s_Conveyor = new Conveyor();
-  //public final Hangarm s_Hangarm = new Hangarm();
+  public final Hangarm s_Hangarm = new Hangarm();
 
 
   // /* Commands */
@@ -93,6 +96,8 @@ public class RobotContainer {
   public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
   public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30, 40);
   public final LimelightDrive c_runTheTrap = new LimelightDrive(s_Camera, s_Swerve, 30, 22);
+  public final HangarmUp c_HangarmUp = new HangarmUp(s_Hangarm);
+  public final HangarmDown c_HangarmDown = new HangarmDown(s_Hangarm);
   
   // public final HangarmDown c_HangarmDown = new HangarmDown(s_Hangarm);
   // public final HangarmUp c_HangarmUp = new HangarmUp(s_Hangarm);
@@ -165,7 +170,9 @@ public class RobotContainer {
     leftBumper.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
     limeLightDriveButton.whileTrue(c_LimelightDrive);
-    trapLightDriveButton.whileTrue(c_runTheTrap);  
+    trapLightDriveButton.whileTrue(c_runTheTrap);
+    hangarmUpButton.whileTrue(c_HangarmUp);  
+    hangarmDownButton.whileTrue(c_HangarmDown); 
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
