@@ -47,7 +47,7 @@ public class Conveyor extends SubsystemBase {
     public void groundIntake() {
         TCSColor color = colorSensor.readColors();
         SmartDashboard.putString("Conveyor Status", "GROUNDINTAKE");
-        if (color.equals(noteColor)){
+        if (!color.equals(noteColor)){
             intakeMotor.set(1);
             placementMotor.set(0.4);
         } 
