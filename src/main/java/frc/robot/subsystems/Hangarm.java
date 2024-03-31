@@ -24,8 +24,8 @@ public class Hangarm extends SubsystemBase {
 
 
     public Hangarm() {
-        leftMotor = new CANSparkMax(Mod5.leftMotorID, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(Mod5.rightMotorID, MotorType.kBrushless);
+        leftMotor = new CANSparkMax(Mod5.leftMotorId, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(Mod5.rightMotorId, MotorType.kBrushless);
         leftEncoder = leftMotor.getEncoder();
         rightEncoder = rightMotor.getEncoder();
     }
