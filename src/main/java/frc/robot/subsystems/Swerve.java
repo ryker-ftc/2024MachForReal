@@ -34,7 +34,7 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     // gyro.configFactoryDefault();
-    zeroGyro();
+    zeroGyro(0);
 
     mSwerveMods = new SwerveModule[] {
         new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -176,7 +176,10 @@ public class Swerve extends SubsystemBase {
     return positions;
   }
 
-  public void zeroGyro() {
+  public void zeroGyro(double angle) {
+    gyro.setYaw(angle);
+    gyro.setFusedHeading(angle);
+
   }
 
   public Rotation2d getYaw() {
@@ -187,7 +190,7 @@ public class Swerve extends SubsystemBase {
     return Rotation2d.fromDegrees(ypr[0]);
     // return (Constants.Swerve.invertGyro)
     //     ? Rotation2d.fromDegrees(360 - gyro.getAngle())
-    //     : Rotation2d.fromDegrees(gyro.getAngle());
+    //     : Rotation2xd.fromDegrees(gyro.getAngle());
   }
 
   @Override
