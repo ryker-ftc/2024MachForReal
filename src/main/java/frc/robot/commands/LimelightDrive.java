@@ -44,7 +44,8 @@ public class LimelightDrive extends CommandBase{
         if (botpose[0] == 0) {
             complete = true;
             m_swerve.drive(new Translation2d(0, 0), 0, false, false);
-        }
+            return;
+      }
         double xError = shootDistance + botpose[2];
         double yError = -0.2-botpose[0];
         double angleError = -botpose[4];

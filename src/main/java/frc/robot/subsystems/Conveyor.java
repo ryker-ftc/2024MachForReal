@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.TCS34725ColorSensor;
+import frc.lib.TCS34725ColorSensor.TCSColor;
 import frc.robot.Constants;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.ConveyorConstants.Mod4;
@@ -24,13 +26,16 @@ public class Conveyor extends SubsystemBase {
     private final CANSparkMax placementMotor;
     private final CANSparkMax flywheelMotorLeft;
     private final CANSparkMax flywheelMotorRight;
-    
+    private TCS34725ColorSensor colorSensor;
+    private final TCSColor noteColor = new TCSColor(0, 0, 0, 0);
 
     public Conveyor() {
         intakeMotor = new CANSparkMax(Mod4.intakeMotorID, MotorType.kBrushless);
         placementMotor = new CANSparkMax(Mod4.placementMotorID, MotorType.kBrushless);
         flywheelMotorLeft = new CANSparkMax(Mod4.flywheelMotorIDLeft, MotorType.kBrushless);
         flywheelMotorRight = new CANSparkMax(Mod4.flywheelMotorIDRight, MotorType.kBrushless);
+        colorSensor = new TCS34725ColorSensor();
+        colorSensor.init();
     }
 
 
@@ -40,9 +45,12 @@ public class Conveyor extends SubsystemBase {
 
 
     public void groundIntake() {
+        TCSColor color = colorSensor.readColors();
         SmartDashboard.putString("Conveyor Status", "GROUNDINTAKE");
-        intakeMotor.set(1);
-        placementMotor.set(0.4);
+        if (!color.equals(noteColor)){
+            intakeMotor.set(1);
+            placementMotor.set(0.4);
+        } 
     }
 
     public void groundOuttake() {
