@@ -31,8 +31,8 @@ public class Conveyor extends SubsystemBase {
     private final TCSColor noteColor = new TCSColor(0, 0, 0, 0);
 
     public Conveyor() {
-        intakeMotorTop = new CANSparkMax(Mod4.intakeMotorID, MotorType.kBrushless);
-        intakeMotorBottom = new CANSparkMax(Mod4.intakeMotorID, MotorType.kBrushless);
+        intakeMotorTop = new CANSparkMax(Mod4.intakeMotorIDTop, MotorType.kBrushless);
+        intakeMotorBottom = new CANSparkMax(Mod4.intakeMotorIDBottom, MotorType.kBrushless);
         placementMotor = new CANSparkMax(Mod4.placementMotorID, MotorType.kBrushless);
         flywheelMotorLeft = new CANSparkMax(Mod4.flywheelMotorIDLeft, MotorType.kBrushless);
         flywheelMotorRight = new CANSparkMax(Mod4.flywheelMotorIDRight, MotorType.kBrushless);
@@ -43,11 +43,20 @@ public class Conveyor extends SubsystemBase {
 
     public void periodic() {
         // SmartDashboard.putNumber("Intake speed", intakeMotor.get());
+        SmartDashboard.putNumber("Speed", flywheelMotorLeft.getEncoder().getVelocity());
+        SmartDashboard.putNumber("red COLORSENSOR", colorSensor.readColors().getR());
+        SmartDashboard.putNumber("green COLORSENSOR", colorSensor.readColors().getG());
+        SmartDashboard.putNumber("blue COLORSENSOR", colorSensor.readColors().getB());
+        SmartDashboard.putNumber("C COLORSENSOR", colorSensor.readColors().getC());
+        
+
+
     }
 
 
     public void groundIntake() {
         TCSColor color = colorSensor.readColors();
+        
         SmartDashboard.putString("Conveyor Status", "GROUNDINTAKE");
         // if (!color.equals(noteColor)){
         //     intakeMotor.set(1);
@@ -72,16 +81,19 @@ public class Conveyor extends SubsystemBase {
     public void spinUp(double speed){
         SmartDashboard.putString("Conveyor Status", "SPINUP");
         SmartDashboard.putNumber("Conveyor Shoot Speed", speed);
-        flywheelMotorLeft.set(-speed);
-        flywheelMotorRight.set(-speed);
+        flywheelMotorLeft.set(-1);
+        flywheelMotorRight.set(1);
+
     }
 
     public void shoot(double speed) {
         SmartDashboard.putString("Conveyor Status", "SHOOT");
         SmartDashboard.putNumber("Conveyor Shoot Speed", speed);
-        placementMotor.set(0.2);
-        flywheelMotorLeft.set(-speed);
-        flywheelMotorRight.set(-speed);
+        intakeMotorTop.set(0.7);
+        intakeMotorBottom.set(-0.7);
+        placementMotor.set(0.7);
+        flywheelMotorLeft.set(-1);
+        flywheelMotorRight.set(1);
         
     }
     // this is the default state of the intake motor - do not move.

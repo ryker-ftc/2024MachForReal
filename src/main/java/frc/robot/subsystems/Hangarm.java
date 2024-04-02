@@ -31,22 +31,22 @@ public class Hangarm extends SubsystemBase {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("left Pos", leftEncoder.getPosition() );
-        SmartDashboard.putNumber("right Pos", rightEncoder.getPosition() );
+        SmartDashboard.putNumber("left Pos", leftEncoder.getPosition());
+        SmartDashboard.putNumber("right Pos", rightEncoder.getPosition());
     }
 
     // extend hangarm
     public void extend() {
         SmartDashboard.putString("Hangarm Status", "EXTEND");
-        if (leftEncoder.getPosition() < EXTENDED_POS)leftMotor.set(-0.5);
-        if (leftEncoder.getPosition() < EXTENDED_POS)rightMotor.set(0.5);
+        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ leftMotor.set(0.5);
+        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ rightMotor.set(0.5);
     }
 
     // retract hangarm
     public void retract() {
         SmartDashboard.putString("Hangarm Status", "RETRACT");
-        if (leftEncoder.getPosition() < RETRACTED_POS) leftMotor.set(0.5);
-        if (rightEncoder.getPosition() < RETRACTED_POS) rightMotor.set(-0.5);
+        /*if (leftEncoder.getPosition() < RETRACTED_POS)*/ leftMotor.set(-0.5);
+        /*if (rightEncoder.getPosition() < RETRACTED_POS)*/ rightMotor.set(-0.5);
     }
 
     // this is the default state of the intake motor - do not move.

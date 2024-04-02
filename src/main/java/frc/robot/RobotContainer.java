@@ -29,6 +29,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -58,7 +59,7 @@ public class RobotContainer {
   private final POVButton dPad_Down = new POVButton(driver2, 180);
   private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton leftBumper = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kA.value);
+  // private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton trapLightDriveButton = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
@@ -88,6 +89,8 @@ public class RobotContainer {
   public final Camera s_Camera = new Camera();
   public final Conveyor s_Conveyor = new Conveyor();
   public final Hangarm s_Hangarm = new Hangarm();
+
+
 
 
   // /* Commands */
@@ -126,6 +129,13 @@ public class RobotContainer {
     // SendableRegistry.setName(chooser, "Auto Selector");
 
     // new ShuffleboardWrapper(chooser);
+
+    NamedCommands.registerCommand("shoot", new Shoot(s_Conveyor, 1).withTimeout(2));
+    NamedCommands.registerCommand("intake", new InstantCommand(() -> new GroundIntake(s_Conveyor)));
+    NamedCommands.registerCommand("stop", new InstantCommand(() -> s_Conveyor.stop()));
+
+
+
   }
 
   public void teleopInit() {
@@ -169,14 +179,18 @@ public class RobotContainer {
     aButton.whileTrue(c_GroundIntake);
     leftBumper.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
-    limeLightDriveButton.whileTrue(c_LimelightDrive);
+    // limeLightDriveButton.whileTrue(c_LimelightDrive);
     trapLightDriveButton.whileTrue(c_runTheTrap);
     hangarmUpButton.whileTrue(c_HangarmUp);  
     hangarmDownButton.whileTrue(c_HangarmDown); 
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
-    dPad_Top.whileTrue(new Shoot(s_Conveyor, 1));   
+    dPad_Top.whileTrue(( new SpinUp(s_Conveyor, 1).withTimeout(0.5))
+    .andThen(new Shoot(s_Conveyor, 1).withTimeout(2))
+
+
+    );   
     dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); //0.6
     dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); //0.5
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); //0.2
@@ -211,9 +225,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 
-    // return new PathPlannerAuto("auto test");
+    return new PathPlannerAuto("auto test");
     
-    return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
+    // return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
   }
 
   public void resetToAbsoluteNorth() {

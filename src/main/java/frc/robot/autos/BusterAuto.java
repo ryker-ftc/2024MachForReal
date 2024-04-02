@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -68,29 +69,31 @@ public class BusterAuto extends SequentialCommandGroup {
       case "2 note auto":
 
         addCommands(
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 2, 45),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
-          new WaitCommand(2),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          new PathPlannerAuto("2 note")
+
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 2, 45),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          // new WaitCommand(2),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),  
 
 
 
           
         
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 3.5, 98),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 3.5, 98),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
           // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
           // new WaitCommand(1), 
           // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),
-          new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),          
+          // new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)),          
 
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 45),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 45),
 
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
-          new WaitCommand(1),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
-          new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 80)
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+          // new WaitCommand(1),
+          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 5, 80)
 
 
         );
@@ -99,17 +102,21 @@ public class BusterAuto extends SequentialCommandGroup {
 
 
       case "4 note auto":
+
+        // new PathPlannerAuto("auto test");
         
         addCommands(
+          new PathPlannerAuto("4 note")
+        );
 
 
-          // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
-          AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 3")),
-          // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
-          // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
-          new WaitCommand(2),
-          new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
+        //   // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
+        //   AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 2")),
+        //   // new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
+        //   // new LimelightDrive(m_robotContainer.s_Camera, m_robotContainer.s_Swerve, 100),
+        //   new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+        //   new WaitCommand(2),
+        //   new InstantCommand(() -> m_robotContainer.s_Conveyor.stop())
 
 
           // new InstantCommand(() -> m_robotContainer.s_Conveyor.groundIntake()),
@@ -184,7 +191,7 @@ public class BusterAuto extends SequentialCommandGroup {
 
           // check if have to reset odometry
 
-        );
+        // );
           
           
 
