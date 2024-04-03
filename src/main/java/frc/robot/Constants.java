@@ -127,7 +127,8 @@ public final class Constants {
     /* Conveyor module - Module 4 */
     public static final class Mod4 {
       public static final int intakeMotorChannel = 1;
-      public static final int intakeMotorID = 13;
+      public static final int intakeMotorIDTop = 13;
+      public static final int intakeMotorIDBottom = 19;
       public static final int intakeEncoderPort = 15;
       public static final int placementMotorID = 14;
       // these ID's are left and right from the POV of the shooter
