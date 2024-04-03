@@ -131,7 +131,7 @@ public class RobotContainer {
     // new ShuffleboardWrapper(chooser);
 
     NamedCommands.registerCommand("shoot", new Shoot(s_Conveyor, 1).withTimeout(2));
-    NamedCommands.registerCommand("intake", new InstantCommand(() -> new GroundIntake(s_Conveyor)));
+    NamedCommands.registerCommand("intake", new InstantCommand(() -> s_Conveyor.groundIntake()));
     NamedCommands.registerCommand("stop", new InstantCommand(() -> s_Conveyor.stop()));
 
 
@@ -225,7 +225,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 
-    return new PathPlannerAuto("auto test");
+    return new PathPlannerAuto("speaker to 1 auto");
     
     // return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
   }

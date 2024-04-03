@@ -64,7 +64,7 @@ public class Conveyor extends SubsystemBase {
         // }
         intakeMotorTop.set(0.7);
         intakeMotorBottom.set(-0.7);
-        placementMotor.set(0.4);
+        placementMotor.set(0.7);
     }
 
     public void groundOuttake() {
