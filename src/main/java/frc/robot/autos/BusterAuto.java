@@ -38,6 +38,7 @@ import frc.robot.commands.Shoot;
 public class BusterAuto extends SequentialCommandGroup {
   private int colorFactor = 1;
   private RobotContainer m_robotContainer;
+  private Swerve swerve;
   private LimelightDrive limelightDrive;
   private Shoot c_shoot;
   private Trajectory trajectory;
@@ -49,6 +50,7 @@ public class BusterAuto extends SequentialCommandGroup {
 
   public BusterAuto(RobotContainer container, SendableChooser<String> chooserColor, SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
+    swerve = m_robotContainer.s_Swerve;
     //limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10, );
     c_shoot = new Shoot(m_robotContainer.s_Conveyor, 1);
 
@@ -106,7 +108,19 @@ public class BusterAuto extends SequentialCommandGroup {
         // new PathPlannerAuto("auto test");
         
         addCommands(
-          new PathPlannerAuto("4 note")
+          new InstantCommand(() -> swerve.zeroGyro(0)),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(1.5, 5.55, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 1")),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(2.6, 7, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("1 to speaker")),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(1.5, 5.55, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 2")),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(2.6, 5.55, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("2 to speaker")),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(1.5, 5.55, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 3")),
+          new InstantCommand(() -> swerve.resetOdometry(new Pose2d(2.6, 4.1, swerve.getYaw()))),
+          AutoBuilder.followPath(PathPlannerPath.fromPathFile("3 to speaker"))
         );
 
 

@@ -59,7 +59,7 @@ public class RobotContainer {
   private final POVButton dPad_Down = new POVButton(driver2, 180);
   private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton leftBumper = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
-  // private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton trapLightDriveButton = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
@@ -179,7 +179,7 @@ public class RobotContainer {
     aButton.whileTrue(c_GroundIntake);
     leftBumper.whileTrue(c_GroundOuttake);
     rightTrigger.whileTrue(c_UpperIntake);
-    // limeLightDriveButton.whileTrue(c_LimelightDrive);
+    limeLightDriveButton.whileTrue(c_LimelightDrive);
     trapLightDriveButton.whileTrue(c_runTheTrap);
     hangarmUpButton.whileTrue(c_HangarmUp);  
     hangarmDownButton.whileTrue(c_HangarmDown); 
@@ -225,9 +225,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 
-    return new PathPlannerAuto("speaker to 1 auto");
+    // return new PathPlannerAuto("speaker to 1 auto");
     
-    // return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
+    return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
   }
 
   public void resetToAbsoluteNorth() {
