@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -176,10 +177,14 @@ public class RobotContainer {
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
-    dPad_Top.whileTrue(new Shoot(s_Conveyor, 1));   
+    //dPad_Top.whileTrue(new Shoot(s_Conveyor, 1));   
     dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); //0.6
     dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); //0.5
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); //0.2
+    dPad_Top.whileTrue(
+      (new SpinUp(s_Conveyor, 1.0).withTimeout(4.0))
+      .andThen(new Shoot(s_Conveyor, 1.0).withTimeout(2.0))
+    );
     // yKey.whileTrue(new HangarmDown(s_Hangarm));
     // xKey.whileTrue(new HangarmUp(s_Hangarm));
     // s_Intake.stop()));
