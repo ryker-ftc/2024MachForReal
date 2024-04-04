@@ -27,7 +27,7 @@ public class Conveyor extends SubsystemBase {
     private final CANSparkMax placementMotor;
     private final CANSparkMax flywheelMotorLeft;
     private final CANSparkMax flywheelMotorRight;
-    private TCS34725ColorSensor colorSensor;
+    public TCS34725ColorSensor colorSensor;
     private final TCSColor noteColor = new TCSColor(0, 0, 0, 0);
 
     public Conveyor() {
@@ -55,7 +55,7 @@ public class Conveyor extends SubsystemBase {
 
 
     public void groundIntake() {
-        TCSColor color = colorSensor.readColors();
+        // TCSColor color = colorSensor.readColors();
         
         SmartDashboard.putString("Conveyor Status", "GROUNDINTAKE");
         // if (!color.equals(noteColor)){
@@ -105,6 +105,26 @@ public class Conveyor extends SubsystemBase {
         flywheelMotorLeft.set(0);
         flywheelMotorRight.set(0);
 
+    }
+
+    public void setIntakeMotorTop(double value) {
+        intakeMotorTop.set(value);
+    }
+
+    public void setIntakeMotorBottom(double value) {
+        intakeMotorBottom.set(value);
+    }
+
+    public void setPlacementMotor(double value) {
+        placementMotor.set(value);
+    }
+
+    public void setFlywheelMotorLeft(double value) {
+        flywheelMotorLeft.set(value);
+    }
+
+    public void setFlywheelMotorRight(double value) {
+        flywheelMotorRight.set(value);
     }
 
 }

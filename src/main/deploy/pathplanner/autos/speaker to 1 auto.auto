@@ -16,6 +16,12 @@
           "data": {
             "pathName": "speaker to 1"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1 to speaker"
+          }
         }
       ]
     }
