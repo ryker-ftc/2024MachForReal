@@ -123,9 +123,10 @@ public class BusterAuto extends SequentialCommandGroup {
 
       case "drive forward":
         addCommands(
+            new InstantCommand(() -> swerve.zeroGyro(0)),
             new WaitCommand(12),
             new InstantCommand(
-                () -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, -0.2 * colorFactor), 0, false, true)),
+                () -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.2, 0), 0, false, true)),
             new WaitCommand(2),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)));
         break;
@@ -134,6 +135,7 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "boom and zoom":
         addCommands(
+            new InstantCommand(() -> swerve.zeroGyro(45 * colorFactor)),
             new SpinUp(conveyor, 1).withTimeout(0.5).andThen(new Shoot(conveyor, 1).withTimeout(2)),
             new WaitCommand(1),
             new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
@@ -143,7 +145,8 @@ public class BusterAuto extends SequentialCommandGroup {
             new InstantCommand(
                 () -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.1, 0.1 * colorFactor), 0, false, true)),
             new WaitCommand(1.5),
-            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true)));
+            new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(0, 0), 0, false, true))
+        );
     }
   }
 
