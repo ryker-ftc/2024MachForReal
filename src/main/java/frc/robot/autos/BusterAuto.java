@@ -49,7 +49,7 @@ public class BusterAuto extends SequentialCommandGroup {
       SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
     swerve = m_robotContainer.s_Swerve;
-    Conveyor = m_robotContainer.s_Conveyor;
+    conveyor = m_robotContainer.s_Conveyor;
     
     //limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10, );
 
