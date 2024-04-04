@@ -60,29 +60,19 @@ public class RobotContainer {
   private final POVButton dPad_Down = new POVButton(driver2, 180);
   private final JoystickButton aButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton leftBumper = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-  private final JoystickButton trapLightDriveButton = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton limeLightDriveButton = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton rightTrigger = new JoystickButton(driver2, 3);
   private final JoystickButton hangarmUpButton = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton hangarmDownButton = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton x2Button = new JoystickButton(driver2, XboxController.Button.kX.value);
 
-
-  // private final JoystickButton ykey = new JoystickButton(driver, XboxController.Button.kY.value);
-  // private final JoystickButton xKey = new JoystickButton(driver, XboxController.Button.kX.value);
-
   /* Driver Buttons */
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
-  // private final JoystickButton fastSpeed = new JoystickButton(driver,
-  // XboxController.Button.kRightBumper.value);
+
   private final SendableChooser<String> chooserColor;
   private final SendableChooser<String> chooserTarget;
 
-  // private final JoystickButton m_groundOuttakeButton = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  //private final JoystickButton m_hangArmDownButton = new JoystickButton(driver2, XboxController.Button.kY.value);
-  // private final JoystickButton m_speakerShootButton = new JoystickButton(driver2, XboxController.Button.kB.value);
-  // private final JoystickButton m_ampShootButton = new JoystickButton(driver2, XboxController.Button.kA.value);
   private final JoystickButton slowSpeed = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -93,21 +83,13 @@ public class RobotContainer {
   public final Conveyor s_Conveyor = new Conveyor();
   public final Hangarm s_Hangarm = new Hangarm();
 
-
-
-
   // /* Commands */
   public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
   public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
   public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
-  public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30, 50);
-  public final LimelightDrive c_runTheTrap = new LimelightDrive(s_Camera, s_Swerve, 30, 22);
-  public final HangarmUp c_HangarmUp = new HangarmUp(s_Hangarm);
-  public final HangarmDown c_HangarmDown = new HangarmDown(s_Hangarm);
-  
-  // public final HangarmDown c_HangarmDown = new HangarmDown(s_Hangarm);
-  // public final HangarmUp c_HangarmUp = new HangarmUp(s_Hangarm);
-  
+  public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30, 50, 0, 0);
+  public final LimelightDrive c_runTheTrap = new LimelightDrive(s_Camera, s_Swerve, 30, 22, 0, 0);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -124,9 +106,6 @@ public class RobotContainer {
     chooserTarget.addOption("2 note auto", "2 note auto");
     chooserTarget.addOption("Nothing", "none");
 
-    
-
-
     SmartDashboard.putData("Color Auto Selector", chooserColor);
     SmartDashboard.putData("Target Auto Selector", chooserTarget);
     // SendableRegistry.setName(chooser, "Auto Selector");
@@ -136,8 +115,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new Shoot(s_Conveyor, 1).withTimeout(2));
     NamedCommands.registerCommand("intake", new InstantCommand(() -> s_Conveyor.groundIntake()));
     NamedCommands.registerCommand("stop", new InstantCommand(() -> s_Conveyor.stop()));
-
-
 
   }
 
@@ -178,46 +155,17 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    // Changed version 
     aButton.whileTrue(c_GroundIntake);
     leftBumper.whileTrue(c_GroundOuttake);
-    rightTrigger.whileTrue(c_UpperIntake);
     limeLightDriveButton.whileTrue(c_LimelightDrive);
-    trapLightDriveButton.whileTrue(c_runTheTrap);
-    hangarmUpButton.whileTrue(c_HangarmUp);  
-    hangarmDownButton.whileTrue(c_HangarmDown); 
+
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
-    // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
-    // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
-    dPad_Top.whileTrue((new SpinUp(s_Conveyor, 1).withTimeout(0.5))
-    .andThen(new Shoot(s_Conveyor, 1).withTimeout(2))
 
+    x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
 
-    );   
-    dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); //0.6
-    dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); //0.5
-    dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); //0.2
-    // yKey.whileTrue(new HangarmDown(s_Hangarm));
-    // xKey.whileTrue(new HangarmUp(s_Hangarm));
-    // s_Intake.stop()));
-    // m_GroundOuttakeButton.whileTrue(c_IntakeOut);
-    // m_GroundIntakeButton.whileTrue(new GroundIntake(s_Intake));
-    // m_GroundOuttakeButton.whileTrue(new GroundOuttake(s_Intake));
-    //m_pull.whileTrue(new RunCommand(() -> s_Lifter.pull()));
-    // m_push.whileTrue(new RunCommand(() -> s_Lifter.push()));
-    // m_pull.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.pull())));
-    // m_push.whileTrue(new RepeatCommand(new RunCommand(() -> s_Lifter.push())));
-    // m_pull.whileTrue(new StartEndCommand(() -> s_Lifter.pull(), () -> s_Lifter.stop()));
-    // m_push.whileTrue(new StartEndCommand(() -> s_Lifter.push(), () -> s_Lifter.stop()));
+    dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
+    dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
 
-    //TODO: Test position method for the lifter
-    // dPad_Left.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(2)));
-    // dPad_Top.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(4)));
-    // dPad_Right.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(6)));
-    // resetPosition.onTrue(new InstantCommand(() -> s_Lifter.setToPosition(0)));
-
-    // back_resetPosition.onTrue(new
-    // InstantCommand(()->s_Swerve.resetToAbsoluteNorth()));
   }
 
   /**
@@ -226,10 +174,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
 
-    // return new PathPlannerAuto("speaker to 1 auto");
-    
     return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
   }
 
@@ -241,14 +186,6 @@ public class RobotContainer {
    * This is run constantly as soon as the robot is plugged in.
    */
   public void periodic() {
-    // s_Lifter.checkLimits();
-    // s_Intaker.periodic();
-
-    // while(driver2.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5) {
-    //   s_Conveyor.groundIntake();
-   // } while((driver2.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5)) {
-    //   s_Conveyor.stop();
-    // }
 
     SmartDashboard.putString("Choosen Auto Color", chooserColor.getSelected());
     SmartDashboard.putString("Choosen Auto Target", chooserTarget.getSelected());

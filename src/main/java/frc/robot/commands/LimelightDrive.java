@@ -17,15 +17,21 @@ public class LimelightDrive extends CommandBase{
     private double timeout;
     private Timer timer = new Timer();
     private SlewRateLimiter limiter = new SlewRateLimiter(3.0);
-    private double shootDistance = Units.inchesToMeters(40);
     private double[] botpose;
+    private double xDistance = Units.inchesToMeters(40);
+    private double yDistance = 0;
+    private double theta = 0;
 
-    public LimelightDrive(Camera camera, Swerve swerve, double timeout, double distance) {
+
+
+    public LimelightDrive(Camera camera, Swerve swerve, double timeout, double xDistance, double yDistance, double theta) {
         m_camera = camera;
         m_swerve  = swerve;
         this.timeout = timeout;
         addRequirements(m_swerve);
-        shootDistance = Units.inchesToMeters(distance);
+        this.xDistance = Units.inchesToMeters(xDistance);
+        this.yDistance = Units.inchesToMeters(yDistance);
+        this.theta = theta;
 
     }
 
@@ -46,8 +52,8 @@ public class LimelightDrive extends CommandBase{
             m_swerve.drive(new Translation2d(0, 0), 0, false, false);
             return;
       }
-        double xError = shootDistance + botpose[2];
-        double yError = -0.2-botpose[0];
+        double xError = xDistance + botpose[2];
+        double yError = yDistance - botpose[0];
         double angleError = -botpose[4];
         
         
@@ -68,7 +74,7 @@ public class LimelightDrive extends CommandBase{
         
 
     
-        if (Math.abs(angleError) > 2 || Math.abs(xError) > 0.1 || Math.abs(yError) > 0.1 || timer.get() < timeout) {
+        if (Math.abs(angleError) > 6 || Math.abs(xError) > 0.1 || Math.abs(yError) > 0.1 && timer.get() < timeout) {
             m_swerve.drive(new Translation2d(-xSpeed, -ySpeed), angularSpeed, false, true);
         } else {
             complete = true;

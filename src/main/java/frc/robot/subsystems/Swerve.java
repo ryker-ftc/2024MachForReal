@@ -88,6 +88,7 @@ public class Swerve extends SubsystemBase {
     // values defined in
     // the Constants for this are critical.
     //ChassisSpeeds speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    SmartDashboard.putBoolean("is Field Relative?", fieldRelative);
     ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
       translation.getX(), translation.getY(), rotation, getYaw());
     ChassisSpeeds robotCentricSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);

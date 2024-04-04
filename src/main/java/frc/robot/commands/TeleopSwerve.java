@@ -45,13 +45,13 @@ public class TeleopSwerve extends Command {
   @Override
   public void execute() {
 
-    double defaultSpeedMultiplier = 0.1;
+    double defaultSpeedMultiplier = 0.7;
     double speedMultiplier = defaultSpeedMultiplier;
-    // if (slowSpeedSup.getAsBoolean()) {
-    //   speedMultiplier = 0.4;
-    // } else if (turboSup.getAsBoolean()) {
-      // speedMultiplier = 0.1;
-    // }
+    if (slowSpeedSup.getAsBoolean()) {
+      speedMultiplier = 0.4;
+    } else if (turboSup.getAsBoolean()) {
+      speedMultiplier = 0.1;
+    }
 
     SmartDashboard.putNumber("Controller X", translationSup.getAsDouble());
     SmartDashboard.putNumber("Controller Y", strafeSup.getAsDouble());

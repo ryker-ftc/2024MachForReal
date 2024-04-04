@@ -201,7 +201,8 @@ public class SwerveModule {
     // Custom optimize command, since default WPILib optimize assumes continuous
     // controller which
     // REV and CTRE are not
-    SmartDashboard.putNumber("setDesiredState: " + moduleNumber, desiredState.angle.getDegrees());
+    SmartDashboard.putNumber("setDesiredState (angle): " + moduleNumber, desiredState.angle.getDegrees());
+    SmartDashboard.putNumber("setDesiredState: (speed)" + moduleNumber, desiredState.speedMetersPerSecond);
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
     SmartDashboard.putNumber("setDesiredState B: " + moduleNumber, desiredState.angle.getDegrees());
     setAngle(desiredState, jitterCheck);
