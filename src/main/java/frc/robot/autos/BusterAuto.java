@@ -32,14 +32,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Camera;
 import frc.robot.commands.LimelightDrive;
 import frc.robot.commands.Shoot;
-
+import frc.robot.subsystems.Conveyor;
 
 
 public class BusterAuto extends SequentialCommandGroup {
   private int colorFactor = 1;
   private RobotContainer m_robotContainer;
   private LimelightDrive limelightDrive;
-  private Shoot c_shoot;
+  private Conveyor Conveyor;
   private Trajectory trajectory;
   private TrajectoryConfig trajectoryConfig;
   private PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -50,7 +50,7 @@ public class BusterAuto extends SequentialCommandGroup {
   public BusterAuto(RobotContainer container, SendableChooser<String> chooserColor, SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
     //limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10, );
-    c_shoot = new Shoot(m_robotContainer.s_Conveyor, 1);
+    Conveyor = container.s_Conveyor;
 
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
