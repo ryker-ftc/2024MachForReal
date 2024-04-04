@@ -189,15 +189,11 @@ public class RobotContainer {
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
     // m_ampShootButton.whileTrue(new Shoot(s_Conveyor, 0.2));
     // m_speakerShootButton.whileTrue(new Shoot(s_Conveyor, 0.6));
-<<<<<<< HEAD
-    //dPad_Top.whileTrue(new Shoot(s_Conveyor, 1));   
-=======
     dPad_Top.whileTrue((new SpinUp(s_Conveyor, 1).withTimeout(0.5))
     .andThen(new Shoot(s_Conveyor, 1).withTimeout(2))
 
 
     );   
->>>>>>> b330c95d9b2467fcd01b4c5ffb4e747692c27146
     dPad_Right.whileTrue(new Shoot(s_Conveyor, 0.6)); //0.6
     dPad_Left.whileTrue(new Shoot(s_Conveyor, 0.5)); //0.5
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 0.2)); //0.2
