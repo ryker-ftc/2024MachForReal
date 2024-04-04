@@ -34,13 +34,12 @@ import frc.robot.commands.LimelightDrive;
 import frc.robot.commands.Shoot;
 
 
-
 public class BusterAuto extends SequentialCommandGroup {
   private int colorFactor = 1;
   private RobotContainer m_robotContainer;
   private Swerve swerve;
   private LimelightDrive limelightDrive;
-  private Shoot c_shoot;
+  private Conveyor Conveyor;
   private Trajectory trajectory;
   private TrajectoryConfig trajectoryConfig;
   private PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -51,8 +50,9 @@ public class BusterAuto extends SequentialCommandGroup {
   public BusterAuto(RobotContainer container, SendableChooser<String> chooserColor, SendableChooser<String> chooserTarget, Camera camera) {
     m_robotContainer = container;
     swerve = m_robotContainer.s_Swerve;
+    Conveyor = m_robotContainer.s_Conveyor;
+    
     //limelightDrive = new LimelightDrive(camera, m_robotContainer.s_Swerve, 10, );
-    c_shoot = new Shoot(m_robotContainer.s_Conveyor, 1);
 
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -111,6 +111,7 @@ public class BusterAuto extends SequentialCommandGroup {
           new InstantCommand(() -> swerve.zeroGyro(0)),
           new InstantCommand(() -> swerve.resetOdometry(new Pose2d(1.5, 5.55, swerve.getYaw()))),
           AutoBuilder.followPath(PathPlannerPath.fromPathFile("speaker to 1")),
+           new InstantCommand(() -> S_Conveyor.shoot()),
           new InstantCommand(() -> swerve.resetOdometry(new Pose2d(2.6, 7, swerve.getYaw()))),
           AutoBuilder.followPath(PathPlannerPath.fromPathFile("1 to speaker")),
           new InstantCommand(() -> swerve.resetOdometry(new Pose2d(1.5, 5.55, swerve.getYaw()))),
@@ -231,7 +232,7 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
       case "boom and zoom":
       addCommands(
-        new InstantCommand(() -> m_robotContainer.s_Conveyor.shoot(1)),
+        // new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1).withTimeout(2)),
         new WaitCommand(1),
         new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
         new WaitCommand(10),
