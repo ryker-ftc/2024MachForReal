@@ -163,7 +163,7 @@ public class RobotContainer {
 
     x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
 
-    dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1).withTimeout(2)));
+    dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
 
     // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));

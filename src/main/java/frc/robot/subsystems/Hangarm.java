@@ -17,8 +17,8 @@ public class Hangarm extends SubsystemBase {
     
     private final CANSparkMax leftMotor;
     private final CANSparkMax rightMotor;
-    private RelativeEncoder leftEncoder;
-    private RelativeEncoder rightEncoder;
+    // private RelativeEncoder leftEncoder;
+    // private RelativeEncoder rightEncoder;
     private final double RETRACTED_POS = 0;
     private final double EXTENDED_POS = 0;
 
@@ -26,7 +26,7 @@ public class Hangarm extends SubsystemBase {
     public Hangarm() {
         leftMotor = new CANSparkMax(Mod5.leftMotorId, MotorType.kBrushless);
         rightMotor = new CANSparkMax(Mod5.rightMotorId, MotorType.kBrushless);
-        leftEncoder = leftMotor.getEncoder();
+        // leftEncoder = leftMotor.getEncoder();
         // rightEncoder = rightMotor.getEncoder();
     }
 
@@ -38,15 +38,15 @@ public class Hangarm extends SubsystemBase {
     // extend hangarm
     public void extend() {
         SmartDashboard.putString("Hangarm Status", "EXTEND");
-        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ leftMotor.set(0.5);
-        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ rightMotor.set(-0.5);
+        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ leftMotor.set(0.7);
+        /*if (leftEncoder.getPosition() < EXTENDED_POS)*/ rightMotor.set(-0.7);
     }
 
     // retract hangarm
     public void retract() {
         SmartDashboard.putString("Hangarm Status", "RETRACT");
-        /*if (leftEncoder.getPosition() < RETRACTED_POS)*/ leftMotor.set(-0.5);
-        /*if (rightEncoder.getPosition() < RETRACTED_POS)*/ rightMotor.set(0.5);
+        /*if (leftEncoder.getPosition() < RETRACTED_POS)*/ leftMotor.set(-0.7);
+        /*if (rightEncoder.getPosition() < RETRACTED_POS)*/ rightMotor.set(0.7);
     }
 
     // this is the default state of the intake motor - do not move.

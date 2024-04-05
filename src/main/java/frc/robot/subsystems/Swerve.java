@@ -32,6 +32,8 @@ public class Swerve extends SubsystemBase {
 
   private ChassisSpeeds lastChassisSpeeds = new ChassisSpeeds(0, 0, 0);
 
+  // private SwerveDriveKinematics kinematics = new SwerveDriveKinematics();
+
   public Swerve() {
     // gyro.configFactoryDefault();
     zeroGyro(0);
@@ -230,10 +232,7 @@ public class Swerve extends SubsystemBase {
 
 
   public ChassisSpeeds getChassisSpeeds() {
-    return lastChassisSpeeds;
+    SwerveModuleState[] states = getStates();
+    return Constants.Swerve.swerveKinematics.toChassisSpeeds(states[0], states[1], states[2], states[3]);
   }
-
-  
-  
-
 }
