@@ -154,7 +154,6 @@ public class SwerveModule {
     lastAngle = 0;
     // this.setDesiredState(new SwerveModuleState(0, new Rotation2d(0)), false);
   }
-
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;

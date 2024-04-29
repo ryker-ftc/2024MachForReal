@@ -77,6 +77,9 @@ public class RobotContainer {
 
   private final JoystickButton turbo = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
+  private final POVButton hangarmLeftDown = new POVButton(driver, 270, 0);
+  private final POVButton hangarmRightDown = new POVButton(driver, 90, 0);
+
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
@@ -164,6 +167,7 @@ public class RobotContainer {
     x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
 
     dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
+    dPad_Left.whileTrue(new SpinUp(s_Conveyor, 0.5).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 0.5)));
 
     // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
     dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
@@ -172,7 +176,15 @@ public class RobotContainer {
     hangarmDownButton.whileTrue(new HangarmDown(s_Hangarm));
     hangarmUpButton.whileTrue(new HangarmUp(s_Hangarm));
 
+    hangarmLeftDown.whileTrue(new InstantCommand(() -> s_Hangarm.setLeftMotor(0.2))/*.withTimeout(0.05)
+    .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
+    hangarmRightDown.whileTrue(new InstantCommand(() -> s_Hangarm.setRightMotor(-0.2))/*.withTimeout(0.05)
+    .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
 
+  }
+
+  public void configureTestButtons() {
+    
   }
 
   /**

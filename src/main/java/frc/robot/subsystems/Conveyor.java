@@ -27,8 +27,8 @@ public class Conveyor extends SubsystemBase {
     private final CANSparkMax placementMotor;
     private final CANSparkMax flywheelMotorLeft;
     private final CANSparkMax flywheelMotorRight;
-    public TCS34725ColorSensor colorSensor;
-    private final TCSColor noteColor = new TCSColor(0, 0, 0, 0);
+    // public TCS34725ColorSensor colorSensor;
+    // private final TCSColor noteColor = new TCSColor(0, 0, 0, 0);
 
     public Conveyor() {
         intakeMotorTop = new CANSparkMax(Mod4.intakeMotorIDTop, MotorType.kBrushless);
@@ -36,18 +36,18 @@ public class Conveyor extends SubsystemBase {
         placementMotor = new CANSparkMax(Mod4.placementMotorID, MotorType.kBrushless);
         flywheelMotorLeft = new CANSparkMax(Mod4.flywheelMotorIDLeft, MotorType.kBrushless);
         flywheelMotorRight = new CANSparkMax(Mod4.flywheelMotorIDRight, MotorType.kBrushless);
-        colorSensor = new TCS34725ColorSensor();
-        colorSensor.init();
+        // colorSensor = new TCS34725ColorSensor();
+        // colorSensor.init();
     }
 
 
     public void periodic() {
         // SmartDashboard.putNumber("Intake speed", intakeMotor.get());
-        SmartDashboard.putNumber("Speed", flywheelMotorLeft.getEncoder().getVelocity());
-        SmartDashboard.putNumber("red COLORSENSOR", colorSensor.readColors().getR());
-        SmartDashboard.putNumber("green COLORSENSOR", colorSensor.readColors().getG());
-        SmartDashboard.putNumber("blue COLORSENSOR", colorSensor.readColors().getB());
-        SmartDashboard.putNumber("C COLORSENSOR", colorSensor.readColors().getC());
+        // SmartDashboard.putNumber("Speed", flywheelMotorLeft.getEncoder().getVelocity());
+        // SmartDashboard.putNumber("red COLORSENSOR", colorSensor.readColors().getR());
+        // SmartDashboard.putNumber("green COLORSENSOR", colorSensor.readColors().getG());
+        // SmartDashboard.putNumber("blue COLORSENSOR", colorSensor.readColors().getB());
+        // SmartDashboard.putNumber("C COLORSENSOR", colorSensor.readColors().getC());
         
 
 
@@ -92,8 +92,8 @@ public class Conveyor extends SubsystemBase {
         intakeMotorTop.set(0.8);
         intakeMotorBottom.set(-0.8);
         placementMotor.set(0.8);
-        flywheelMotorLeft.set(-1);
-        flywheelMotorRight.set(1);
+        flywheelMotorLeft.set(-speed);
+        flywheelMotorRight.set(speed);
         
     }
     // this is the default state of the intake motor - do not move.

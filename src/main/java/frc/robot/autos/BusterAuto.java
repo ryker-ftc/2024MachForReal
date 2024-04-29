@@ -139,7 +139,7 @@ public class BusterAuto extends SequentialCommandGroup {
             new SpinUp(conveyor, 1).withTimeout(0.5).andThen(new Shoot(conveyor, 1).withTimeout(2)),
             new WaitCommand(1),
             new InstantCommand(() -> m_robotContainer.s_Conveyor.stop()),
-            new WaitCommand(10),
+            new WaitCommand(7.5),
             new InstantCommand(() -> m_robotContainer.s_Swerve.drive(new Translation2d(-0.1, 0), 0, false, true)),
             new WaitCommand(1.5),
             new InstantCommand(

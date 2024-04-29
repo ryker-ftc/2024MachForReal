@@ -16,17 +16,17 @@ public class GroundIntakeColor extends Command {
 
     @Override
     public void execute() {
-        offset = 170 - m_Conveyor.colorSensor.readColors().getR();
-        SmartDashboard.putNumber("COLORSENSOR OFFSET * 0.05", offset * 0.05);
-        m_Conveyor.setIntakeMotorBottom(MathUtil.clamp(offset * -0.05, -1, 1));
-        m_Conveyor.setIntakeMotorTop(MathUtil.clamp(offset * 0.05, 1, 1));
-        m_Conveyor.setPlacementMotor(MathUtil.clamp(offset * 0.03, -0.6, 0.6));
+        // offset = 170 - m_Conveyor.colorSensor.readColors().getR();
+        // SmartDashboard.putNumber("COLORSENSOR OFFSET * 0.05", offset * 0.05);
+        // m_Conveyor.setIntakeMotorBottom(MathUtil.clamp(offset * -0.05, -1, 1));
+        // m_Conveyor.setIntakeMotorTop(MathUtil.clamp(offset * 0.05, 1, 1));
+        // m_Conveyor.setPlacementMotor(MathUtil.clamp(offset * 0.03, -0.6, 0.6));
 
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(offset) < 3;
+        return false;
     }
 
     @Override
