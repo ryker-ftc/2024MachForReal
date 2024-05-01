@@ -132,6 +132,9 @@ public class BusterAuto extends SequentialCommandGroup {
         break;
 
       case "none":
+        addCommands(
+          new InstantCommand(() -> swerve.zeroGyro(0))
+        );
         break;
       case "boom and zoom":
         addCommands(
