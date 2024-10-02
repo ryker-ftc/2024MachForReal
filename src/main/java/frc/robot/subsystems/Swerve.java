@@ -17,6 +17,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +35,9 @@ public class Swerve extends SubsystemBase {
   private ChassisSpeeds lastChassisSpeeds = new ChassisSpeeds(0, 0, 0);
 
   // private SwerveDriveKinematics kinematics = new SwerveDriveKinematics();
+
+  StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
+    .getStructTopic("MyPose", Pose2d.struct).publish();
 
   public Swerve() {
     // gyro.configFactoryDefault();
@@ -200,6 +205,7 @@ public class Swerve extends SubsystemBase {
   public void periodic() {
     swerveOdometry.update(getYaw(), getPositions());
     field.setRobotPose(getPose());
+    publisher.set(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(

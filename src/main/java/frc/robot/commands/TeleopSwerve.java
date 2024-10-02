@@ -89,7 +89,7 @@ public class TeleopSwerve extends Command {
         // The translation values will be from -maxSpeed to +maxSpeed
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
         rotationVal * Constants.Swerve.maxAngularVelocity * 0.7,
-        robotCentricSup.getAsBoolean(),
+        robotCentricSup.getAsBoolean(), // true for field centric
         // Pass isOpenLoop as true
         true);
   }
