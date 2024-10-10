@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import frc.robot.autos.*;
+// import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -83,13 +83,13 @@ public class RobotContainer {
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
-  public final Conveyor s_Conveyor = new Conveyor();
-  public final Hangarm s_Hangarm = new Hangarm();
+  // public final Conveyor s_Conveyor = new Conveyor();
+  // public final Hangarm s_Hangarm = new Hangarm();
 
   // /* Commands */
-  public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
-  public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
-  public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
+  // public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
+  // public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
+  // public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
   public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30, 50, 0, 0);
   public final LimelightDrive c_runTheTrap = new LimelightDrive(s_Camera, s_Swerve, 30, 22, 0, 0);
 
@@ -115,9 +115,9 @@ public class RobotContainer {
 
     // new ShuffleboardWrapper(chooser);
 
-    NamedCommands.registerCommand("shoot", new Shoot(s_Conveyor, 1).withTimeout(2));
-    NamedCommands.registerCommand("intake", new InstantCommand(() -> s_Conveyor.groundIntake()));
-    NamedCommands.registerCommand("stop", new InstantCommand(() -> s_Conveyor.stop()));
+    // NamedCommands.registerCommand("shoot", new Shoot(s_Conveyor, 1).withTimeout(2));
+    // NamedCommands.registerCommand("intake", new InstantCommand(() -> s_Conveyor.groundIntake()));
+    // NamedCommands.registerCommand("stop", new InstantCommand(() -> s_Conveyor.stop()));
 
   }
 
@@ -158,28 +158,28 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    aButton.whileTrue(c_GroundIntake);
-    leftBumper.whileTrue(c_GroundOuttake);
+    // aButton.whileTrue(c_GroundIntake);
+    // leftBumper.whileTrue(c_GroundOuttake);
     limeLightDriveButton.whileTrue(c_LimelightDrive);
 
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
 
-    x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
+    // x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
 
-    dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
-    dPad_Left.whileTrue(new SpinUp(s_Conveyor, 0.5).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 0.5)));
+    // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
+    // dPad_Left.whileTrue(new SpinUp(s_Conveyor, 0.5).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 0.5)));
 
-    // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
-    dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
+    // // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
+    // dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
 
-    // no no delete ryker
-    hangarmDownButton.whileTrue(new HangarmDown(s_Hangarm));
-    hangarmUpButton.whileTrue(new HangarmUp(s_Hangarm));
+    // // no no delete ryker
+    // hangarmDownButton.whileTrue(new HangarmDown(s_Hangarm));
+    // hangarmUpButton.whileTrue(new HangarmUp(s_Hangarm));
 
-    hangarmLeftDown.whileTrue(new InstantCommand(() -> s_Hangarm.setLeftMotor(0.2))/*.withTimeout(0.05)
-    .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
-    hangarmRightDown.whileTrue(new InstantCommand(() -> s_Hangarm.setRightMotor(-0.2))/*.withTimeout(0.05)
-    .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
+    // hangarmLeftDown.whileTrue(new InstantCommand(() -> s_Hangarm.setLeftMotor(0.2))/*.withTimeout(0.05)
+    // .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
+    // hangarmRightDown.whileTrue(new InstantCommand(() -> s_Hangarm.setRightMotor(-0.2))/*.withTimeout(0.05)
+    // .andThen(new InstantCommand(() -> s_Hangarm.stop()))*/);
 
   }
 
@@ -192,10 +192,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  // public Command getAutonomousCommand() {
 
-    return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
-  }
+    // return new BusterAuto(this, chooserColor, chooserTarget, s_Camera);
+  // }
 
   public void resetToAbsoluteNorth() {
     s_Swerve.resetToAbsoluteNorth();
