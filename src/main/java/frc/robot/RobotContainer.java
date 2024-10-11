@@ -83,13 +83,13 @@ public class RobotContainer {
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Camera s_Camera = new Camera();
-  // public final Conveyor s_Conveyor = new Conveyor();
+  public final Conveyor s_Conveyor = new Conveyor();
   // public final Hangarm s_Hangarm = new Hangarm();
 
   // /* Commands */
-  // public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
-  // public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
-  // public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
+  public final GroundIntake c_GroundIntake = new GroundIntake(s_Conveyor);
+  public final GroundOuttake c_GroundOuttake = new GroundOuttake(s_Conveyor);
+  public final UpperIntake c_UpperIntake = new UpperIntake(s_Conveyor);
   public final LimelightDrive c_LimelightDrive = new LimelightDrive(s_Camera, s_Swerve, 30, 50, 0, 0);
   public final LimelightDrive c_runTheTrap = new LimelightDrive(s_Camera, s_Swerve, 30, 22, 0, 0);
 
@@ -158,19 +158,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    // aButton.whileTrue(c_GroundIntake);
-    // leftBumper.whileTrue(c_GroundOuttake);
+    aButton.whileTrue(c_GroundIntake);
+    leftBumper.whileTrue(c_GroundOuttake);
     limeLightDriveButton.whileTrue(c_LimelightDrive);
 
     xButton.whileTrue(new RepeatCommand(new InstantCommand(() -> s_Swerve.setX())));
 
     // x2Button.whileTrue(new GroundIntakeColor(s_Conveyor));
 
-    // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
-    // dPad_Left.whileTrue(new SpinUp(s_Conveyor, 0.5).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 0.5)));
+    dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 1)));
+    dPad_Left.whileTrue(new SpinUp(s_Conveyor, 0.5).withTimeout(0.5).andThen(new Shoot(s_Conveyor, 0.5)));
 
-    // // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
-    // dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
+    // dPad_Top.whileTrue(new SpinUp(s_Conveyor, 1));
+    dPad_Down.whileTrue(new Shoot(s_Conveyor, 1));
 
     // // no no delete ryker
     // hangarmDownButton.whileTrue(new HangarmDown(s_Hangarm));

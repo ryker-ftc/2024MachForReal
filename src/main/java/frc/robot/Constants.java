@@ -106,7 +106,7 @@ public final class Constants {
     public static final class Mod2 {
       public static final int driveMotorID = 8;
       public static final int angleMotorID = 7;
-      public static final int canCoderID = 10;
+      public static final int canCoderID = 12;
       public static final int angleOffset = -350; //107 //-348 //0 //-68
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
@@ -116,7 +116,7 @@ public final class Constants {
     public static final class Mod3 {
       public static final int driveMotorID = 6;
       public static final int angleMotorID = 5;
-      public static final int canCoderID = 12;
+      public static final int canCoderID = 10;
       public static final int angleOffset = -258; //298 //-259 //-359 //273
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
@@ -127,13 +127,13 @@ public final class Constants {
     /* Conveyor module - Module 4 */
     public static final class Mod4 {
       public static final int intakeMotorChannel = 1;
-      public static final int intakeMotorIDTop = 13;
-      public static final int intakeMotorIDBottom = 19;
+      public static final int intakeMotorIDTop = 14;
+      public static final int intakeMotorIDBottom = 13;
       public static final int intakeEncoderPort = 15;
-      public static final int placementMotorID = 14;
+      public static final int placementMotorID = 15;
       // these ID's are left and right from the POV of the shooter
-      public static final int flywheelMotorIDLeft = 15;
-      public static final int flywheelMotorIDRight = 16;
+      public static final int flywheelMotorIDLeft = 16;
+      public static final int flywheelMotorIDRight = 17;
 
 
       //  public static final boolean kEncoderReversed = false;
@@ -182,8 +182,8 @@ public final class Constants {
 
   public static final class HangarmConstants {
     public static final class Mod5 {
-      public static final int leftMotorId = 17;
-      public static final int rightMotorId = 18;
+      public static final int leftMotorId = 18;
+      public static final int rightMotorId = 19;
       
     }
   }
